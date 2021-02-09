@@ -1,0 +1,39 @@
+.header {
+    height: 100px;
+    background: rgb(162, 174, 179);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;  
+
+    .head-sub {
+        max-width: 1450px;
+        position: relative;
+        height: 100%;
+        margin: 0 auto;
+
+        .taclogo {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%; 
+            left: 40px;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            transform: translateY(-50%);
+
+            img {
+                display: block;
+                height: 100%;
+                width: 100%;
+                margin: 0;
+            }
+        }
+
+        .tac-mess {
+            position: absolute;
+            top: 55%;
+            right: 100px;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+    }
+}

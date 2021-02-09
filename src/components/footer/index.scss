@@ -1,0 +1,25 @@
+.footer {
+
+    .footer-sub {
+        padding: 80px 100px;
+        background: black;
+        width: 100%;
+        margin: 0;
+        width: 100%;
+        max-width: 1450px;
+
+        .font-icon {
+            color: grey;
+            font-size: 14px;
+            text-transform: capitalize;
+            top: 20px;
+        }
+
+        .rights {
+            display: flex;
+            color: grey;
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+    }
+}

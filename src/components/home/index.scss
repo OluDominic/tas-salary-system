@@ -1,0 +1,73 @@
+.homepage {
+    height: 100vh;
+    position: relative;
+    
+    .home-write {
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .home-login {
+            display: flex;
+            flex-direction: row;
+
+        
+            span {
+                line-height: 1;
+                color: rgb(29, 26, 26);
+                display: block;
+                padding: 0 10px;
+                font-size: 17px;
+                font-weight: 400;
+                font-family: Noto Sans JP;
+                top: 0;
+            }
+
+            
+        .tac-link {
+
+            ul, li {
+                margin: 0;
+                padding: 0;
+            }
+    
+            li {
+                display: inline-block;
+                list-style-type: none;
+                margin-right: 25px;
+                padding: 10px 12px;
+                margin: 0 auto 12px;
+    
+                a {
+                    font-size: 20px;
+                    background: black;
+                    color: white;
+                    border: 1px solid white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    line-height: 1;
+                    padding: 7px 10px;
+                    font-size: 25px;
+                    font-weight: 400;
+                    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    
+                    &:hover {
+                        background: white;
+                        color: black;
+                        border: 1px solid black;
+                    }
+                }
+            }
+        }
+
+    }
+
+
+    }
+}
+
+

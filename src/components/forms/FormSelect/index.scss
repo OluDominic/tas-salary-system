@@ -1,0 +1,28 @@
+.formSelect {
+    display: inline-block;
+    width: 100%;
+
+    label {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
+    select {
+        display: block;
+        width: 100%;
+        float: left;
+        text-align: left;
+        padding: 12px 4px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 400;
+        color: grey;
+        line-height: 1;
+        font-family: Nunito Sans;
+        text-transform: capitalize;
+        border: 1px solid grey;
+    }
+}

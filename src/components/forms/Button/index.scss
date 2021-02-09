@@ -1,0 +1,23 @@
+.btn {
+    display: block;
+    width: 100%;
+    margin:  20px auto 0;
+    padding: 8px 12px;
+    border: 1px solid rgb(77, 72, 72);
+    outline: none;
+    color: rgb(56, 51, 51);
+    font-size: 17px;
+    font-weight: 300px;
+    font-family: Source Serif Pro;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+
+    &:hover {
+        background: rgb(56, 55, 55);
+        color: white;
+        border: 1px solid white;
+    }
+}

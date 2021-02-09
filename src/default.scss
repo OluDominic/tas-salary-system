@@ -1,0 +1,64 @@
+html {
+    font-size: 10px;
+}
+
+html, 
+body {
+    margin: 0;
+    padding: 0;
+    background: url("Promo-Facebook-Event Cover.jpeg");
+}
+
+html,
+body,
+#root,
+.App,
+*, ::before, ::after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+a, a:hover {
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+
+h1 {
+    line-height: 1;
+    color: black;
+    display: block;
+    padding: 0 12px;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: Roboto Slab;
+    margin: 0 auto 20px;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+h2 {
+    line-height: 1;
+    color: black;
+    display: block;
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: Noto Sans JP;
+    margin: 0 auto 10px;
+    width: 100%;
+    text-transform: capitalize;
+}

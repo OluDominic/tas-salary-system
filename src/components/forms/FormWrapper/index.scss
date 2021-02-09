@@ -1,0 +1,25 @@
+.formWrapper {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    margin: 40px auto 60px;
+    border: 1px solid rgb(80, 78, 78);
+
+    .wrap {
+        padding: 14px;
+
+        h2 {
+            font-size: 18px;
+            color: rgb(73, 72, 72);
+            display: block;
+            line-height: 1;
+            padding: 6px 10px;
+            font-weight: 400;
+            font-family: Noto Sans JP;
+            margin: 0 auto 10px;
+            width: 100%;
+            text-transform: uppercase;
+            text-align: center;
+        }
+    }
+}
