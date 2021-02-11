@@ -1,0 +1,35 @@
+.adminpage {
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        padding: 30px 40px;
+        background: whitesmoke;
+    }
+
+    .admincolumn {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .adminName, .requests, .staffs {
+        padding: 50px 30px;
+        color: black;
+        background: linear-gradient(180deg,#f3cbab,#feedca);
+        transition: 0.3s all ease-in-out;
+        margin: 30px auto;
+    }
+
+    .requests {
+        background: linear-gradient(180deg,#dbb4f3,#efb7d7);
+    }
+
+    .staffs {
+        background: linear-gradient(90deg,#b1e5f9,#f4d2fe);
+    }
+}

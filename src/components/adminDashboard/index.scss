@@ -1,0 +1,23 @@
+.admindash {
+    width: 100%;
+    display: block;
+    height: 100%;
+    padding: 0 10px;
+
+    h1 {
+        padding: 30px 40px;
+        background: whitesmoke;
+    }
+
+    .admindash-sub {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-around;
+        
+        .admindash-sub-sub {
+            padding: 100px 150px;
+            background: wheat;
+            color: black;
+        }
+    }
+}

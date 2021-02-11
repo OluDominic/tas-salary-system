@@ -1,0 +1,33 @@
+.admin-comp {
+    background: wheat;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 3px;
+    width: 100%;
+    height: 100%;
+
+    .admin-drop {
+        padding: 0 10px;
+        margin-left: 20px;
+
+        ul {
+            max-width: 100%;
+            height: 100%;
+            display: flex;
+
+            li, a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-content: space-around;
+                color: black;
+            }
+        }
+    }
+
+    h2 {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

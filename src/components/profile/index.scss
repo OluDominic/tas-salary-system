@@ -1,0 +1,39 @@
+.userProfile {
+    display: block;
+    width: 100%;
+    background: rgb(84, 147, 177);
+    margin: 3rem auto 1rem;
+
+    .portal {
+        display: block;
+    }
+
+    ul {
+        li {
+            display: block;
+            width: 100%;
+
+            .avatar {
+                display: block;
+                width: 5.0rem;
+                margin: 0 auto;
+
+                img {
+                    display: block;
+                    width: 100%;
+                }
+            }
+
+            .displayName {
+                display: block;
+                padding: 20px 30px;
+                width: 100%;
+                text-align: center;
+                margin: 10px auto;
+                font-size: 18px;
+                line-height: 1;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
