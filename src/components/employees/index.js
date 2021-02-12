@@ -6,9 +6,14 @@ const Employees =()=> {
 
     return (
         <div className="employees">
-            <h1>Register Employees</h1>
+            <h1> Employees section</h1>
+            <div className="employee-sub">
+                <div className="employee">employees</div>
+                <div className="department">departments</div>
+                <div className="schools">schools</div>
+            </div>
             <ul>
-                <li>
+                <li style={{maxWidth: "75px"}}>
                     <Link to="/register">
                         Add
                     </Link>

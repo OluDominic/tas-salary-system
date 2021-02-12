@@ -6,6 +6,8 @@ const Birthday =()=> {
 
     return (
         <div className="birthday">
+            <h1>Birthday's</h1>
+            <div className="birthday-sub">
             <h2>Today's Birthday</h2>
             <table border="0" cellPadding="10" cellSpacing="10">
                     <tbody>
@@ -62,6 +64,8 @@ const Birthday =()=> {
                         </tr>
                     </tbody>
                 </table>
+            </div>
+           
         </div>
     );
 }

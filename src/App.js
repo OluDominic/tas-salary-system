@@ -4,15 +4,15 @@ import MainLayout from './layouts/mainLay/mainLay';
 import LoginPage from './pages/LoginPage';
 import HomeLayout from './layouts/homeLay';
 import Homepage from './pages/Homepage';
-import SignUp from './pages/Signup';
-
-import './default.scss'
+import SignUp from './pages/Signup';import './default.scss'
 import AdminLayout from './layouts/adminLay';
 import Adminpage from './pages/AdminPage';
 import Admin from './components/admin';
 import AdminDash from './pages/AdminDash';
 import Employees from './components/employees';
 import BirthdayPage from './pages/BirthdayPage';
+import UserProfilePage from './pages/UserProfilePage';
+import SalaryEditPage from './pages/SalaryEditPage';
 //import './App.css';
 
 function App() {
@@ -33,9 +33,9 @@ function App() {
           )}
           />
           <Route path="/register" render={()=> (
-            <MainLayout>
+            <AdminLayout>
               <SignUp />
-            </MainLayout>
+            </AdminLayout>
           )}
           />
           <Route path="/admin" render={()=> (
@@ -59,6 +59,18 @@ function App() {
           <Route path="/birthday" render={()=> (
             <AdminLayout>
               <BirthdayPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/userprofile" render={()=> (
+            <AdminLayout>
+              <UserProfilePage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/salaryedit" render={()=> (
+            <AdminLayout>
+              <SalaryEditPage />
             </AdminLayout>
           )}
           />
