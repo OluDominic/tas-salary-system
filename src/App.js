@@ -4,7 +4,7 @@ import MainLayout from './layouts/mainLay/mainLay';
 import LoginPage from './pages/LoginPage';
 import HomeLayout from './layouts/homeLay';
 import Homepage from './pages/Homepage';
-import SignUp from './pages/Signup';import './default.scss'
+import SignUp from './pages/Signup';
 import AdminLayout from './layouts/adminLay';
 import Adminpage from './pages/AdminPage';
 import Admin from './components/admin';
@@ -13,12 +13,19 @@ import Employees from './components/employees';
 import BirthdayPage from './pages/BirthdayPage';
 import UserProfilePage from './pages/UserProfilePage';
 import SalaryEditPage from './pages/SalaryEditPage';
+import './default.scss'
+import SsLay from './layouts/ssLay';
+import ProfilePage from './pages/Profile';
+import SalaryPage from './pages/SalaryPage';
+import EmployeeInformation from './pages/EmployeeInformation';
+import Employee from './components/employee';
 //import './App.css';
 
 function App() {
   return (
     <div className="App">
       {/*<Admin />*/}
+      <Employee />
       <Switch>
         <Route exact path="/" render={()=> (
             <HomeLayout>
@@ -72,6 +79,24 @@ function App() {
             <AdminLayout>
               <SalaryEditPage />
             </AdminLayout>
+          )}
+          />
+          <Route path="/profile" render={()=> (
+            <SsLay>
+              <ProfilePage />
+            </SsLay>
+          )}
+          />
+          <Route path="/salary" render={()=> (
+            <SsLay>
+              <SalaryPage />
+            </SsLay>
+          )}
+          />
+          <Route path="/info" render={()=> (
+            <SsLay>
+              <EmployeeInformation />
+            </SsLay>
           )}
           />
       </Switch>

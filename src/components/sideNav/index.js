@@ -1,5 +1,4 @@
 import React from 'react'
-import UserProfile from '../profile'
 import './index.scss'
 
 const SideNav =({ children })=> {

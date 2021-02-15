@@ -1,11 +1,82 @@
-.userProfile {
+.profile {
+    background: white;
     display: block;
     width: 100%;
-    background: rgb(84, 147, 177);
     margin: 3rem auto 1rem;
+    height: 80vh;
 
-    .portal {
-        display: block;
+    .name {
+        background: rgb(245, 244, 244);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
+        padding: 0 10px;
+        margin-left: 50px;
+        h2 {
+            display: block;
+            padding: 4px 6px;
+            margin: 0 auto 10px;
+            font-size: 24px;
+            color: rgb(48, 79, 80);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+
+        .date {
+            padding: 4px 8px;
+            margin: 0 auto 10px;
+
+            p {
+                font-size: 18px;
+                font-weight: bold;
+                line-height: 1;
+                display: block;
+                font-family: Merriweather;
+                position: relative;
+                padding: 5px 0;
+                margin: 5px 5px;
+                color: rgb(75, 121, 151);
+            }
+        }
+    }
+
+    .name-sub {
+        display: flex;
+        flex-direction: row;
+        padding: 20px 20px;
+        margin: 50px 0px 0 0;
+        justify-content: space-around;
+        background: rgb(245, 244, 244);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
+        margin-left: 50px;
+
+        .sub, .sub-school, .sub-title {
+            padding: 80px 60px;
+            border-radius: 10px;
+            margin: 5px 5px;
+            text-align: left;
+            background: linear-gradient(180deg,#67b990,#7f828d);
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
+
+            
+
+            h2 {
+                display: block;
+                font-size: 18px;
+                font-weight: 400;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                line-height: 1;
+                color: white;
+            }
+
+            span {
+                display: block;
+                font-size: 24px;
+                font-weight: bolder;
+                color: white;
+                padding: 4px;
+                margin-top: 40px;
+            }
+        }
+
+        
     }
 
     ul {

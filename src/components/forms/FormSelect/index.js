@@ -1,36 +1,29 @@
-import React, {useState} from 'react'
+import React from 'react';
 import './index.scss'
 
-const FormSelect =(props)=> {
-
-    const [data]= useState(props.data);
-    const [selectedData, updateSelectedData] = useState("");
-
-    const handleChange =(e)=> {
-        updateSelectedData(e.target.value);
-        if (props.onSelectChange) props.onSelectChange(selectedData)
-    }
-
-    let options = data.map(data => (
-        <option key={data.id} value={data.id}>
-            {data.name}
-        </option>
-    ));
+const FormSelect = ({ options, defaultValue, handleChange, label, ...otherProps}) => {
+    if(!Array.isArray(options) || options.length < 1) return null;
 
     return (
+        <div className="formRow">
+            {label && (
+                <label>
+                    {label}
+                </label>
+            )}
 
-        <div className="formSelect">
-            
-            <select
-                name="customSearch"
-                className="custom-search-select"
-                onChange={handleChange}
-                >
-                    <option>Select Item </option>
-                    {options}
+            <select className="formSelect" value={defaultValue} onChange={handleChange} {...otherProps}>
+                {options.map((option, index) => {
+                    const { value, name } = option;
+                    return (
+                        <option key={index} value={value}>
+                            {name}
+                        </option>
+                    );
+                })}
             </select>
         </div>
     );
 }
 
-export default FormSelect
+export default FormSelect;

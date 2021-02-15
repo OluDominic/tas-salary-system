@@ -1,0 +1,51 @@
+.employee-top {
+    background: rgb(30, 94, 99);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 15px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+
+    .employee-drop{
+        margin-left: 20px;
+        display: flex;
+
+        ul {
+            max-width: 100%;
+            height: 100%;
+            display: flex;
+            margin-left: 200px;
+
+            li, a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-content: space-around;
+                color: white;
+                font-size: 17px;
+                font-weight: 400;
+                padding: 2px;
+                margin: 0 7px 0 7px;
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            }
+        }
+    }
+    
+
+    h2 {
+        display: flex;
+        justify-content: flex-end;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+
+        &:hover {
+            color: rgb(220, 210, 210);
+        }
+    }
+}

@@ -25,14 +25,20 @@ ul {
     padding: 0;
 }
 
-th {
-    color: black;
-    font-size: 18px;
-    text-transform: uppercase;
-    padding: 4px 6px;
-    font-weight: 400;
+
+
+td {
+    color: rgb(36, 35, 35);
+    font-size: 17px;
+    font-weight: 300;
     line-height: 1;
-    font-family: 'Times New Roman', Times, serif;
+    text-transform: capitalize;
+    font-family: Roboto Slab;
+}
+
+tr {
+    padding: 20px 40px;
+    margin: 20px 20px;
 }
 
 body {

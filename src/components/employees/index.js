@@ -1,8 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Modal from './../modal'
+import Button from './../forms/Button'
+import FormInput from '../forms/FormInput'
+import FormSelect from '../forms/FormSelect'
 import './index.scss'
 
 const Employees =()=> {
+
+    const [hideModal, setHideModal] = useState(true)
+    const [firstName, setFirstName] = useState("")
+    const [surName, setSurName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [school, setSchool] = useState([])
+    const [department, setDepartment] = useState([])
+
+    const handleSubmite =(event)=> {
+        event.preventDefault()
+    }
+
+
+
+    const toggleModal =()=> setHideModal(!hideModal);
+
+    const configModal = {
+        hideModal,
+        toggleModal
+    }
 
     return (
         <div className="employees">
@@ -13,36 +39,139 @@ const Employees =()=> {
                 <div className="schools">schools</div>
             </div>
             <ul>
-                <li style={{maxWidth: "75px"}}>
-                    <Link to="/register">
-                        Add
-                    </Link>
+                <li>
+                    <Button onClick={()=> toggleModal()}>
+                        Add new employee
+                    </Button>
                 </li>
             </ul>
+
+            <Modal {...configModal}>
+            <div>
+                <form onSubmit={handleSubmite}>
+                <FormInput 
+                type="text"
+                placeholder="Firstname"
+                name="firstName"
+                value={firstName}
+                handleChange={ e=> setFirstName(e.target.value)}
+                />
+                <FormInput 
+                type="text"
+                placeholder="Surname"
+                name="surname"
+                value={surName}
+                handleChange={ e=> setSurName(e.target.value)}
+                />
+                <FormInput 
+                type="text"
+                placeholder="Lastname"
+                name="lastname"
+                value={lastName}
+                handleChange={ e=> setLastName(e.target.value)}
+                />
+                <FormInput 
+                type="text"
+                placeholder="Email Address"
+                name="email"
+                value={email}
+                handleChange={ e=> setEmail(e.target.value)}
+                />
+                <FormInput 
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={password}
+                handleChange={ e=> setPassword(e.target.value)}
+                />
+                <FormSelect
+                        options={[
+                            {
+                        
+                                value: "ss",
+                                name: "Select School"
+                            },{
+                        
+                            value: "ss",
+                            name: "Senior Secondary School"
+                        }, {
+                            value: "ds",
+                            name: "Day School"
+                        }
+                        , {
+                            value: "js",
+                            name: "Junior Secondary School"
+                        }
+                        , {
+                            value: "ps",
+                            name: "Primary School"
+                        }
+                    ]}
+                    handleChange={e => setSchool(e.target.value)}
+                />
+                <FormSelect
+                    options={[
+                        {
+                        
+                            value: "science",
+                            name: "Select School"
+                        },{
+                        
+                            value: "ss",
+                            name: "Senior Secondary School"
+                        }, {
+                            value: "ds",
+                            name: "Day School"
+                        }
+                        , {
+                            value: "js",
+                            name: "Junior Secondary School"
+                        }
+                        , {
+                            value: "ps",
+                            name: "Primary School"
+                        }
+                    ]}
+                    handleChange={e => setSchool(e.target.value)}
+                />
+                <Button type="submit">
+                    Sign Up
+                </Button>
+                </form>
+                </div>
+            </Modal>
             <div className="employeesTable">
-                    <h2>All Employees table</h2>
                     <table>
                     <table border="0" cellPadding="0" cellSpacing="0">
                     <tbody>
                         <tr>
                             <td>
-                                <table className="paymentHeader" border="0" cellPadding="10" cellSpacing="0">
+                                <table className="paymentHeader" border="0" cellPadding="0" cellSpacing="0">
                                     <tbody>
                                         <tr>
+                                            
                                             <th>
-                                               ID
+                                                <h1>id</h1>
                                             </th>
                                             <th>
-                                                Fullname
+                                                <h1>
+                                                    Fullname
+                                                </h1>
                                             </th>
                                             <th>
-                                                School
+                                                <h1>
+                                                    School
+                                                </h1>
                                             </th>
                                             <th>
-                                                Department
+                                                <h1>
+                                                    Department
+                                                </h1>
                                             </th>
                                             <th>
-                                               Actions
+                                                <h1>
+                                                    actions
+                                                </h1>
                                             </th>
                                         </tr>
                                     </tbody>
@@ -51,32 +180,34 @@ const Employees =()=> {
                         </tr>
                         <tr>
                             <td>
-                                <table border="0" cellSpacing="0" cellPadding="10">
+                                <table className="paymentBody" border="0" cellSpacing="0" cellPadding="10">
                                     <tbody>
                                                     <tr>
                                                         <td>
-                                                            id
+                                                            1
                                                         </td>
                                                         <td>
-                                                            fullname
+                                                            Admin Admin
                                                         </td>
                                                         <td>
-                                                            school
+                                                            Secondary School
                                                         </td>
                                                         <td>
-                                                            department
+                                                            Information Technology
                                                         </td>
                                                         <td>
                                                             <ul>
                                                                 <li>
-                                                                    <Link>Edit</Link>
+                                                                    <Button className="butt">
+                                                                        Edit
+                                                                    </Button>
                                                                 </li>
                                                             </ul>
                                                         </td>
                                                     </tr>
-                                   
                                     </tbody>
                                 </table>
+                                
                             </td>
                         </tr>
                     </tbody>

@@ -1,0 +1,53 @@
+.employeeSidebar {
+    display: block;
+    position: fixed;
+    top: 56px;
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(180deg,#3488a1,#69725e);
+    height: 100vh;
+    width: 200px;
+
+    i {
+        display: flex;
+        justify-content: flex-end;
+        color: white;
+        cursor: pointer;
+        font-size: 30px;
+        position: relative;
+    }
+
+
+    h2 {
+        padding: 30px 40px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 0;
+    }
+
+    ul {
+        padding: 0;
+
+        li {
+            width: 100%;
+
+            a, span {
+                display: block;
+                width: 100%;
+                padding: 2rem;
+                font-size: 16px;
+                line-height: 1;
+                color: white;
+                cursor: pointer;
+            }
+
+            &:hover {
+                background-color: grey;
+            }
+        }
+    }
+}
