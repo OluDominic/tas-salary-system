@@ -12,9 +12,11 @@ const AdminSideBar =()=> {
             <h2>The Ambassadors Schools HRM</h2>
             <hr />
                 <ul>
+                    {/*}
                     <li>
                         <Link to="/admindash"> <FontAwesomeIcon icon={faUser} /> Dashboard </Link>
                     </li>
+                    */}
                     <li>
                         <Link to="/admin"> <FontAwesomeIcon icon={faHome} /> Home </Link>
                     </li>

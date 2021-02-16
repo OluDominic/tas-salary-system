@@ -1,7 +1,8 @@
 .adminsidebar {
     display: block;
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 30px;
+    width: 200px;
     padding: 0;
     margin: 0;
     background: rgb(84, 147, 177);

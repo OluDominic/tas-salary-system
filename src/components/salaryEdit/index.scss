@@ -1,0 +1,14 @@
+.salaryedit {
+
+    .search {
+        display: flex;
+        justify-content: space-around;
+
+        .search-input {
+            width: 50%;
+        }
+        .search-select {
+            margin-top: 50px;
+        }
+    }
+}

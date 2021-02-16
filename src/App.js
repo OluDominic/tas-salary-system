@@ -19,6 +19,8 @@ import ProfilePage from './pages/Profile';
 import SalaryPage from './pages/SalaryPage';
 import EmployeeInformation from './pages/EmployeeInformation';
 import Employee from './components/employee';
+import SalaryInfoPage from './pages/SalaryInfoPage';
+import UserProfileEditPage from './pages/UserProfileEditPage';
 //import './App.css';
 
 function App() {
@@ -78,6 +80,18 @@ function App() {
           <Route path="/salaryedit" render={()=> (
             <AdminLayout>
               <SalaryEditPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/salaryinfo" render={()=> (
+            <AdminLayout>
+              <SalaryInfoPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/userprofileedit" render={()=> (
+            <AdminLayout>
+              <UserProfileEditPage />
             </AdminLayout>
           )}
           />

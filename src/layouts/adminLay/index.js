@@ -1,4 +1,5 @@
 import React from 'react'
+import Admin from '../../components/admin'
 import AdminSideBar from '../../components/adminSideBar'
 import Footer from '../../components/footer'
 import Header from '../../components/header'

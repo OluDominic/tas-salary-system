@@ -85,6 +85,47 @@ h2 {
     text-transform: capitalize;
 }
 
+h3 {
+    line-height: 1;
+    color: black;
+    display: block;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 300;
+    font-family: Noto Sans JP;
+    margin: 0 auto 10px;
+    width: 100%;
+    text-transform: capitalize;
+}
+
+p {
+    color: rgb(78, 76, 76);
+    display: block;
+    padding: 1px 5px;
+    font-size: 12px;
+    font-family: Roboto Slab;
+    text-transform: capitalize;
+    width: 100%;
+}
+
+h4 {
+    color: rgb(95, 93, 93);
+    padding: 1px 5px;
+    font-size: 12px;
+    font-family: Roboto Slab;
+    text-transform: capitalize;
+    width: 100%;
+}
+
+label {
+    color: rgb(43, 40, 40);
+    display: block;
+    padding: 1px 5px;
+    text-transform: capitalize;
+    font-size: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 .controlPanel {
     position: relative;
     display: inline-block;
