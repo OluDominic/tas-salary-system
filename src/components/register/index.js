@@ -3,10 +3,12 @@ import FormInput from '../forms/FormInput'
 import FormSelect from '../forms/FormSelect'
 import FormWrapper from '../forms/FormWrapper'
 import Button from '../forms/Button'
+import axios from 'axios';
 import './index.scss'
 
 const Register =()=> {
 
+    const [id, setId] = useState('');
     const [firstName, setFirstName] = useState("")
     const [surName, setSurName] = useState("")
     const [lastName, setLastName] = useState("")

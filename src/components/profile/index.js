@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './index.scss'
 
 const Profile =()=> {
-    const [date, setDate] = useState(new Date())
+    const [date, setDate] = useState(new Date());
+    let [userdata,setUserdata] = useState({});
 
     const today = new Date();
 
@@ -15,6 +16,19 @@ const Profile =()=> {
         }
     })
 
+    useEffect(() => {
+        let data = localStorage.getItem('userdata')
+
+        if (!data) {
+           // history.push('/')
+        }
+        else{
+            data=JSON.parse(data);
+            console.log(data,'popop')
+      setUserdata(data);
+        }
+    },[]);
+
     const months = ["January", "Febuary", "March", "April", "May", "June", "July",
                 "August", "September", "October", "November", "December"]
 
@@ -23,7 +37,7 @@ const Profile =()=> {
     return (
         <div className="profile">
             <div className="name">
-                <h2>Welcome, Dominic Oludare</h2>
+                <h2>Welcome, {userdata.usertype=='admin'?'Admin':userdata.surname}</h2>
                 <div className="date">
                     <p>{date.toLocaleTimeString()}</p>
                     <p>{date.toLocaleDateString('default', { weekday: 'long', month: "long", day: 'numeric', year: "numeric"})}</p>
@@ -32,15 +46,15 @@ const Profile =()=> {
             <div className="name-sub">
                 <div className="sub">
                 <h2>Department</h2>
-                <span>Information Technology</span>
+                <span>{userdata.usertype=='admin'?'Admin':userdata.department}</span>
                 </div>
                 <div className="sub-school">
                     <h2>school</h2>
-                    <span>Senior Secondary</span>
+                    <span>{userdata.usertype=='admin'?'Admin':userdata.school}</span>
                 </div>
                 <div className="sub-title">
-                    <h2>Title</h2>
-                    <span>Software Developer</span>
+                    <h2>ID</h2>
+                    <span>{userdata.usertype=='admin'?'Admin':userdata.staffid}</span>
                 </div>
             </div>
         </div>

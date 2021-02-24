@@ -7,24 +7,8 @@ import { useHistory } from 'react-router-dom'
 import Dropdown from './dropdown.js'
 const Admin =()=> {
 
-    const [openMenu, setOpenMenu] = useState(false)
-    const history = useHistory()
-
-    const items = [
-        {
-            id: 1,
-            value: 'Pulp Fiction'
-        },
-        {
-            id: 2,
-            value: 'Raggae Fiction'
-        },
-        {
-            id: 3,
-            value: 'Jazz Fiction'
-        },
-    ]
-    
+    const [openMenu, setOpenMenu] = useState(false);
+    const history = useHistory();
 
 
     return (

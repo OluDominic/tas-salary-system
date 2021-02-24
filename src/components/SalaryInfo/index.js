@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import Button from '../forms/Button'
 import FormInput from '../forms/FormInput'
+import { DatePicker } from "@material-ui/pickers"
 import './index.scss'
 
 
 const SalaryInfo =()=> {
 
-    const [netSalary, setNetSalary] = useState('')
+    const [netSalary, setNetSalary] = useState('');
+    const [grossSalary, setGrossSalary] = useState('');
+    const [selectedDate, handleDateChange] = useState(new Date());
 
     //addition
     const [leaveAllow, setLeaveAllow] = useState(0);
@@ -31,26 +34,47 @@ const SalaryInfo =()=> {
         event.preventDefault()
     }
 
+    const SalaryTotal =()=> {
+        setNetSalary = parseInt(grossSalary) + parseInt(leaveAllow) + 
+        parseInt(monthlyAllow) + parseInt(transportAllowance) + 
+        parseInt(hodAllowance) + parseInt(classTeacherAllow) + 
+        parseInt(arrears) + parseInt(compensation) + parseInt(otherAllowance) - 
+        parseInt(social) - parseInt(lateness) - parseInt(cooperative) - 
+        parseInt(childFees) - parseInt(absentism) - parseInt(health) - 
+        parseInt(otherDec)
+    }
+
     return (
         <div className="salaryInfo">
             <h1>Salary Profile</h1>
             <div className="info-header">
                 <h2>Olu Dom</h2>
+                <h3>TAS/SS/admin</h3>
                 <p>Admin Department</p>
                 <p>SS School</p>
                 <h3>Software Development</h3>
-                <p>Date of Join : Jan, 2021</p>
             </div>
 
             <div className="wrap">
             <form onSubmit={handleSubmit}>
+                {/*}
+                <Fragment>
+                        <DatePicker 
+                        variant="inline"
+                        views={["year", "month"]}
+                        label="Year and Month"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        />
+                </Fragment>
+                */}
                 <div className="net">
-                        <label>Net Salary (N)</label>
+                        <label>Gross Salary (N)</label>
                         <FormInput 
-                        name="netsalary"
-                        value={netSalary}
+                        name="grossSalary"
+                        value={grossSalary}
                         type="text"
-                        handleChange={e => setNetSalary(e.target.value)}
+                        handleChange={e => setGrossSalary(e.target.value)}
                         />
                 </div>
                 <div className="info-fill">
@@ -153,17 +177,29 @@ const SalaryInfo =()=> {
                         <FormInput 
                         name="health"
                         value={health}
-                        type="money"
+                        type="text"
                         handleChange={e => setHealth(e.target.value)}
                         />
                         <label>Others</label>
                         <FormInput 
                         name="others"
                         value={otherDec}
-                        type="money"
+                        type="text"
                         handleChange={e => setOtherDec(e.target.value)}
                         />
                     </div>
+                    <div className="net">
+                        <Button onClick={()=> SalaryTotal}>
+                            Get Total
+                        </Button>
+                        <label>Net Salary (N)</label>
+                        <FormInput 
+                        name="netsalary"
+                        value={netSalary}
+                        type="text"
+                        handleChange={e => setNetSalary(e.target.value)}
+                        />
+                </div>
                     
                     <Button style={{width: "60%", alignItem: "center"}} type="submit">
                             Submit

@@ -21,6 +21,7 @@ import EmployeeInformation from './pages/EmployeeInformation';
 import Employee from './components/employee';
 import SalaryInfoPage from './pages/SalaryInfoPage';
 import UserProfileEditPage from './pages/UserProfileEditPage';
+import WithAdminAuth from './hoc/withAdminAuth';
 //import './App.css';
 
 function App() {
@@ -48,9 +49,10 @@ function App() {
           )}
           />
           <Route path="/admin" render={()=> (
-            <AdminLayout>
-              <Adminpage />
-            </AdminLayout>
+            
+              <AdminLayout>
+                <Adminpage />
+              </AdminLayout>
           )}
           />
           <Route path="/admindash" render={()=> (

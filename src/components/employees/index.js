@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import Modal from './../modal'
 import Button from './../forms/Button'
 import FormInput from '../forms/FormInput'
 import FormSelect from '../forms/FormSelect'
 import './index.scss'
 import FormWrapper from '../forms/FormWrapper'
+import axios from 'axios'
+import { useHistory } from 'react-router-dom'
+import  {APPCONFIG} from '../../config/config';
+import JwPagination from 'jw-react-pagination';
 import {
     TableContainer, Table, TableHead,
     TableRow, TableBody, TableCell, makeStyles
@@ -15,6 +18,8 @@ import {
 const Employees =()=> {
 
     const [hideModal, setHideModal] = useState(true)
+    const [employees, setEmployees] = useState([]);
+    const [page, setPage] = useState(1);
     const [firstName, setFirstName] = useState("")
     const [surName, setSurName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -24,10 +29,52 @@ const Employees =()=> {
     const [department, setDepartment] = useState([])
     const [id, setId] = useState('')
 
+    const history = useHistory()
+
     const handleSubmite =(event)=> {
-        event.preventDefault()
+        event.preventDefault();
+        reset();
     }
 
+    const reset =()=> {
+        setHideModal(true);
+        setId('');
+        setFirstName('');
+        setLastName('');
+        setSurName('');
+        setEmail('');
+        setPassword('');
+        setDepartment('');
+        setSchool('');
+    }
+
+    useEffect(() => {
+        console.log("Behavior when the value of 'foo' changes.");
+       fetchEmployees() 
+      },[setEmployees]);
+    
+ const fetchANew = (add)=>{
+   let newpage = add?page+1:page-1;
+    setPage(newpage);
+ }
+
+        const fetchEmployees = () => {
+            console.log('Employees fetched')
+        const headers = {
+                "Content-Type": "application/json",
+                Authorization: `Bearer lll`,
+                "Access-Control-Allow-Origin":"*"
+            }
+    console.log(page,'here')
+            axios.get(`${APPCONFIG.appapi}/fetchemployees?page=1`, {
+                headers
+            }).then((data) => {
+               
+             employees(data.data);
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
 
 
     const toggleModal =()=> setHideModal(!hideModal);
@@ -35,6 +82,21 @@ const Employees =()=> {
     const configModal = {
         hideModal,
         toggleModal
+    }
+
+    const register =()=> {
+        axios.post("http://localhost:8000/register", {
+            staffid: id,
+            surname: surName,    
+            firstname: firstName,
+            lastname: lastName,
+            email: email,
+            password: password,
+            school: school,
+            department: department,
+        }).then((response) => {
+            console.log(response)
+        })
     }
 
     const headline = {
@@ -99,7 +161,7 @@ const Employees =()=> {
             <ul>
                 <li>
                     <Button onClick={()=> toggleModal()}>
-                        Add new employee
+                        Register employee
                     </Button>
                 </li>
             </ul>
@@ -112,13 +174,15 @@ const Employees =()=> {
                 <form onSubmit={handleSubmite}>
                 <FormInput 
                 type="text"
-                placeholder="Firstname"
-                name="firstName"
-                value={firstName}
-                handleChange={ e=> setFirstName(e.target.value)}
+                required
+                placeholder="ID"
+                name="id"
+                value={id}
+                handleChange={ e=> setId(e.target.value)}
                 />
                 <FormInput 
                 type="text"
+                required
                 placeholder="Surname"
                 name="surname"
                 value={surName}
@@ -126,6 +190,15 @@ const Employees =()=> {
                 />
                 <FormInput 
                 type="text"
+                required
+                placeholder="Firstname"
+                name="firstName"
+                value={firstName}
+                handleChange={ e=> setFirstName(e.target.value)}
+                />
+                <FormInput 
+                type="text"
+                required
                 placeholder="Lastname"
                 name="lastname"
                 value={lastName}
@@ -133,12 +206,14 @@ const Employees =()=> {
                 />
                 <FormInput 
                 type="text"
+                required
                 placeholder="Email Address"
                 name="email"
                 value={email}
                 handleChange={e=> setEmail(e.target.value)}
                 />
-                <FormInput 
+                <FormInput
+                required 
                 type="password"
                 placeholder="Password"
                 name="password"
@@ -146,64 +221,76 @@ const Employees =()=> {
                 handleChange={ e=> setPassword(e.target.value)}
                 />
                 <FormSelect
+                
                         options={[
-                            {
-                        
-                                value: "ss",
-                                name: "Select School"
-                            },{
-                        
-                            value: "ss",
+                        {
+                            value: "School",
+                            name: "School"
+                        },
+                        {
+                            value: "SS",
                             name: "Senior Secondary School"
-                        }, {
-                            value: "ds",
+                        },
+                        {
+                            value: "DS",
                             name: "Day School"
                         }
                         , {
-                            value: "js",
+                            value: "JS",
                             name: "Junior Secondary School"
                         }
                         , {
-                            value: "ps",
+                            value: "PS",
                             name: "Primary School"
                         }
                     ]}
                     handleChange={e => setSchool(e.target.value)}
                 />
+
                 <FormSelect
                     options={[
+                         {
+                            value: "Department",
+                            name: "Department"
+                        },
                         {
-                        
-                            value: "department",
-                            name: "Select Department"
-                        },{
-                        
-                            value: "drivers",
+                            value: "Executives",
+                            name: "Executives"
+                        },
+                         {
+                            value: "Principal Officers",
+                            name: "Principal Officers"
+                        }, 
+                        {
+                            value: "Teaching Staff",
+                            name: "Teachers"
+                        },
+                        {
+                            value: "Admin",
+                            name: "Admin"
+                        },
+                        {
+                            value: "Drivers",
                             name: "Drivers"
                         }, {
-                            value: "security",
+                            value: "Security",
                             name: "Security"
                         }
                         , {
-                            value: "admin",
-                            name: "Admin"
-                        }, {
-                            value: "kitchen",
+                            value: "Kitchen",
                             name: "Kitchen"
                         }, {
-                            value: "teachers",
-                            name: "Teachers"
-                        }, {
-                            value: "corpers",
+                            value: "Corper",
                             name: "Corpers"
-                        }, {
-                            value: "principal Officers",
-                            name: "Principal Officers"
-                        }
+                        },
+                        {
+                           value: "Utility",
+                           name: "Utility"
+                       }
                     ]}
-                    handleChange={e => setSchool(e.target.value)}
+                    handleChange={e => setDepartment(e.target.value)}
                 />
-                <Button type="submit">
+                <Button onClick={register} type="submit">
                     Sign Up
                 </Button>
                 </form>
@@ -261,23 +348,31 @@ const Employees =()=> {
                             <TableCell style={stylesHead}>ID </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
-                            <TableCell style={stylesHead}>Action </TableCell>
+                            <TableCell style={stylesHead}>Actions </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row)=> (
-                            <TableRow key={row.firstname}>
-                                <TableCell style={stylesBody}>{row.firstname}</TableCell>
-                                <TableCell style={stylesBody}>{row.surname}</TableCell>
-                                <TableCell style={stylesBody}>{row.id}</TableCell>
-                                <TableCell style={stylesBody}>{row.department}</TableCell>
-                                <TableCell style={stylesBody}>{row.school}</TableCell>
-                                <TableCell style={stylesBody}>{row.action}</TableCell>
-                            </TableRow>
-                        ))}
+                        { 
+                        employees.map((data, i)=> {
+                            console.log(data)
+                            return (
+                                <TableRow key={i} onClick={()=> history.push(`${APPCONFIG.appapi}/fetchemployees?id`)}>
+                                    <TableCell  style={stylesBody}>{data.staffid}</TableCell>
+                                    <TableCell style={stylesBody}>{data.surname}</TableCell>
+                                    <TableCell style={stylesBody}>{data.firstname}</TableCell>
+                                    <TableCell style={stylesBody}>{data.department}</TableCell>
+                                    <TableCell style={stylesBody}>{data.school}</TableCell>
+                                    <TableCell style={stylesBody}><Button >
+                              Edit
+                            </Button></TableCell>
+                                </TableRow>
+                            )
+                        } )}
                     </TableBody>
                 </Table>
             </TableContainer>  
+
+            <JwPagination items={employees} onChangePage={ fetchANew} />
             </div>
         </div>
     );
