@@ -15,7 +15,7 @@ useEffect(()=> {
     const currentUser=(response)=> {
         let data = response.data;
             localStorage.setItem("userdata",JSON.stringify(data));
-            if (!data.usertype=='admin') {
+            if (!data) {
                 history.push('/login')
             }
     }

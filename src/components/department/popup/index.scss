@@ -1,0 +1,39 @@
+.popup {
+    position: fixed;
+    background: #00000050;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    .popup-div {
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+        left: 50%;
+        height: auto;
+        max-height: 70vh;
+        background: #fff;
+        padding: 20px;
+        border: 1px solid #999;
+        overflow: auto;
+        max-height: 70vh;
+        margin-top: calc(100vh - 52vh - 20px);
+
+        .close {
+            content: 'X';
+            cursor: pointer;
+            position: fixed;
+            right: calc(30% - 30px);
+            top: calc(100vh - 52vh - 33px);
+            text-align: center;
+            width: 25px;
+            height: 25px;
+            background: #ededed;
+            border: 1px solid #999;
+            font-size: 20px;
+            line-height: 20px;
+            border-radius: 50%;
+        }
+    }
+}

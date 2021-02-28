@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './index.scss'
@@ -9,7 +9,18 @@ const Admin =()=> {
 
     const [openMenu, setOpenMenu] = useState(false);
     const history = useHistory();
+    const [useData, setuseData] = useState({});
+    
+    useEffect(()=> {
+        let userdata = localStorage.getItem('userdata');
+        setuseData(JSON.parse(userdata))
+    },[]);
 
+    const logout=()=> {
+        localStorage.clear();
+        setuseData({});
+        window.location.replace('http://localhost:3000/')
+    }
 
     return (
         <div className="admin-comp">
@@ -19,15 +30,16 @@ const Admin =()=> {
                     <li>
                         <Link><FontAwesomeIcon icon={faUser} /> <span style={{marginLeft:"4px"}}> Users</span></Link>
                     </li>
-                    <li>
-                        <Link to="/register"> Register</Link>
+                    <li style={{cursor: "pointer"}} onClick={logout}>
+                        LogOut
                     </li>
                     <li>
                         <Link> <FontAwesomeIcon icon={faTachometerAlt} /> </Link>
                     </li>
                 </ul>
             </div>
-            <h2> Dominic, Admin <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faUser} /></span>  </h2>
+            <span></span>
+            <h2>{useData.adminid} , Admin <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faUser} /></span>  </h2>
            
         </div>
     );

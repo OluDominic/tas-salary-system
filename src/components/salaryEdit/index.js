@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '../forms/Button'
 import FormInput from '../forms/FormInput'
 import FormWrapper from '../forms/FormWrapper'
@@ -7,6 +7,8 @@ import {
   TableRow, TableBody, TableCell, makeStyles
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import { APPCONFIG } from '../../config/config';
+import axios from 'axios';
 
 import './index.scss'
 import FormSelect from '../forms/FormSelect';
@@ -17,6 +19,7 @@ const SalaryEdit =()=> {
     const [employee, setEmployee] = useState("")
     const [search, setSearch] = useState("")
     const history = useHistory();
+    const [employees, setEmployees] = useState([])
 
     const handleSubmit =(event)=> {
         event.preventDefault();
@@ -26,14 +29,17 @@ const SalaryEdit =()=> {
         event.preventDefault();
     }
 
-    const handleClick =()=> {
-        history.push('/salaryinfo')
+    const handleClick =(id)=> {
+        history.push('/salaryinfo/'+id)
     }
 
     const headline = {
         headline : "Employee search"
     }
 
+    useEffect(()=> {
+        getEmployees()
+    }, [])
 
     const createdData = (firstname, surname, id, department, school, action) => {
         return {
@@ -44,6 +50,24 @@ const SalaryEdit =()=> {
             school,
             action
         }
+    }
+
+    const getEmployees =()=> {
+        const headers = {
+            "Content-Type": "application/json",
+            Authorisation: `Bearer 111`,
+            "Access-Control-Allow-Origin":"*"
+        }
+
+        axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
+            headers
+        })
+        .then((data) => {
+            setEmployees(data.data);
+        })
+        .catch((error)=> {
+            console.log(error);
+        })
     }
 
     const rows = [
@@ -130,23 +154,25 @@ const SalaryEdit =()=> {
                 <Table className={useStyles.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={stylesHead}>FirstName </TableCell>
-                            <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>ID </TableCell>
+                            <TableCell style={stylesHead}>Surname </TableCell>
+                            <TableCell style={stylesHead}>Fistname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
                             <TableCell style={stylesHead}>Action </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row)=> (
-                            <TableRow key={row.firstname}>
-                                <TableCell style={stylesBody}>{row.firstname}</TableCell>
-                                <TableCell style={stylesBody}>{row.surname}</TableCell>
-                                <TableCell style={stylesBody}>{row.id}</TableCell>
-                                <TableCell style={stylesBody}>{row.department}</TableCell>
-                                <TableCell style={stylesBody}>{row.school}</TableCell>
-                                <TableCell style={stylesBody}>{row.action}</TableCell>
+                        {employees.map((data, i)=> (
+                            <TableRow  key={i}>
+                                <TableCell style={stylesBody}>{data.staffid}</TableCell>
+                                <TableCell style={stylesBody}>{data.surname}</TableCell>
+                                <TableCell style={stylesBody}>{data.firstname}</TableCell>
+                                <TableCell style={stylesBody}>{data.department}</TableCell>
+                                <TableCell style={stylesBody}>{data.school}</TableCell>
+                                <TableCell style={stylesBody}><Button onClick={()=>{
+handleClick(data.id)
+                                }}> Edit</Button> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

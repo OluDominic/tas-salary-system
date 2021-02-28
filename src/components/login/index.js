@@ -34,9 +34,9 @@ const Login =()=> {
             let data = response.data;
             localStorage.setItem("userdata",JSON.stringify(data));
             if (data.usertype=='admin') {
-                history.push('/admin')
+               window.location.replace('http://localhost:3000/admin')
             } else {
-                history.push('/profile')
+                window.location.replace('http://localhost:3000/profile')
             }
         }).catch((error)=>{
             console.log(error)

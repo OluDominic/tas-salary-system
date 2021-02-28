@@ -51,12 +51,8 @@ const Employees =()=> {
     useEffect(() => {
         console.log("Behavior when the value of 'foo' changes.");
        fetchEmployees() 
-      },[setEmployees]);
-    
- const fetchANew = (add)=>{
-   let newpage = add?page+1:page-1;
-    setPage(newpage);
- }
+      },[]);
+
 
         const fetchEmployees = () => {
             console.log('Employees fetched')
@@ -66,11 +62,11 @@ const Employees =()=> {
                 "Access-Control-Allow-Origin":"*"
             }
     console.log(page,'here')
-            axios.get(`${APPCONFIG.appapi}/fetchemployees?page=1`, {
+            axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
                 headers
             }).then((data) => {
                
-             employees(data.data);
+             setEmployees(data.data);
             }).catch((error) => {
                 console.log(error);
             })
@@ -343,9 +339,9 @@ const Employees =()=> {
                 <Table className={useStyles.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={stylesHead}>FirstName </TableCell>
-                            <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>ID </TableCell>
+                            <TableCell style={stylesHead}>Surname </TableCell>
+                            <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
                             <TableCell style={stylesHead}>Actions </TableCell>
@@ -356,8 +352,8 @@ const Employees =()=> {
                         employees.map((data, i)=> {
                             console.log(data)
                             return (
-                                <TableRow key={i} onClick={()=> history.push(`${APPCONFIG.appapi}/fetchemployees?id`)}>
-                                    <TableCell  style={stylesBody}>{data.staffid}</TableCell>
+                                <TableRow key={i}>
+                                    <TableCell onClick={()=> history.push(`${APPCONFIG.appapi}/fetchemployees?id`)} style={stylesBody}>{data.staffid}</TableCell>
                                     <TableCell style={stylesBody}>{data.surname}</TableCell>
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                     <TableCell style={stylesBody}>{data.department}</TableCell>
@@ -372,7 +368,6 @@ const Employees =()=> {
                 </Table>
             </TableContainer>  
 
-            <JwPagination items={employees} onChangePage={ fetchANew} />
             </div>
         </div>
     );

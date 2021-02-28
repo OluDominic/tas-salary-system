@@ -1,15 +1,22 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '../forms/Button'
 import FormInput from '../forms/FormInput'
-import { DatePicker } from "@material-ui/pickers"
+import axios from 'axios'
+import {APPCONFIG} from './../../config/config'
 import './index.scss'
+import { useLocation, useParams } from 'react-router-dom';
+import DatePicker from "react-datepicker";
 
+import "react-datepicker/dist/react-datepicker.css";
 
 const SalaryInfo =()=> {
+    const [salaryinfo, setSalaryinfo] = useState([]);
+    const [date, setDate] = useState(new Date());
 
     const [netSalary, setNetSalary] = useState('');
     const [grossSalary, setGrossSalary] = useState('');
     const [selectedDate, handleDateChange] = useState(new Date());
+    const [fullname, setFullname] = useState([]);
 
     //addition
     const [leaveAllow, setLeaveAllow] = useState(0);
@@ -34,170 +41,214 @@ const SalaryInfo =()=> {
         event.preventDefault()
     }
 
+        let {id} = useParams()
+    useEffect(()=> {
+        fetchUser()
+    }, [])
+
+    const fetchUser = () => {
+   
+        // console.log(location)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/salaryinfo/${id}`, {
+            headers
+        }).then((data) => {
+           
+         setSalaryinfo(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     const SalaryTotal =()=> {
-        setNetSalary = parseInt(grossSalary) + parseInt(leaveAllow) + 
+       let setNetSalary0 = parseInt(grossSalary)
+        + parseInt(leaveAllow) + 
         parseInt(monthlyAllow) + parseInt(transportAllowance) + 
         parseInt(hodAllowance) + parseInt(classTeacherAllow) + 
         parseInt(arrears) + parseInt(compensation) + parseInt(otherAllowance) - 
         parseInt(social) - parseInt(lateness) - parseInt(cooperative) - 
         parseInt(childFees) - parseInt(absentism) - parseInt(health) - 
         parseInt(otherDec)
+    setNetSalary(setNetSalary0)
     }
+
+    const siid = salaryinfo.staffid
+
+    
 
     return (
         <div className="salaryInfo">
             <h1>Salary Profile</h1>
             <div className="info-header">
-                <h2>Olu Dom</h2>
-                <h3>TAS/SS/admin</h3>
-                <p>Admin Department</p>
-                <p>SS School</p>
-                <h3>Software Development</h3>
+                <h2> {salaryinfo.surname}, {salaryinfo.firstname}</h2>
+                <h3>{salaryinfo.staffid}</h3>
+                <p>{salaryinfo.department}</p>
+                <p>{salaryinfo.school}</p>
             </div>
 
             <div className="wrap">
             <form onSubmit={handleSubmit}>
-                {/*}
-                <Fragment>
+                <>
+                <h3>Date</h3>
                         <DatePicker 
-                        variant="inline"
-                        views={["year", "month"]}
-                        label="Year and Month"
-                        value={selectedDate}
-                        onChange={handleDateChange}
+                        dateFormat="MMMM yyyy"
+                        showMonthYearDropdown
+                        selected={date}
+                        onChange={date => setDate(date)}
+                        dropdownMode= "scroll"
                         />
-                </Fragment>
-                */}
+                </>
+                
                 <div className="net">
                         <label>Gross Salary (N)</label>
                         <FormInput 
+                        required
                         name="grossSalary"
                         value={grossSalary}
-                        type="text"
+                        type="number"
                         handleChange={e => setGrossSalary(e.target.value)}
                         />
                 </div>
                 <div className="info-fill">
                     <h3>addition</h3>
                         <label>HOD Allowance</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="hod allowance"
                         value={hodAllowance}
-                        type="text"
+                        type="number"
                         handleChange={e => setHodAllowance(e.target.value)}
                         />
                         <label>Class Teacher Allowance</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="class teacher allowance"
                         value={classTeacherAllow}
-                        type="text"
+                        type="number"
                         handleChange={e => setClassTeacherAllow(e.target.value)}
                         />
                         <label>Monthly Allowance</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="monthlyAllowance"
                         value={monthlyAllow}
-                        type="text"
+                        type="number"
                         handleChange={e => setMonthlyAllow(e.target.value)}
                         />
                         <label>Leave Allowance</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="leaveAllowance"
                         value={leaveAllow}
-                        type="text"
+                        type="number"
                         handleChange={e => setLeaveAllow(e.target.value)}
                         />
                         <label>Transport Allowance</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="transport allowance"
                         value={transportAllowance}
-                        type="text"
+                        type="number"
                         handleChange={e => setTransportAllowance(e.target.value)}
                         />
-                        <label>Other Allowance</label>
-                        <FormInput 
-                        name="other allowance"
-                        value={otherAllowance}
-                        type="text"
-                        handleChange={e => setOtherAllowance(e.target.value)}
-                        />
                         <label>Arrears</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="arrears"
                         value={arrears}
-                        type="text"
+                        type="number"
                         handleChange={e => setArrears(e.target.value)}
                         />
                         <label>Compensations</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="compensation"
                         value={compensation}
-                        type="text"
+                        type="number"
                         handleChange={e => setCompesation(e.target.value)}
+                        />
+                        <label>Other Allowance</label>
+                        <FormInput
+                        required 
+                        name="other allowance"
+                        value={otherAllowance}
+                        type="number"
+                        handleChange={e => setOtherAllowance(e.target.value)}
                         />
                 </div>
                 <div className="info-fill">
                     <h3>Deduction</h3>
                     <label>Social</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="social"
                         value={social}
-                        type="text"
+                        type="number"
                         readOnly
                         />
                         <label>Lateness</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="lateness"
                         value={lateness}
-                        type="text"
+                        type="number"
                         handleChange={e => setLateness(e.target.value)}
                         />
                         <label>Co-operative</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="cooperative"
                         value={cooperative}
-                        type="text"
+                        type="number"
                         handleChange={e => setCooperative(e.target.value)}
                         />
                         <label>Child Fees</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="childfees"
                         value={childFees}
-                        type="text"
+                        type="number"
                         handleChange={e => setChildFees(e.target.value)}
                         />
                         <label>Absentism</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="absentism"
                         value={absentism}
-                        type="text"
+                        type="number"
                         handleChange={e => setAbsentism(e.target.value)}
                         />
                         <label>Health</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="health"
                         value={health}
-                        type="text"
+                        type="number"
                         handleChange={e => setHealth(e.target.value)}
                         />
                         <label>Others</label>
-                        <FormInput 
+                        <FormInput
+                        required 
                         name="others"
                         value={otherDec}
-                        type="text"
+                        type="number"
                         handleChange={e => setOtherDec(e.target.value)}
                         />
                     </div>
                     <div className="net">
-                        <Button onClick={()=> SalaryTotal}>
+                        <Button onClick={()=> SalaryTotal()}>
                             Get Total
                         </Button>
                         <label>Net Salary (N)</label>
                         <FormInput 
                         name="netsalary"
                         value={netSalary}
-                        type="text"
-                        handleChange={e => setNetSalary(e.target.value)}
+                        type="number"
                         />
                 </div>
                     

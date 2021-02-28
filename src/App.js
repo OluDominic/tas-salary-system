@@ -22,13 +22,23 @@ import Employee from './components/employee';
 import SalaryInfoPage from './pages/SalaryInfoPage';
 import UserProfileEditPage from './pages/UserProfileEditPage';
 import WithAdminAuth from './hoc/withAdminAuth';
+import School from './pages/School';
+import DepartmentPage from './pages/DepartmentPage';
+import {useState,useEffect} from 'react'
 //import './App.css';
 
 function App() {
+ 
+  const [useData, setuseData] = useState(null);
+    
+  useEffect(()=> {
+      let userdata = localStorage.getItem('userdata');
+      setuseData(JSON.parse(userdata))
+  },[])
   return (
     <div className="App">
-      {/*<Admin />*/}
-      <Employee />
+      {useData && useData.usertype=='admin'?   <Admin />:null}
+      {useData && useData.usertype=='employee'?   <Employee />:null}
       <Switch>
         <Route exact path="/" render={()=> (
             <HomeLayout>
@@ -85,7 +95,7 @@ function App() {
             </AdminLayout>
           )}
           />
-          <Route path="/salaryinfo" render={()=> (
+          <Route path="/salaryinfo/:id" render={()=> (
             <AdminLayout>
               <SalaryInfoPage />
             </AdminLayout>
@@ -94,6 +104,18 @@ function App() {
           <Route path="/userprofileedit" render={()=> (
             <AdminLayout>
               <UserProfileEditPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/schools" render={()=> (
+            <AdminLayout>
+              <School />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/departments" render={()=> (
+            <AdminLayout>
+              <DepartmentPage />
             </AdminLayout>
           )}
           />

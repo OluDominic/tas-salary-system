@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import './index.scss'
-import { faBirthdayCake, faHome, faMoneyBill, faSuitcase, faUser, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import { faBirthdayCake, faHome, faMoneyBill, faSchool, faSpaceShuttle, faSuitcase, faUser, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 
 const AdminSideBar =()=> {
 
@@ -28,10 +28,16 @@ const AdminSideBar =()=> {
                         <Link to="/userprofile"> <FontAwesomeIcon icon={faSuitcase} /> User Profile </Link>
                     </li>
                     <li>
-                        <Link to="/birthday"> <FontAwesomeIcon icon={faBirthdayCake} /> Birthday </Link>
+                        <Link to="/birthday"> <FontAwesomeIcon icon={faBirthdayCake} /> Birthdays </Link>
                     </li>
                     <li>
                         <Link to="/salaryedit"> <FontAwesomeIcon icon={faMoneyBill} /> Salary Info </Link>
+                    </li>
+                    <li>
+                        <Link to="/schools"> <FontAwesomeIcon icon={faSchool} /> Schools </Link>
+                    </li>
+                    <li>
+                        <Link to="/departments"> <FontAwesomeIcon icon={faSpaceShuttle} /> Departments </Link>
                     </li>
                 </ul>
         </div>

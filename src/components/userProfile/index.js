@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '../forms/Button'
 import FormInput from '../forms/FormInput'
 import FormWrapper from '../forms/FormWrapper'
@@ -7,20 +7,47 @@ import {
   TableRow, TableBody, TableCell, makeStyles
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-
+import axios from 'axios'
+import {APPCONFIG} from './../../config/config'
 import './index.scss'
 import FormSelect from '../forms/FormSelect';
 import { useHistory } from 'react-router-dom';
 
 const UserProfile =()=> {
 
-    const [employee, setEmployee] = useState("")
+    const [employees, setEmployees] = useState('')
+    const [employee, setEmployee] = useState('')
     const [search, setSearch] = useState("")
     const history = useHistory();
 
     const handleSubmit =(event)=> {
         event.preventDefault();
     }
+
+    useEffect(() => {
+        console.log("Behavior when the value of 'foo' changes.");
+       fetchEmployees() 
+      },[]);
+
+
+    const fetchEmployees = () => {
+            console.log('Employees fetched')
+    const headers = {
+                "Content-Type": "application/json",
+                Authorization: `Bearer lll`,
+                "Access-Control-Allow-Origin":"*"
+            }
+        console.log('here')
+            axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
+                headers
+            }).then((data) => {
+               
+             setEmployees(data.data);
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+
 
     const handleSubmitSelect =(event)=> {
         event.preventDefault();
@@ -131,23 +158,23 @@ const UserProfile =()=> {
                 <Table className={useStyles.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={stylesHead}>FirstName </TableCell>
-                            <TableCell style={stylesHead}>Surname </TableCell>
+                            <TableCell style={stylesHead}># </TableCell>
                             <TableCell style={stylesHead}>ID </TableCell>
+                            <TableCell style={stylesHead}>Surname </TableCell>
+                            <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
-                            <TableCell style={stylesHead}>Action </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row)=> (
-                            <TableRow key={row.firstname}>
-                                <TableCell style={stylesBody}>{row.firstname}</TableCell>
-                                <TableCell style={stylesBody}>{row.surname}</TableCell>
-                                <TableCell style={stylesBody}>{row.id}</TableCell>
-                                <TableCell style={stylesBody}>{row.department}</TableCell>
-                                <TableCell style={stylesBody}>{row.school}</TableCell>
-                                <TableCell style={stylesBody}>{row.action}</TableCell>
+                        {employees.map((data, i)=> (
+                            <TableRow key={i}>
+                                <TableCell style={stylesBody}>{data.id}</TableCell>
+                                <TableCell style={stylesBody}>{data.staffid}</TableCell>
+                                <TableCell style={stylesBody}>{data.surname}</TableCell>
+                                <TableCell style={stylesBody}>{data.firstname}</TableCell>
+                                <TableCell style={stylesBody}>{data.department}</TableCell>
+                                <TableCell style={stylesBody}>{data.school}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

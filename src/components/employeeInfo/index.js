@@ -9,10 +9,13 @@ import FormSelect from '../forms/FormSelect'
 import { CountryDropdown } from 'react-country-region-selector';
 import NaijaStates from 'naija-state-local-government';
 import Button from '../forms/Button';
-import naijaStateLocalGovernment from 'naija-state-local-government';
+import States from './states'
+//import naijaStateLocalGovernment from 'naija-state-local-government';
+import TextField from '@material-ui/core/TextField';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizaitonProvider from '@material-ui/lab/LocalizationProvider';
+import DatePicker from '@material-ui/lab/DatePicker';
 import axios from 'axios';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const EmployeeInfo =()=> {
     let [userdata,setUserdata] = useState({});
@@ -217,11 +220,26 @@ const EmployeeInfo =()=> {
                             handleChange={e => setPhone(e.target.value)}
                             />
 
-                            <DatePicker
-                            onChange={date => setBirthday(date)}
-                            selected={birthday}
-                            />
-
+                        <LocalizaitonProvider dateAdapter={AdapterDateFns}>
+                            <div style={{width: 300, padding: 20}}>
+                                <DatePicker
+                                views={['year', 'date']}
+                                label="Year and Month only"
+                                value={startDate}
+                                onChange={(date) => {
+                                    setStartDate(date);
+                                }}
+                                renderInput={(params) => (
+                                    <TextField
+                                    {...params}
+                                    margin="normal"
+                                    helperText={null}
+                                    variant="standard"
+                                    />
+                                )}
+                                />
+                            </div> 
+                            </LocalizaitonProvider>
                             <FormInput
                             name="address"
                             value={address}
@@ -268,12 +286,15 @@ const EmployeeInfo =()=> {
                             name="tel"
                             handleChange={e=> setTel(e.target.value)}
                             />
+
+                            <States />
+
                             <CountryDropdown
                             required
                             onChange={handleCountryChange}
                             value={country}
                             valueType="short"
-                            />
+                            /> 
                             <FormSelect
                             options={[ 
                             {
@@ -320,11 +341,27 @@ const EmployeeInfo =()=> {
                             handleChange={e => setReligion(e.target.value)}
                             />
                             <label>Date of join</label>
-                            <DatePicker
-                            showMonthDropdown
-                            selected={startDate}
-                            onChange={date => setStartDate(date)}
-                            />
+                            <div style={{width: 300}}>
+                                <DatePicker
+                                views={['year', 'month', 'date']}
+                                label="Year, month and date"
+                                minDate={new Date('1996-01-01')}
+                                value={birthday}
+                                onChange={(date) => {
+                                    setBirthday(date);
+                                }}
+                                renderInput={(params) => (
+                                    <TextField
+                                    {...params}
+                                    margin="normal"
+                                    helperText={null}
+                                    variant="standard"
+                                    />
+                                )}
+                                />
+                            </div>
+
+                            
                             </div>
 
                             <div>
