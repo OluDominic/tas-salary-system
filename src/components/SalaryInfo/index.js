@@ -4,8 +4,13 @@ import FormInput from '../forms/FormInput'
 import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import './index.scss'
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DatePicker from "react-datepicker";
+import {
+    TableContainer, Table, TableHead,
+    TableRow, TableBody, TableCell, makeStyles
+  } from '@material-ui/core';
+  import Paper from '@material-ui/core/Paper';
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -17,6 +22,7 @@ const SalaryInfo =()=> {
     const [grossSalary, setGrossSalary] = useState('');
     const [selectedDate, handleDateChange] = useState(new Date());
     const [fullname, setFullname] = useState([]);
+    const [siid, setSiid] = useState([salaryinfo.staffid])
 
     //addition
     const [leaveAllow, setLeaveAllow] = useState(0);
@@ -38,7 +44,53 @@ const SalaryInfo =()=> {
     const [otherDec, setOtherDec] = useState(0);
 
     const handleSubmit =(event)=> {
-        event.preventDefault()
+        event.preventDefault();
+        reset();
+    }
+
+    const reset =()=> {
+        setHodAllowance(0);
+        setClassTeacherAllow(0);
+        setMonthlyAllow(0);
+        setLeaveAllow(0);
+        setTransportAllowance(0);
+        setArrears(0);
+        setCompesation(0);
+        setOtherAllowance(0);
+        setSocial(300);
+        setLateness(0);
+        setCooperative(0);
+        setChildFees(0);
+        setAbsentism(0);
+        setHealth(0);
+        setOtherDec(0)
+    }
+
+    const postSalary =()=> {
+        axios.post("http://localhost:8000/salary", {
+            staffid: salaryinfo.staffid,
+            date: date,
+            gross: grossSalary,
+            hod: hodAllowance,
+            classteacher: classTeacherAllow,
+            monthly: monthlyAllow,
+            leaveallow: leaveAllow,
+            transport: transportAllowance,
+            arrears: arrears,
+            compensations: compensation,
+            otherallow: otherAllowance,
+            social: social,
+            lateness: lateness,
+            cooperative: cooperative,
+            childfees: childFees,
+            absentism: absentism,
+            health: health,
+            othersred: otherDec,
+            net: netSalary
+        })
+        .then((response) => {
+            console.log(response)
+        })
     }
 
         let {id} = useParams()
@@ -77,7 +129,6 @@ const SalaryInfo =()=> {
     setNetSalary(setNetSalary0)
     }
 
-    const siid = salaryinfo.staffid
 
     
 
@@ -85,26 +136,40 @@ const SalaryInfo =()=> {
         <div className="salaryInfo">
             <h1>Salary Profile</h1>
             <div className="info-header">
-                <h2> {salaryinfo.surname}, {salaryinfo.firstname}</h2>
+                <h2> {salaryinfo.surname} {salaryinfo.firstname}</h2>
                 <h3>{salaryinfo.staffid}</h3>
-                <p>{salaryinfo.department}</p>
-                <p>{salaryinfo.school}</p>
+                <h3><p>{salaryinfo.department}</p></h3>
+                <h3><p>{salaryinfo.school}</p></h3>
             </div>
 
             <div className="wrap">
             <form onSubmit={handleSubmit}>
-                <>
-                <h3>Date</h3>
-                        <DatePicker 
+                
+                
+                <div className="net">
+                    <div style={{width: '150px', fontWeight: '600px'}}>
+                        <FormInput
+                        type="text"
+                        name="id"
+                        value={salaryinfo.staffid}
+                        />
+                    </div>
+                        <h3>Month & Year</h3>
+                    <div className="date">
+                         <DatePicker 
                         dateFormat="MMMM yyyy"
                         showMonthYearDropdown
                         selected={date}
                         onChange={date => setDate(date)}
                         dropdownMode= "scroll"
                         />
-                </>
-                
-                <div className="net">
+                    </div> 
+                        {/* <FormInput
+                        type="month"
+                        name="date"
+                        value={date}
+                        handleChange={e => setDate(e.target.value)}
+                        /> */}
                         <label>Gross Salary (N)</label>
                         <FormInput 
                         required
@@ -241,6 +306,9 @@ const SalaryInfo =()=> {
                         />
                     </div>
                     <div className="net">
+                        <Button onClick={reset}>
+                            Reset
+                        </Button>
                         <Button onClick={()=> SalaryTotal()}>
                             Get Total
                         </Button>
@@ -252,10 +320,40 @@ const SalaryInfo =()=> {
                         />
                 </div>
                     
-                    <Button style={{width: "60%", alignItem: "center"}} type="submit">
+                    <Button onClick={postSalary} style={{width: "60%", alignItem: "center"}} type="submit">
                             Submit
                         </Button>
                 </form>
+            </div>
+            <div>
+            {/* <TableContainer component={Paper}>
+                <Table className={useStyles.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={stylesHead}>ID </TableCell>
+                            <TableCell style={stylesHead}>Surname </TableCell>
+                            <TableCell style={stylesHead}>Fistname </TableCell>
+                            <TableCell style={stylesHead}>Department </TableCell>
+                            <TableCell style={stylesHead}>School </TableCell>
+                            <TableCell style={stylesHead}>Action </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {employees.map((data, i)=> (
+                            <TableRow  key={i}>
+                                <TableCell style={stylesBody}>{data.staffid}</TableCell>
+                                <TableCell style={stylesBody}>{data.surname}</TableCell>
+                                <TableCell style={stylesBody}>{data.firstname}</TableCell>
+                                <TableCell style={stylesBody}>{data.department}</TableCell>
+                                <TableCell style={stylesBody}>{data.school}</TableCell>
+                                <TableCell style={stylesBody}><Button onClick={()=>{
+                                                handleClick(data.id)
+                                }}> Edit</Button> </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer> */}
             </div>
         </div>
     )

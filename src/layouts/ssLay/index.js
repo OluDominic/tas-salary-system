@@ -1,13 +1,20 @@
-import React from 'react'
-import AdminSideBar from '../../components/adminSideBar'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import EmployeeSidebar from '../../components/employeeSideBar'
-import Footer from '../../components/footer'
-import Header from '../../components/header'
-import Home from '../../components/home'
 import SideNav from '../../components/sideNav'
-import Adminpage from '../../pages/AdminPage'
 
 const SsLay =(props)=> {
+    const history = useHistory()
+
+    useEffect(()=> {
+        let usedata = JSON.parse(localStorage.getItem('userdata'))
+
+        if(usedata && usedata.usertype =='employee') {
+            console.log('userdata')
+        } else {
+            history.push('/')
+        }
+    })
     
     return (
         <div style={{background: "white"}}  className="adminLay">

@@ -171,7 +171,7 @@ const SalaryEdit =()=> {
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
                                 <TableCell style={stylesBody}><Button onClick={()=>{
-handleClick(data.id)
+                                                handleClick(data.id)
                                 }}> Edit</Button> </TableCell>
                             </TableRow>
                         ))}

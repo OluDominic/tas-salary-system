@@ -22,7 +22,7 @@ const AdminLayout =(props)=> {
         console.log('userdata88888');
           history.push('/')
       }
-  },[])
+  },[]);
     return (
         <div style={{background: "white"}}  className="adminLay">
             
