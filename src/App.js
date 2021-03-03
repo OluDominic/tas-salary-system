@@ -25,6 +25,9 @@ import WithAdminAuth from './hoc/withAdminAuth';
 import School from './pages/School';
 import DepartmentPage from './pages/DepartmentPage';
 import {useState,useEffect} from 'react'
+import PayslipPage from './pages/PayslipPage';
+import ComplaintForm from './pages/ComplaintPage';
+import RecoveryPage from './pages/RecoveryPage';
 //import './App.css';
 
 function App() {
@@ -135,6 +138,24 @@ function App() {
             <SsLay>
               <EmployeeInformation />
             </SsLay>
+          )}
+          />
+          <Route path="/payslip" render={()=> (
+            <SsLay>
+              <PayslipPage />
+            </SsLay>
+          )}
+          />
+          <Route path="/complaint" render={()=> (
+            <SsLay>
+              <ComplaintForm />
+            </SsLay>
+          )}
+          />
+          <Route path="/recovery" render={()=> (
+            <MainLayout>
+              <RecoveryPage />
+            </MainLayout>
           )}
           />
       </Switch>

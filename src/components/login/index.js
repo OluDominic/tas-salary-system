@@ -4,14 +4,15 @@ import FormInput from '../forms/FormInput'
 import FormWrapper from '../forms/FormWrapper'
 import axios from 'axios'
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import './index.scss'
 
 const Login =()=> {
 
     const history = useHistory();
-    const [id, setId] = useState("")
-    const [password, setPassword] = useState("")
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
+    const [loginMessage, setMessage] = useState('');
 
     const handleSubmit = async event=> {
         event.preventDefault();
@@ -38,6 +39,13 @@ const Login =()=> {
             } else {
                 window.location.replace('http://localhost:3000/profile')
             }
+
+            if (response.data.message) {
+                setMessage(response.data.message)
+            } else {
+                setMessage(response.data[0])
+            }
+            console.log(response.data)
         }).catch((error)=>{
             console.log(error)
         })
@@ -52,6 +60,7 @@ const Login =()=> {
         <FormWrapper {...headline}>
             <div>
                 <form onSubmit={handleSubmit}>
+                    <h3 style={{color: 'red'}}>{loginMessage}</h3>
                     <FormInput 
                     type="text"
                     name="id"
@@ -69,6 +78,12 @@ const Login =()=> {
                     <Button onClick={loginUser} type="submit">
                         Sign In
                     </Button>
+
+                    <div className="recovery">
+                        <Link to="/recovery">
+                            Reset Password
+                        </Link>
+                    </div>
                 </form>
             </div>
         </FormWrapper>

@@ -7,6 +7,7 @@ import {
     CSSTransition,
     TransitionGroup,
   } from 'react-transition-group';
+import { faComment } from '@fortawesome/free-regular-svg-icons'
 
 const EmployeeSidebar =()=> {
 
@@ -30,6 +31,9 @@ const EmployeeSidebar =()=> {
                     </li>
                     <li>
                         <Link to="/info"> <FontAwesomeIcon icon={faSuitcase} /> My Profile </Link>
+                    </li>
+                    <li>
+                        <Link to="/complaint"> <FontAwesomeIcon icon={faComment} /> Complaints </Link>
                     </li>
                 </ul>
         </div>

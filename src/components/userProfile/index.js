@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom';
 
 const UserProfile =()=> {
 
-    const [employees, setEmployees] = useState('')
+    const [employees, setEmployees] = useState([])
     const [employee, setEmployee] = useState('')
     const [search, setSearch] = useState("")
     const history = useHistory();

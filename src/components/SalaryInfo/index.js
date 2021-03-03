@@ -68,6 +68,8 @@ const SalaryInfo =()=> {
 
     const postSalary =()=> {
         axios.post("http://localhost:8000/salary", {
+            
+            id: salaryinfo.id,
             staffid: salaryinfo.staffid,
             date: date,
             gross: grossSalary,
@@ -148,6 +150,11 @@ const SalaryInfo =()=> {
                 
                 <div className="net">
                     <div style={{width: '150px', fontWeight: '600px'}}>
+                    <FormInput
+                        type="text"
+                        name="id"
+                        value={salaryinfo.id}
+                        />
                         <FormInput
                         type="text"
                         name="id"
