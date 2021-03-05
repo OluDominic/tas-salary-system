@@ -6,9 +6,12 @@ import {
     TableContainer, Table, TableHead,
     TableRow, TableBody, TableCell, makeStyles
   } from '@material-ui/core';
+  import Naira from 'react-naira';
   import Paper from '@material-ui/core/Paper';
+  import moment from 'moment'
   import {useHistory} from 'react-router-dom'
 import './index.scss'
+import TableButton from '../forms/TableButton';
 
 
 const Salary =()=> {
@@ -52,7 +55,7 @@ const Salary =()=> {
       });
 
       const stylesHead = {
-        fontSize: '20px',
+        fontSize: '17px',
         cursor: 'pointer',
         width: '10%',
         fontWeight: '500',
@@ -60,10 +63,11 @@ const Salary =()=> {
       };
 
       const stylesBody = {
-        fontSize: '17px',
+        fontSize: '15px',
         cursor: 'pointer',
         width: '10%',
-        fontWeight: '400'
+        fontWeight: '400',
+        padding: '2px 4px'
       };
 
     return (
@@ -90,16 +94,16 @@ const Salary =()=> {
                                 console.log(data)
                                 return (
                                     <TableRow key={i}>
-                                        <TableCell style={stylesHead}>{i + 1} </TableCell>
+                                        <TableCell style={stylesBody}>{i + 1} </TableCell>
                                         <TableCell style={stylesBody}>{data.staffid}</TableCell>
-                                        <TableCell style={stylesBody}>{data.date}</TableCell>
-                                        <TableCell style={stylesBody}>{data.gross}</TableCell>
-                                        <TableCell style={stylesBody}>{data.net}</TableCell>
-                                        <TableCell style={stylesBody}><Button onClick={()=>{
+                                        <TableCell style={stylesBody}>{moment(data.date).format("MM/YYYY")}</TableCell>
+                                        <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
+                                        <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
+                                        <TableCell style={stylesBody}><div  className="button"><TableButton onClick={()=>{
                                                 handleClick(data.salaryid)
                                 }}>
-                                Generate Payslip
-                                </Button></TableCell>
+                                Payslip
+                                </TableButton></div></TableCell>
                                     </TableRow>
                                 )
                             } )}

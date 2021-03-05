@@ -7,18 +7,17 @@ import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput';
 import FormSelect from '../forms/FormSelect'
 import { CountryDropdown } from 'react-country-region-selector';
-import NaijaStates from 'naija-state-local-government';
 import Button from '../forms/Button';
 import States from './states'
-//import naijaStateLocalGovernment from 'naija-state-local-government';
-import TextField from '@material-ui/core/TextField';
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import LocalizaitonProvider from '@material-ui/lab/LocalizationProvider';
-import DatePicker from '@material-ui/lab/DatePicker';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Avatar from 'react-avatar-edit';
 import axios from 'axios';
+import moment from 'moment'
 
 const EmployeeInfo =()=> {
     let [userdata,setUserdata] = useState({});
+    const [preview, setPreview] = useState(null);
     const [startDate, setStartDate] =  useState(new Date());
     const [country, setCountry] = useState([])
     const [hideModal, setHideModal] = useState(true);
@@ -34,6 +33,13 @@ const EmployeeInfo =()=> {
     const [birthday, setBirthday] = useState(new Date());
     const [address, setAddress] = useState('');
     const [gender, setGender] = useState('');
+
+    //avatar upload
+    const [file, setFile] = useState('');
+    const [avatar, setAvatar] = useState('Your File');
+    const [uploadedFile, setUploadedFile] = useState({});
+    const [message, setMessage] = useState('');
+    const [uploadPer, setUploadPer] = useState(0);
 
     const [passport, setPassport] = useState('');
     const [tel, setTel] = useState('')
@@ -72,10 +78,18 @@ const EmployeeInfo =()=> {
     const handleSubmit =(e)=> {
         e.preventDefault();
         reset()
+        hideModal(true);
     }
 
     const handleCountryChange = (country) => {
         setCountry(country)
+    }
+
+    const onBeforeFileLoad=(elem)=> {
+        if (elem.target.files[0].size > 2000000) {
+            alert("File is too big!");
+            elem.target.value = "";
+          }
     }
 
     useEffect(() => {
@@ -91,17 +105,41 @@ const EmployeeInfo =()=> {
         }
     },[]);
 
-    console.log(NaijaStates.all());
+    const onClose =()=> {
+        setPreview(null);
+    }
+
+    const SubmitButton =()=> {
+        if (userdata.staffid, userdata.surname, userdata.firstname, 
+            userdata.lastname, userdata.department, userdata.school, 
+            userdata.email,phone, address,gender,startDate,passport,
+            tel, marital , country, religion, bankName, accName, 
+            accNo, bvn, kinName, kinRela, kinPhone, contactName1, 
+            contactRela1, contactPhone1, contactName2, contactRela2,
+            contactPhone2
+            ) {
+                return <Button onClick={profileAPI} type="submit">
+                                Update
+                            </Button>
+            } else {
+                return <Button onClick={profileAPI} disabled type="submit">
+                                Update
+                            </Button>
+            }
+    }
+
+    const onCrop =(pv)=> {
+        setPreview(pv);
+    }
+
+    const onChange =(e)=> {
+        setFile(e.target.files[0]);
+        setAvatar(e.target.files[0].name.replace(/ /g, '-'));
+
+    }
+
 
     const reset =()=> {
-        setID('');
-        setSurname('');
-        setFirstName('');
-        setSurname('');
-        setLastName('');
-        setDepartment('');
-        setSchool('');
-        setEmail('');
         setPhone('');
         setAddress('');
         setGender('');
@@ -129,19 +167,19 @@ const EmployeeInfo =()=> {
 
     const profileAPI =()=> {
         axios.post("http://localhost:8000/profile", {
-            staffid: id,
-            surname: surName,
-            firstname: firstName,
-            lastname: lastName,
-            department: department,
-            school: school,
-            email: email,
+            staffid: userdata.staffid,
+            surname: userdata.surname,
+            firstname: userdata.firstname,
+            lastname: userdata.lastname,
+            department: userdata.department,
+            school: userdata.school,
+            email: userdata.email,
             phone: phone,
             birthday: birthday,
             address: address,
             gender: gender,
             dateofjoin: startDate,
-            identificationo: passport,
+            identificationno: passport,
             telephone: tel,
             stateoforigin: sot,
             nationality: country,
@@ -155,7 +193,7 @@ const EmployeeInfo =()=> {
             relationshipofkin: kinRela,
             phoneofkin: kinPhone,
             ecname: contactName1,
-            ecrelathionship: contactRela1,
+            ecrelationship: contactRela1,
             ecphone: contactPhone1,
             ecsname: contactName2,
             ecsrelationship: contactRela2,
@@ -177,39 +215,39 @@ const EmployeeInfo =()=> {
                         <form className={handleSubmit}>
                             <FormInput
                             name="id"
-                            value={userdata.usertype=='admin'?'Admin':userdata.staffid}
+                            value={userdata.staffid}
                             type="text"
                             />
                             <FormInput
                             name="surname"
-                            value={userdata.usertype=='admin'?'Admin':userdata.surname}
+                            value={userdata.surname}
                             type="text"
                             ref={input => surName = input}
                             />
                             <FormInput
                             name="firstname"
-                            value={userdata.usertype=='admin'?'Admin':userdata.firstname}
+                            value={userdata.firstname}
                             type="text"
                             ref={input => firstName = input}
                             />
                             <FormInput
                             name="lastname"
-                            value={userdata.usertype=='admin'?'Admin':userdata.lastname}
+                            value={userdata.lastname}
                             type="text"
                             />
                             <FormInput
                             name="department"
-                            value={userdata.usertype=='admin'?'Admin':userdata.department}
+                            value={userdata.department}
                             type="text"
                             />
                             <FormInput
                             name="school"
-                            value={userdata.usertype=='admin'?'Admin':userdata.school}
+                            value={userdata.school}
                             type="text"
                             />
                             <FormInput
                             name="email"
-                            value={userdata.usertype=='admin'?'Admin':userdata.email}
+                            value={userdata.email}
                             type="text"
                             />
                             <FormInput
@@ -220,26 +258,16 @@ const EmployeeInfo =()=> {
                             handleChange={e => setPhone(e.target.value)}
                             />
 
-                        <LocalizaitonProvider dateAdapter={AdapterDateFns}>
-                            <div style={{width: 300, padding: 20}}>
-                                <DatePicker
-                                views={['year', 'date']}
-                                label="Year and Month only"
-                                value={startDate}
-                                onChange={(date) => {
-                                    setStartDate(date);
-                                }}
-                                renderInput={(params) => (
-                                    <TextField
-                                    {...params}
-                                    margin="normal"
-                                    helperText={null}
-                                    variant="standard"
-                                    />
-                                )}
+                            <label>Birthday</label>
+                            <div className="date">
+                                <DatePicker 
+                                dateFormat="MMMM dd"
+                                monthsShown
+                                selected={birthday}
+                                onChange={date => setBirthday(date)}
                                 />
                             </div> 
-                            </LocalizaitonProvider>
+
                             <FormInput
                             name="address"
                             value={address}
@@ -341,23 +369,13 @@ const EmployeeInfo =()=> {
                             handleChange={e => setReligion(e.target.value)}
                             />
                             <label>Date of join</label>
-                            <div style={{width: 300}}>
-                                <DatePicker
-                                views={['year', 'month', 'date']}
-                                label="Year, month and date"
-                                minDate={new Date('1996-01-01')}
-                                value={birthday}
-                                onChange={(date) => {
-                                    setBirthday(date);
-                                }}
-                                renderInput={(params) => (
-                                    <TextField
-                                    {...params}
-                                    margin="normal"
-                                    helperText={null}
-                                    variant="standard"
-                                    />
-                                )}
+                            <div className="date">
+                                <DatePicker 
+                                dateFormat="MMMM yyyy"
+                                showMonthYearPicker
+                                selected={startDate}
+                                onChange={date => setStartDate(date)}
+                                dropdownMode= "scroll"
                                 />
                             </div>
 
@@ -472,9 +490,7 @@ const EmployeeInfo =()=> {
                                 />
                             </div>
 
-                            <Button onClick={profileAPI} type="submit">
-                                Update
-                            </Button>
+                            <SubmitButton />
                         </form>
                     </div>
                 </FormWrapper>
@@ -482,18 +498,32 @@ const EmployeeInfo =()=> {
             
             <h1>Employee Info</h1>
             <div className="user-info">
+                    <div>
+                        <Avatar
+                        width={150}
+                        height={150}
+                        label="Avatar Upload"
+                        labelStyle={{fontSize: '16px'}}
+                        onCrop={onCrop}
+                        onClose={onClose}
+                        onBeforeFileLoad={onBeforeFileLoad}
+                        
+                        src={null}
+                        />
+                        {preview && <img src={preview} alt="Preview" />}
+                    </div>
                 <div className="user-names">
                     <div className="fontAwesome">
                     <h2>Profile</h2>
                     <FontAwesomeIcon onClick={()=> toggleModal()} icon={faEdit} />
                     </div>
-                    <p>ID: <h3 style={{display: 'inline'}}>{userdata.usertype=='admin'?'Admin':userdata.staffid}</h3></p>
-                    <p>Surname: <h3 style={{display: 'inline'}}>{userdata.usertype=='admin'?'Admin':userdata.surname}</h3></p>
-                    <p>Firstname: <h3 style={{display: 'inline'}}>{userdata.usertype=='admin'?'Admin':userdata.firstname}</h3></p>
-                    <p>Lastname: <h3 style={{display: 'inline'}}>{userdata.usertype=='admin'?'Admin':userdata.lastname}</h3></p>
-                    <p>Department: <h3 style={{display: 'inline'}}>{userdata.usertype=='admin'?'Admin':userdata.department}</h3></p>
-                    <p>School: <h3 style={{display: 'inline'}}>{userdata.usertype=='admin'?'Admin':userdata.school}</h3></p>
-                    <p>Email: <h3 style={{display: 'inline', textTransform: 'lowercase'}}>{userdata.usertype=='admin'?'Admin':userdata.email}</h3></p>
+                    <p>ID: <h3 style={{display: 'inline'}}>{userdata.staffid}</h3></p>
+                    <p>Surname: <h3 style={{display: 'inline'}}>{userdata.surname}</h3></p>
+                    <p>Firstname: <h3 style={{display: 'inline'}}>{userdata.firstname}</h3></p>
+                    <p>Lastname: <h3 style={{display: 'inline'}}>{userdata.lastname}</h3></p>
+                    <p>Department: <h3 style={{display: 'inline'}}>{userdata.department}</h3></p>
+                    <p>School: <h3 style={{display: 'inline'}}>{userdata.school}</h3></p>
+                    <p>Email: <h3 style={{display: 'inline', textTransform: 'lowercase'}}>{userdata.email}</h3></p>
                 </div>
                 <div className="user-infos">
                     <p>Phone: <h3 style={{display: 'inline'}}></h3></p>
@@ -507,7 +537,7 @@ const EmployeeInfo =()=> {
                 <div className="personal-first">
                     <div className="fontAwesome">
                     <h2>Personal Informations</h2>
-                    <FontAwesomeIcon icon={faEdit} />
+                    {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
                     <p>Passport No: </p>
                     <p>Tel 2: </p>
@@ -519,7 +549,7 @@ const EmployeeInfo =()=> {
                 <div className="personal-second">
                     <div className="fontAwesome">
                     <h2>Emergency Contact</h2>
-                    <FontAwesomeIcon icon={faEdit} />
+                    {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
                     <label>Primary </label>
                     <p>Name </p>
@@ -535,7 +565,7 @@ const EmployeeInfo =()=> {
                 <div className="userBankfirst">
                     <div className="fontAwesome">
                     <h2>Bank Informations</h2>
-                    <FontAwesomeIcon icon={faEdit} />
+                    {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
                     <p>Bank Name </p>
                     <p>Account Name</p>
@@ -545,7 +575,7 @@ const EmployeeInfo =()=> {
                 <div className="userBankSecond">
                     <div className="fontAwesome">
                     <h2>Next Of Kin</h2>
-                    <FontAwesomeIcon icon={faEdit} />
+                    {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
                     <p>Name </p>
                     <p>Relationship</p>

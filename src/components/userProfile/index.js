@@ -29,7 +29,6 @@ const UserProfile =()=> {
        fetchEmployees() 
       },[]);
 
-
     const fetchEmployees = () => {
             console.log('Employees fetched')
     const headers = {
@@ -53,8 +52,8 @@ const UserProfile =()=> {
         event.preventDefault();
     }
 
-    const handleClick =()=> {
-        history.push('/userprofileedit')
+    const handleClick =(id)=> {
+        history.push('/userprofileedit/'+id)
     }
 
     const headline = {
@@ -164,17 +163,21 @@ const UserProfile =()=> {
                             <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
+                            <TableCell style={stylesHead}>Action </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {employees.map((data, i)=> (
                             <TableRow key={i}>
-                                <TableCell style={stylesBody}>{data.id}</TableCell>
+                                <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
+                                <TableCell style={stylesBody}><Button type="submit" onClick={()=> {
+                                    handleClick(data.id)
+                                }}> Edit</Button> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

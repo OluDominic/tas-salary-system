@@ -21,8 +21,6 @@ const SalaryInfo =()=> {
     const [netSalary, setNetSalary] = useState('');
     const [grossSalary, setGrossSalary] = useState('');
     const [selectedDate, handleDateChange] = useState(new Date());
-    const [fullname, setFullname] = useState([]);
-    const [siid, setSiid] = useState([salaryinfo.staffid])
 
     //addition
     const [leaveAllow, setLeaveAllow] = useState(0);

@@ -1,0 +1,24 @@
+.table-btn {
+    display: block;
+    width: 100px;
+    margin:  5px 5px;
+    padding: 4px 4px;
+    border: 1px solid rgb(11, 10, 68);
+    outline: none;
+    color: white;
+    background:  rgb(99, 134, 163);
+    font-size: 16px;
+    font-weight: 300px;
+    font-family: Source Serif Pro;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+
+    &:hover {
+        background: rgb(22, 2, 68);
+        color: white;
+        border: 1px solid white;
+    }
+}

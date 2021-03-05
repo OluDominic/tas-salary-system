@@ -1,17 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import {APPCONFIG} from './../../config/config'
+import axios from 'axios'
+import { useParams } from 'react-router-dom';
 import './index.scss'
 
 const UserProfileEdit =()=> {
+    
+    const [profile, setProfile] = useState([]);
+    const [profileId, setProfileId] = useState('');
+
+    let {staffid} = useParams()
+    useEffect(()=> {
+        fetchUser();
+    }, [])
+
+    const fetchUser = () => {
+        
+        // console.log(location);
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/profileinfo/${staffid}`, {
+            headers
+        }).then((data) => {
+           
+         setProfile(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
     return (
         <div className="user-edit">
             <h1>Profile Edit</h1>
             <div className="combined">
                 <div className="useredit-header">
-                    <h2>Olu Dom</h2>
-                    <p>Admin Department</p>
-                    <p>SS School</p>
-                    <h3>Software Development</h3>
+                    <h2>{profile.staffid}</h2>
+                    <p>{profile.department}</p>
+                    <p>{profile.school}</p>
                     <p>Date of Join : Jan, 2021</p>
                 </div>
                 <div className="useredit-info">

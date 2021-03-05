@@ -29,12 +29,14 @@ const Schools =()=> {
         axios.post("http://localhost:8000/school", {
             school: school
         })
+        window.location.replace('http://localhost:3000/schools')
     }
 
     const deleteSchool =(id)=> {
         axios.delete(`http://localhost:8000/deleteschool/${schoolId}`, {
            
-        })
+        });
+        window.location.replace('http://localhost:3000/schools')
         .then((response)=> {
             console.log(response)
         })
@@ -155,7 +157,7 @@ const Schools =()=> {
                         {
                         schools.map((data, i)=> (
                             <TableRow key={i}>
-                                <TableCell style={stylesBody}>{data.id}</TableCell>
+                                <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
                                 <TableCell style={stylesBody}><button onClick={()=>{togglePopup(data.id)}}><FontAwesomeIcon  icon={faTrashAlt}  /> </button> </TableCell>
                             </TableRow>

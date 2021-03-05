@@ -28,6 +28,7 @@ import {useState,useEffect} from 'react'
 import PayslipPage from './pages/PayslipPage';
 import ComplaintForm from './pages/ComplaintPage';
 import RecoveryPage from './pages/RecoveryPage';
+import UpdateEmployee from './pages/UpdateEmployeePage';
 //import './App.css';
 
 function App() {
@@ -122,6 +123,12 @@ function App() {
             </AdminLayout>
           )}
           />
+          <Route path="/update/:id" render={()=> (
+            <AdminLayout>
+              <UpdateEmployee />
+            </AdminLayout>
+          )}
+          />
           <Route path="/profile" render={()=> (
             <SsLay>
               <ProfilePage />
@@ -140,7 +147,7 @@ function App() {
             </SsLay>
           )}
           />
-          <Route path="/payslip" render={()=> (
+          <Route path="/payslip/:staffid" render={()=> (
             <SsLay>
               <PayslipPage />
             </SsLay>

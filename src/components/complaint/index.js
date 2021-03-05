@@ -8,7 +8,11 @@ const Complaint =()=> {
 
     const [usedata, setUsedata] = useState([]);
     const [message, setMessage] = useState('');
-    const [char, setChar] = useState(400)
+    const [char, setChar] = useState(300);
+    const [charsExceed, setCharsExceed] = useState(false);
+    const [postText, setPostText] = useState('');
+    const [maxLength, setMaxLength] = useState('');
+
 
     useEffect(()=> {
         let data = localStorage.getItem('userdata');
@@ -20,7 +24,15 @@ const Complaint =()=> {
             setUsedata(data)
         }
 
-    },[])
+    },[]);
+
+    const textInput =(event)=> {
+        const input = event.target.value;
+        setChar(input.length)
+        setCharsExceed(input.length > 300 ? true : false)
+        setMessage(input)
+        setMaxLength(char)
+    }
 
     const handleFormSubmit =(e)=> {
         e.preventDefault()
@@ -49,13 +61,14 @@ const Complaint =()=> {
                             autoFocus
                             value={message}
                             className="textarea"
-                            maxLength={200} 
+                            maxLength={300} 
                             placeholder="Enter Complaints Here"
                             rowSpan={10}
-                            onChange={e => setMessage(e.target.value)}
+                            onChange={textInput}
+                            style={{overflow: 'auto'}}
                             >
                             </textarea>
-                            <p>{char}/400</p>
+                            <text className="text">{char}/300</text>
                             <Button type="submit">
                                 Submit
                             </Button>

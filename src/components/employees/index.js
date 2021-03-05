@@ -8,12 +8,14 @@ import FormWrapper from '../forms/FormWrapper'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import  {APPCONFIG} from '../../config/config';
-import JwPagination from 'jw-react-pagination';
+//import JwPagination from 'jw-react-pagination';
 import {
     TableContainer, Table, TableHead,
     TableRow, TableBody, TableCell, makeStyles
   } from '@material-ui/core';
   import Paper from '@material-ui/core/Paper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-regular-svg-icons'
 
 const Employees =()=> {
 
@@ -34,6 +36,10 @@ const Employees =()=> {
     const handleSubmite =(event)=> {
         event.preventDefault();
         reset();
+    }
+
+    const handleClick =(id)=> {
+        history.push('/update/'+id)
     }
 
     const reset =()=> {
@@ -61,7 +67,7 @@ const Employees =()=> {
                 Authorization: `Bearer lll`,
                 "Access-Control-Allow-Origin":"*"
             }
-    console.log(page,'here')
+            console.log(page,'here')
             axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
                 headers
             }).then((data) => {
@@ -90,7 +96,9 @@ const Employees =()=> {
             password: password,
             school: school,
             department: department,
-        }).then((response) => {
+        })
+        window.location.replace('http://localhost:3000/employees')
+        .then((response) => {
             console.log(response)
         })
     }
@@ -132,7 +140,7 @@ const Employees =()=> {
       });
 
       const stylesHead = {
-        fontSize: '20px',
+        fontSize: '18px',
         cursor: 'pointer',
         width: '10%',
         fontWeight: '500',
@@ -140,7 +148,7 @@ const Employees =()=> {
       };
 
       const stylesBody = {
-        fontSize: '17px',
+        fontSize: '15px',
         cursor: 'pointer',
         width: '10%',
         fontWeight: '400'
@@ -224,19 +232,19 @@ const Employees =()=> {
                             name: "School"
                         },
                         {
-                            value: "SS",
+                            value: "Senior Secondary School",
                             name: "Senior Secondary School"
                         },
                         {
-                            value: "DS",
+                            value: "Day School",
                             name: "Day School"
                         }
                         , {
-                            value: "JS",
+                            value: "Junior Secondary School",
                             name: "Junior Secondary School"
                         }
                         , {
-                            value: "PS",
+                            value: "Primary School",
                             name: "Primary School"
                         }
                     ]}
@@ -250,25 +258,35 @@ const Employees =()=> {
                             name: "Department"
                         },
                         {
-                            value: "Executives",
-                            name: "Executives"
+                            value: "Management",
+                            name: "Management"
                         },
                          {
                             value: "Principal Officers",
                             name: "Principal Officers"
-                        }, 
+                        },
                         {
-                            value: "Teaching Staff",
-                            name: "Teachers"
+                           value: "HOD",
+                           name: "HOD"
+                       }
+                        , 
+                        {
+                            value: "Teaching",
+                            name: "Teaching"
                         },
                         {
                             value: "Admin",
                             name: "Admin"
                         },
                         {
+                           value: "Hostel",
+                           name: "Hostel"
+                       },
+                        {
                             value: "Drivers",
                             name: "Drivers"
-                        }, {
+                        }
+                        ,{
                             value: "Security",
                             name: "Security"
                         }
@@ -277,12 +295,12 @@ const Employees =()=> {
                             name: "Kitchen"
                         }, {
                             value: "Corper",
-                            name: "Corpers"
+                            name: "Corper"
                         },
-                        {
-                           value: "Utility",
-                           name: "Utility"
-                       }
+                       {
+                          value: "Utility",
+                          name: "Utility"
+                      }
                     ]}
                     handleChange={e => setDepartment(e.target.value)}
                 />
@@ -294,51 +312,13 @@ const Employees =()=> {
                 </FormWrapper>
             </Modal>
             </div>
-            {/*<Modal {...configModal}>
-                <div>
-                <FormInput 
-                type="text"
-                placeholder="Firstname"
-                name="firstName"
-                value={firstName}
-                handleChange={ e=> setFirstName(e.target.value)}
-                />
-                <FormInput 
-                type="text"
-                placeholder="Surname"
-                name="surname"
-                value={surName}
-                handleChange={ e=> setSurName(e.target.value)}
-                />
-                <FormInput 
-                type="text"
-                placeholder="id"
-                name="id"
-                value={setId}
-                handleChange={ e=> setId(e.target.value)}
-                />
-                <FormInput 
-                type="text"
-                placeholder="Department"
-                name="department"
-                value={department}
-                handleChange={ e=> setDepartment(e.target.value)}
-                />
-                <FormInput 
-                type="text"
-                placeholder="School"
-                name="school"
-                value={school}
-                handleChange={ e=> setSchool(e.target.value)}
-                />
-                </div>
-            </Modal>
-                */}
+            
             <div className="employeesTable">
             <TableContainer component={Paper}>
                 <Table className={useStyles.table}>
                     <TableHead>
                         <TableRow>
+                            <TableCell style={stylesHead}># </TableCell>
                             <TableCell style={stylesHead}>ID </TableCell>
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Firstname </TableCell>
@@ -353,14 +333,17 @@ const Employees =()=> {
                             console.log(data)
                             return (
                                 <TableRow key={i}>
+                                    <TableCell style={stylesBody}>{i + 1}</TableCell>
                                     <TableCell onClick={()=> history.push(`${APPCONFIG.appapi}/fetchemployees?id`)} style={stylesBody}>{data.staffid}</TableCell>
                                     <TableCell style={stylesBody}>{data.surname}</TableCell>
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                     <TableCell style={stylesBody}>{data.department}</TableCell>
                                     <TableCell style={stylesBody}>{data.school}</TableCell>
-                                    <TableCell style={stylesBody}><Button >
-                              Edit
-                            </Button></TableCell>
+                                    <TableCell style={stylesBody}><button onClick={()=> {
+                                        handleClick(data.id)
+                                    }}>
+                              <FontAwesomeIcon icon={faEdit} />
+                            </button></TableCell>
                                 </TableRow>
                             )
                         } )}

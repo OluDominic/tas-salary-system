@@ -12,7 +12,7 @@ import FormWrapper from '../forms/FormWrapper';
 import  {APPCONFIG} from '../../config/config';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faTrashAlt  } from '@fortawesome/free-solid-svg-icons';
 import Popup from './popup'
 
 const Department =()=> {
@@ -28,6 +28,7 @@ const Department =()=> {
         axios.post("http://localhost:8000/department", {
             department: department
         })
+        window.location.replace('http://localhost:3000/departments')
     }
 
     useEffect(()=> {
@@ -69,9 +70,10 @@ const Department =()=> {
         axios.delete(`http://localhost:8000/deletedepartment/${departmentId}`, {
            
         })
+        window.location.replace('http://localhost:3000/departments')
         .then((response)=> {
             console.log(response)
-        })
+        });
         setIsOpen(false)
     }
 
@@ -165,7 +167,7 @@ const Department =()=> {
                             <TableRow key={i}>
                                 <TableCell style={stylesBody}>{i+1}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
-                                <TableCell style={stylesBody}><Button onClick={()=>{togglePopup(data.id)}}>Delete</Button> </TableCell>
+                                <TableCell style={stylesBody}><button onClick={()=>{togglePopup(data.id)}}><FontAwesomeIcon  icon={faTrashAlt}  /> </button> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
