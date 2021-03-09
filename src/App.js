@@ -29,6 +29,7 @@ import PayslipPage from './pages/PayslipPage';
 import ComplaintForm from './pages/ComplaintPage';
 import RecoveryPage from './pages/RecoveryPage';
 import UpdateEmployee from './pages/UpdateEmployeePage';
+import AdminComplaintsPage from './pages/AdminComplaintsPage';
 //import './App.css';
 
 function App() {
@@ -126,6 +127,12 @@ function App() {
           <Route path="/update/:id" render={()=> (
             <AdminLayout>
               <UpdateEmployee />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/admincomplaints" render={()=> (
+            <AdminLayout>
+              <AdminComplaintsPage />
             </AdminLayout>
           )}
           />

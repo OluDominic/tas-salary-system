@@ -5,6 +5,38 @@
         background: whitesmoke;
     }
 
+    .reg-all {
+
+
+        .reg {
+            display: flex;
+            justify-content: flex-end;
+            width: 200px;
+
+            ul, li {
+
+                li {
+                    width: auto;
+        
+                    .butt {
+                    font-size: 20px;
+                    display: block;
+                    font-weight: 400;
+                    line-height: 1;
+                    border: none;
+                    cursor: pointer;
+                    padding: 8px 12px;
+                    margin: 0 auto 20px;
+                    text-transform: uppercase;
+                    color: white;
+                    background-color: rgb(84, 147, 177);;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif;
+                    }
+                }
+            }
+        }
+    }
+
     ul, li {
 
         li {

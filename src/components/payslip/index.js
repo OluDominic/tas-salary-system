@@ -6,10 +6,8 @@ import taclogo from './../../taclogo.jpg';
 import Naira from 'react-naira';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
-import {jsPDF} from 'jspdf';
-import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 import moment from 'moment'
+import { ToWords } from 'to-words';
 import converter from 'number-to-words'
 import {APPCONFIG} from './../../config/config'
 
@@ -21,19 +19,25 @@ const Payslip =()=> {
     let [userdata,setUserdata] = useState({});
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1)
+    const toWords = new ToWords({
+        localeCode: 'en-IN'
+    })
 
     const onDocumentLoadSuccess =({ numPages })=> {
         setNumPages(numPages);
     }
 
-    let {staffid} = useParams()
+    let {staffid} = useParams();
     useEffect(()=> {
         fetchUser()
     }, [])
 
     const convert =()=> {
-        converter.toWords(payslip.net)
+        converter.toWords(parseInt(payslip.net))
     }
+
+
+    let words = toWords.convert(39700)
     useEffect(() => {
         let data = localStorage.getItem('userdata')
 
@@ -45,22 +49,7 @@ const Payslip =()=> {
             console.log(data,'popop')
       setUserdata(data);
         }
-    },[]);
-
-    const onButtonClick = () => {
-        let domElement = document.getElementById('my-node');
-        htmlToImage.toPng(domElement)
-          .then(function (dataUrl) {
-            console.log(dataUrl);
-            const pdf = new jsPDF();
-            pdf.addImage(dataUrl, 'PNG', 10, 20, 380, 200);
-            pdf.save("download.pdf");
-          })
-          .catch(function (error) {
-            console.error('oops, something went wrong!', error);
-          });
-      };
-
+    },[])
     const fetchUser = () => {
 
         const headers = {
@@ -85,9 +74,9 @@ const Payslip =()=> {
                 <h1>Payslip</h1>
                 <div className="payslip-print">
                     <ul>
-                        <li>
+                        {/* <li>
                         <button onClick={onButtonClick}><FontAwesomeIcon icon={faFilePdf} /> PDF</button>
-                        </li>
+                        </li> */}
                         <li>
                             <button onClick={()=> window.print()}><FontAwesomeIcon icon={faPrint} /> Print</button>
                         </li>
@@ -136,7 +125,7 @@ const Payslip =()=> {
                                 <h3>Other Allowance <p><Naira>{payslip.otherallow}</Naira></p> </h3>
                             </div>
                             
-                        <div><h2>Net Salary:<Naira>{payslip.net}</Naira> {convert()} </h2></div>
+                        <div><h2>Net Salary:<Naira>{payslip.net}</Naira> {words} naira only </h2></div>
                         </div>
                         
                         <div className="deductions">

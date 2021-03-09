@@ -14,7 +14,7 @@ const Update =()=> {
     const [firstName, setFirstName] = useState("")
     const [surName, setSurName] = useState("")
     const [lastName, setLastName] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
     const [school, setSchool] = useState('')
     const [department, setDepartment] = useState('')
     const [updateid, setUpdateId] = useState('')
@@ -41,14 +41,26 @@ const Update =()=> {
             headers
         }).then((data) => {
            
-            setEmployee(data.data[0]);
+            setUpdate(data.data[0]);
         }).catch((error) => {
             console.log(error);
         })
     }
 
-    const updateUser =()=> {
-        
+
+    const updateEmployee =()=> {
+        axios.put(`http://localhost:8000/employee/${update.id}`, {
+            staffid: updateid,
+            surname: surName,    
+            firstname: firstName,
+            lastname: lastName,
+            email: email,
+            school: school,
+            department: department,
+        })
+        .then((response) => {
+            console.log(response)
+        })
     }
 
     
@@ -65,38 +77,54 @@ const Update =()=> {
                             type="text"
                             placeholder="id"
                             name="id"
-                            value={employee.staffid}
+                            value={updateid}
                             handleChange={ e=> setUpdateId(e.target.value)}
                             />
                             <FormInput 
                             type="text"
                             placeholder="Surname"
                             name="surname"
-                            value={employee.surname}
+                            value={surName}
                             handleChange={ e=> setSurName(e.target.value)}
                             />
                             <FormInput 
                             type="text"
                             placeholder="Firstname"
                             name="firstName"
-                            value={employee.firstname}
+                            value={firstName}
                             handleChange={ e=> setFirstName(e.target.value)}
+                            />
+                            <FormInput 
+                            type="text"
+                            placeholder="Lastname"
+                            name="lastName"
+                            value={lastName}
+                            handleChange={ e=> setLastName(e.target.value)}
+                            />
+                            <FormInput 
+                            type="text"
+                            placeholder="Email"
+                            name="email"
+                            value={email}
+                            handleChange={ e=> setEmail(e.target.value)}
                             />
                             <FormInput 
                             type="text"
                             placeholder="Department"
                             name="department"
-                            value={employee.department}
+                            value={department}
                             handleChange={ e=> setDepartment(e.target.value)}
                             />
                             <FormInput 
                             type="text"
                             placeholder="School"
                             name="school"
-                            value={employee.school}
+                            value={school}
                             handleChange={ e=> setSchool(e.target.value)}
                             />
-                            <Button type="submit">
+                            <Button type="submit" onSubmit={()=> {
+                                updateEmployee(update.id)
+                            }}>
                                 Update
                             </Button>
                         </div>

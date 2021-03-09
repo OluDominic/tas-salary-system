@@ -8,6 +8,7 @@ import FormWrapper from '../forms/FormWrapper'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import  {APPCONFIG} from '../../config/config';
+import Popup from './../department/popup'
 //import JwPagination from 'jw-react-pagination';
 import {
     TableContainer, Table, TableHead,
@@ -15,11 +16,12 @@ import {
   } from '@material-ui/core';
   import Paper from '@material-ui/core/Paper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-regular-svg-icons'
+import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 
 const Employees =()=> {
 
     const [hideModal, setHideModal] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
     const [employees, setEmployees] = useState([]);
     const [page, setPage] = useState(1);
     const [firstName, setFirstName] = useState("")
@@ -29,7 +31,9 @@ const Employees =()=> {
     const [password, setPassword] = useState("")
     const [school, setSchool] = useState([])
     const [department, setDepartment] = useState([])
-    const [id, setId] = useState('')
+    const [id, setId] = useState('');
+    const [search, setSearch] = React.useState("");
+    const [employeeId, setEmployeeId] = useState('')
 
     const history = useHistory()
 
@@ -52,6 +56,11 @@ const Employees =()=> {
         setPassword('');
         setDepartment('');
         setSchool('');
+    }
+
+    const togglePopup =(id)=> {
+        setEmployeeId(id)
+        setIsOpen(!isOpen);
     }
 
     useEffect(() => {
@@ -78,6 +87,11 @@ const Employees =()=> {
             })
         }
 
+        let oldlist = employees.map(employees => {
+            return {surname: employees.surname, school: employees.school, 
+                department: employees.department, staffid: employees.staffid, firstname: employees.firstname};
+        });
+
 
     const toggleModal =()=> setHideModal(!hideModal);
 
@@ -103,6 +117,17 @@ const Employees =()=> {
         })
     }
 
+    const deleteEmployee =()=> {
+        axios.delete(`http://localhost:8000/deleteemployees/${employeeId}`, {
+           
+        })
+        window.location.replace('http://localhost:3000/employees')
+        .then((response)=> {
+            console.log(response)
+        });
+        setIsOpen(false)
+    }
+
     const headline = {
         headline : "Register Employee"
     }
@@ -118,22 +143,6 @@ const Employees =()=> {
         }
     }
 
-    const rows = [
-        createdData('Olu', 'Dom', 1, 'Admin','SS',
-        
-            <Button>
-                Edit
-            </Button>),
-        createdData('Admin', 'Admin', 2, 'Admin','SS',<Button>
-            edit
-        </Button>),
-        createdData('NoAdmin', 'NoAdmin', 3, 'Principal officers','DS',<Button>
-            edit
-        </Button>)
-    ]
-
-    
-
     const useStyles = makeStyles({
         table: {
         },
@@ -144,14 +153,16 @@ const Employees =()=> {
         cursor: 'pointer',
         width: '10%',
         fontWeight: '500',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        padding: '4px 4px'
       };
 
       const stylesBody = {
         fontSize: '15px',
         cursor: 'pointer',
-        width: '10%',
-        fontWeight: '400'
+        width: '15%',
+        fontWeight: '400',
+        padding: '4px 4px'
       };
 
     return (
@@ -162,13 +173,18 @@ const Employees =()=> {
                 <div className="department">departments</div>
                 <div className="schools">schools</div>
             </div>
-            <ul>
-                <li>
-                    <Button onClick={()=> toggleModal()}>
-                        Register employee
-                    </Button>
-                </li>
-            </ul>
+
+            <div className="reg-all">
+                <span className="reg">
+                    <ul>
+                        <li>
+                            <Button onClick={()=> toggleModal()}>
+                                Add New employee
+                            </Button>
+                        </li>
+                    </ul>
+                </span>
+            </div>
 
             <div className="modal-register">
 
@@ -314,6 +330,24 @@ const Employees =()=> {
             </div>
             
             <div className="employeesTable">
+            <div className="search-input">
+                            <FormInput 
+                            name="employee"
+                            value={search}
+                            placeholder="Search Bar"
+                            handleChange={e => {
+                                if (e.target.value) {
+                                    const filteredTeams = employees.filter(employees => {
+                                      return employees.surname.toLowerCase().includes(e.target.value.toLowerCase());
+                                    });
+                                    setEmployees(filteredTeams);
+                                  } else {
+                                    setEmployees(oldlist);
+                                  }
+                                  setSearch(e.target.value);
+                              }}
+                            />
+                </div>
             <TableContainer component={Paper}>
                 <Table className={useStyles.table}>
                     <TableHead>
@@ -339,18 +373,31 @@ const Employees =()=> {
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                     <TableCell style={stylesBody}>{data.department}</TableCell>
                                     <TableCell style={stylesBody}>{data.school}</TableCell>
-                                    <TableCell style={stylesBody}><button onClick={()=> {
+                                    <TableCell style={stylesBody}><span>
+                                    <button onClick={()=> {
                                         handleClick(data.id)
                                     }}>
                               <FontAwesomeIcon icon={faEdit} />
-                            </button></TableCell>
+                            </button>
+                            <button onClick={()=>{togglePopup(data.id)}}>
+                              <FontAwesomeIcon icon={faTrashAlt} />
+                            </button>
+                                        </span> </TableCell>
                                 </TableRow>
                             )
                         } )}
                     </TableBody>
                 </Table>
             </TableContainer>  
-
+            {isOpen && <Popup 
+                content={
+                    <>
+                        <h3>Are you sure?</h3>
+                        <Button onClick={deleteEmployee}>Confirm Delete</Button>
+                    </>
+                         }
+                handleClose={togglePopup}
+            />}
             </div>
         </div>
     );

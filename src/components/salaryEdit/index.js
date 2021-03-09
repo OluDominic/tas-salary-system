@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../forms/Button'
+import TableButton from '../forms/TableButton'
 import FormInput from '../forms/FormInput'
-import FormWrapper from '../forms/FormWrapper'
 import {
   TableContainer, Table, TableHead,
   TableRow, TableBody, TableCell, makeStyles
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import SearchBar from "material-ui-search-bar"
 import { APPCONFIG } from '../../config/config';
 import axios from 'axios';
 
@@ -19,22 +19,35 @@ const SalaryEdit =()=> {
     const [employee, setEmployee] = useState("")
     const [search, setSearch] = useState("")
     const history = useHistory();
-    const [employees, setEmployees] = useState([])
+    const [employees, setEmployees] = useState([]);
+  const [searched, setSearched] = useState("");
 
-    const handleSubmit =(event)=> {
-        event.preventDefault();
-    }
+  const [searchTerm, setSearchTerm] = React.useState("");
+ const handleChange = event => {
+    setSearchTerm(event.target.value);
+  };
+  useEffect(() => {
+    getCharacter()
+    if (searchTerm && searchTerm.length > 1) {
+        if (searchTerm.length % 2 === 0) {
+            getCharacter();
+        } 
+    } 
+  }, [searchTerm]);
 
-    const handleSubmitSelect =(event)=> {
-        event.preventDefault();
-    }
+  const getCharacter =()=> {
+    const results = employees.filter( employees =>
+        employees.surname.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        employees.staffid.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employees.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        employees.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employees.school.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setEmployees(results);
+  }
 
     const handleClick =(id)=> {
         history.push('/salaryinfo/'+id)
-    }
-
-    const headline = {
-        headline : "Employee search"
     }
 
     useEffect(()=> {
@@ -70,16 +83,6 @@ const SalaryEdit =()=> {
         })
     }
 
-    const rows = [
-        createdData('Olu', 'Dom', 1, 'Admin','SS', <Button onClick={handleClick}>
-            edit
-        </Button>),
-        createdData('Admin', 'Admin', 2, 'Admin','SS',<Button>
-            edit
-        </Button>),
-        createdData('NoAdmin', 'NoAdmin', 3, 'Principal officers','DS',<Button>edit</Button>)
-    ]
-
     
 
     const useStyles = makeStyles({
@@ -90,16 +93,18 @@ const SalaryEdit =()=> {
       const stylesHead = {
         fontSize: '20px',
         cursor: 'pointer',
-        width: '10%',
+        width: '15%',
         fontWeight: '500',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        padding: '4px 4px'
       };
 
       const stylesBody = {
-        fontSize: '17px',
+        fontSize: '15px',
         cursor: 'pointer',
-        width: '10%',
-        fontWeight: '400'
+        width: '15%',
+        fontWeight: '400',
+        padding: '4px 4px'
       };
 
 
@@ -108,21 +113,14 @@ const SalaryEdit =()=> {
             <h1>Salary Edit Page</h1>
             <div className="search">
                 <div className="search-input">
-                    <FormWrapper>
-                        <form onSubmit={handleSubmit}>
                             <FormInput 
                             name="employee"
-                            value={employee}
-                            placeholder="Enter Employee Surname"
-                            handleChange={e=> setEmployee(e.target.value)}
+                            value={searchTerm || ""}
+                            placeholder="Seacrh Bar"
+                            handleChange={handleChange}
                             />
-                            <Button type="submit">
-                                Search
-                            </Button>
-                        </form>
-                    </FormWrapper>
                 </div>
-                <div className="search-select">
+                {/* <div className="search-select">
                             <FormSelect
                             options={[
                                 {
@@ -148,8 +146,14 @@ const SalaryEdit =()=> {
                             ]}
                                 handleChange={e => setSearch(e.target.value)}
                             />
-                </div>
+                </div> */}
             </div>
+            {/* <SearchBar
+            style={classes}
+                value={searched}
+                onChange={(searchVal) => requestSearch(searchVal)}
+                onCancelSearch={() => cancelSearch()}
+            /> */}
             <TableContainer component={Paper}>
                 <Table className={useStyles.table}>
                     <TableHead>
@@ -170,9 +174,9 @@ const SalaryEdit =()=> {
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
-                                <TableCell style={stylesBody}><Button onClick={()=>{
+                                <TableCell style={stylesBody}><TableButton onClick={()=>{
                                                 handleClick(data.id)
-                                }}> Edit</Button> </TableCell>
+                                }}> Edit</TableButton> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

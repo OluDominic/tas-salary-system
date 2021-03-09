@@ -2,12 +2,56 @@ import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './index.scss'
-import { faIcons, faTachometerAlt, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faIcons, faTachometerAlt, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 import Dropdown from './dropdown.js'
+import { faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons'
+
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import NavigationIcon from '@material-ui/icons/Navigation';
+import SettingsIcon from '@material-ui/icons/Settings';
+
+const StyledMenu = withStyles({
+    paper: {
+      border: '1px solid #d3d4d5',
+    },
+  })((props) => (
+    <Menu
+      elevation={0}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      {...props}
+    />
+  ));
+  
+  const StyledMenuItem = withStyles((theme) => ({
+    root: {
+      '&:focus': {
+        backgroundColor: theme.palette.primary.main,
+        '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+          color: theme.palette.common.grey,
+        },
+      },
+    },
+  }))(MenuItem);
+
+
 const Admin =()=> {
 
-    const [openMenu, setOpenMenu] = useState(false);
+    const [openMenu, setOpenMenu] = useState(null);
     const history = useHistory();
     const [useData, setuseData] = useState({});
     
@@ -15,6 +59,14 @@ const Admin =()=> {
         let userdata = localStorage.getItem('userdata');
         setuseData(JSON.parse(userdata))
     },[]);
+
+    const handleClick = (event) => {
+        setOpenMenu(event.currentTarget);
+      };
+
+    const handleClose = () => {
+        setOpenMenu(null);
+      };
 
     const logout=()=> {
         localStorage.clear();
@@ -27,19 +79,39 @@ const Admin =()=> {
             <div className="admin-drop">
             {/*<Dropdown title="Select movie" items={items} />*/}
                 <ul>
-                    <li>
+                    {/* <li>
                         <Link><FontAwesomeIcon icon={faUser} /> <span style={{marginLeft:"4px"}}> Users</span></Link>
-                    </li>
-                    <li style={{cursor: "pointer"}} onClick={logout}>
-                        LogOut
-                    </li>
-                    <li>
+                    </li> */}
+                    {/* <li>
                         <Link> <FontAwesomeIcon icon={faTachometerAlt} /> </Link>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
             <span></span>
-            <h2>{useData.adminid} , Admin <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faUser} /></span>  </h2>
+            <h2 onClick={handleClick} >Welcome, {useData.adminid} <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faArrowDown} /></span>  </h2> 
+            <StyledMenu
+        id="customized-menu"
+        anchorEl={openMenu}
+        keepMounted
+        open={Boolean(openMenu)}
+        onClose={handleClose}
+      >
+          <StyledMenuItem>
+          <ListItemIcon>
+            <SettingsIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Settings" />
+        </StyledMenuItem>
+        <StyledMenuItem onClick={logout}>
+          <ListItemIcon>
+            <NavigationIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </StyledMenuItem>
+          {/* <li style={{cursor: "pointer"}} onClick={logout}>
+                        LogOut
+                    </li> */}
+      </StyledMenu>
            
         </div>
     );

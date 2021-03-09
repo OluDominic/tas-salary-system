@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Button from '../forms/Button'
+import TableButton from '../forms/TableButton'
 import FormInput from '../forms/FormInput'
 import FormWrapper from '../forms/FormWrapper'
 import {
@@ -10,18 +10,30 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import './index.scss'
-import FormSelect from '../forms/FormSelect';
 import { useHistory } from 'react-router-dom';
 
 const UserProfile =()=> {
 
     const [employees, setEmployees] = useState([])
-    const [employee, setEmployee] = useState('')
     const [search, setSearch] = useState("")
     const history = useHistory();
 
-    const handleSubmit =(event)=> {
-        event.preventDefault();
+    const handleChange=(e)=> {
+        setSearch(e);
+        let oldlist = employees.map(employees => {
+            return {surname: employees.surname.toLowerCase(), school: employees.school, 
+                department: employees.department, staffid: employees.staffid, firstname: employees.firstname};
+        });
+
+        if(search !== "") {
+            let newlist = [];
+
+            newlist = oldlist.filter(employees => 
+                employees.surname.includes(search.toLowerCase()));
+                setEmployees(newlist)
+        } else {
+            setEmployees(employees)
+        }
     }
 
     useEffect(() => {
@@ -47,11 +59,6 @@ const UserProfile =()=> {
             })
         }
 
-
-    const handleSubmitSelect =(event)=> {
-        event.preventDefault();
-    }
-
     const handleClick =(id)=> {
         history.push('/userprofileedit/'+id)
     }
@@ -73,18 +80,6 @@ const UserProfile =()=> {
         }
     }
 
-    const rows = [
-        createdData('Olu', 'Dom', 1, 'Admin','SS', <Button onClick={handleClick}>
-            edit
-        </Button>),
-        createdData('Admin', 'Admin', 2, 'Admin','SS',<Button>
-            edit
-        </Button>),
-        createdData('NoAdmin', 'NoAdmin', 3, 'Principal officers','DS',<Button>edit</Button>)
-    ]
-
-    
-
     const useStyles = makeStyles({
         table: {
         },
@@ -95,14 +90,16 @@ const UserProfile =()=> {
         cursor: 'pointer',
         width: '10%',
         fontWeight: '500',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        padding: '6px 6px'
       };
 
       const stylesBody = {
-        fontSize: '17px',
+        fontSize: '15px',
         cursor: 'pointer',
-        width: '10%',
-        fontWeight: '400'
+        width: '15%',
+        fontWeight: '400',
+        padding: '6px 6px'
       };
 
 
@@ -111,21 +108,14 @@ const UserProfile =()=> {
             <h1>Employee Profile</h1>
             <div className="search">
                 <div className="search-input">
-                    <FormWrapper>
-                        <form onSubmit={handleSubmit}>
                             <FormInput 
                             name="employee"
-                            value={employee}
-                            placeholder="Enter Employee Surname"
-                            handleChange={e=> setEmployee(e.target.value)}
+                            value={search}
+                            placeholder="Search Bar"
+                            handleChange={e=> handleChange(e.target.value)}
                             />
-                            <Button type="submit">
-                                Search
-                            </Button>
-                        </form>
-                    </FormWrapper>
                 </div>
-                <div className="search-select">
+                {/* <div className="search-select">
                             <FormSelect
                             options={[
                                 {
@@ -151,7 +141,7 @@ const UserProfile =()=> {
                             ]}
                                 handleChange={e => setSearch(e.target.value)}
                             />
-                </div>
+                </div> */}
             </div>
             <TableContainer component={Paper}>
                 <Table className={useStyles.table}>
@@ -175,9 +165,9 @@ const UserProfile =()=> {
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
-                                <TableCell style={stylesBody}><Button type="submit" onClick={()=> {
+                                <TableCell style={stylesBody}><TableButton type="submit" onClick={()=> {
                                     handleClick(data.id)
-                                }}> Edit</Button> </TableCell>
+                                }}> Edit</TableButton> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
