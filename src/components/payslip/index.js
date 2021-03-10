@@ -36,7 +36,6 @@ const Payslip =()=> {
         converter.toWords(parseInt(payslip.net))
     }
 
-
     let words = toWords.convert(39700)
     useEffect(() => {
         let data = localStorage.getItem('userdata')
@@ -49,7 +48,8 @@ const Payslip =()=> {
             console.log(data,'popop')
       setUserdata(data);
         }
-    },[])
+    },[]);
+    
     const fetchUser = () => {
 
         const headers = {
@@ -66,7 +66,7 @@ const Payslip =()=> {
         }).catch((error) => {
             console.log(error);
         })
-    }
+    };
 
     return (
         <div id="my-node"  className="payslip">

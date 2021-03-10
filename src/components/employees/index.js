@@ -20,7 +20,7 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 
 const Employees =()=> {
 
-    const [hideModal, setHideModal] = useState(true)
+    const [hideModal, setHideModal] = useState(true);
     const [isOpen, setIsOpen] = useState(false)
     const [employees, setEmployees] = useState([]);
     const [page, setPage] = useState(1);
@@ -29,7 +29,7 @@ const Employees =()=> {
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [school, setSchool] = useState([])
+    const [school, setSchool] = useState([]);
     const [department, setDepartment] = useState([])
     const [id, setId] = useState('');
     const [search, setSearch] = React.useState("");
@@ -87,10 +87,10 @@ const Employees =()=> {
             })
         }
 
-        let oldlist = employees.map(employees => {
-            return {surname: employees.surname, school: employees.school, 
-                department: employees.department, staffid: employees.staffid, firstname: employees.firstname};
-        });
+        // let oldlist = employees.map(employees => {
+        //     return {surname: employees.surname, school: employees.school, 
+        //         department: employees.department, staffid: employees.staffid, firstname: employees.firstname};
+        // });
 
 
     const toggleModal =()=> setHideModal(!hideModal);
