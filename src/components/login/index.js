@@ -79,11 +79,11 @@ const Login =()=> {
                         Sign In
                     </Button>
 
-                    <div className="recovery">
+                    {/* <div className="recovery">
                         <Link to="/recovery">
                             Reset Password
                         </Link>
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </FormWrapper>

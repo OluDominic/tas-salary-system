@@ -1,9 +1,8 @@
 import React, {useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './index.scss'
 import { faIcons, faTachometerAlt, faUser } from '@fortawesome/free-solid-svg-icons'
-
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -50,6 +49,7 @@ const Employee =()=> {
 
     const [useData, setuseData] = useState({});
     const [openMenu, setOpenMenu] = useState(null);
+    const history = useHistory();
 
     const handleClick = (event) => {
         setOpenMenu(event.currentTarget);
@@ -69,6 +69,10 @@ const Employee =()=> {
         setuseData({});
         window.location.replace('http://localhost:3000/')
     }
+
+    const recovery=(id)=> {
+      history.push('/recovery/'+id)
+  }
 
     
     return (
@@ -94,11 +98,13 @@ const Employee =()=> {
                 open={Boolean(openMenu)}
                 onClose={handleClose}
             >
-          <StyledMenuItem>
+          <StyledMenuItem onClick={()=> {
+            recovery(useData.id)
+          }}>
             <ListItemIcon>
                 <SettingsIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Settings" />
+            <ListItemText primary="Reset Password" />
             </StyledMenuItem>
             <StyledMenuItem onClick={logout}>
             <ListItemIcon>

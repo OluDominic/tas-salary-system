@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import Button from '../forms/Button'
 import FormWrapper from '../forms/FormWrapper';
-import FormInput from '../forms/FormInput'
+import FormInput from '../forms/FormInput';
+import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import './index.scss'
 
 const Recovery =()=> {
 
     const [password, setPassword] = useState("")
-    const [token, setToken] = useState("")
+    //const [token, setToken] = useState("")
     const [confirm, setConfirm] = useState("")
-    const [userData, setUserdata] = useState([])
+    const [userData, setUserdata] = useState([]);
+    const [msg, setMsg] = useState('')
 
     const handleSubmit=(e)=> {
         e.preventDefault()
@@ -19,6 +21,8 @@ const Recovery =()=> {
     const head = {
         headline: 'reset password'
     }
+
+    let {id} = useParams();
 
     useEffect(() => {
         let data = localStorage.getItem('userdata')
@@ -34,25 +38,24 @@ const Recovery =()=> {
     },[])
 
     const resetPassword =()=> {
-        axios.post("http://localhost:8000/setpassword", {
-            email: userData.email,
-            resettokken: token,
-            password: password
+        axios.put(`http://localhost:8000/setpassword/${id}`, {
+            password: password,
+            confirm: confirm,
         })
-        window.location.replace('http://localhost:3000/login')
-        .then((response) => {
-            console.log(response)
-        })
+        setPassword('');
+        setConfirm('');
+        setMsg('Password Updated')
     }
 
     return (
         <div>
             <h1>Recover Password</h1>
+            <div><p style={{color: 'green'}}>{msg} </p></div>
             <div>
                 <FormWrapper {...head}>
                     <form onSubmit={handleSubmit}>
                         <div>
-                        <FormInput 
+                        {/* <FormInput 
                             type="text"
                             placeholder="Surname"
                             name="surname"
@@ -64,23 +67,25 @@ const Recovery =()=> {
                             name="surname"
                             value={token}
                             handleChange={ e=> setToken(e.target.value)}
-                            />
+                            /> */}
                             <FormInput 
-                            type="text"
+                            type="password"
                             placeholder="New Password"
                             name="id"
                             value={password}
                             handleChange={ e=> setPassword(e.target.value)}
                             />
                             <FormInput 
-                            type="text"
-                            placeholder="Firstname"
+                            type="password"
+                            placeholder="Confirm Password"
                             name="firstName"
                             value={confirm}
                             handleChange={ e=> setConfirm(e.target.value)}
                             />
-                            <Button onClick={resetPassword} type="submit">
-                                Update
+                            <Button onClick={()=> {
+                                resetPassword(userData.id)
+                            }} type="submit">
+                                Reset
                             </Button>
                         </div>
                     </form>

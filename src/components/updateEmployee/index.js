@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput'
+import FormSelect from '../forms/FormSelect'
 import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import { useParams } from 'react-router-dom';
@@ -9,7 +10,7 @@ import Button from '../forms/Button';
 
 const Update =()=> {
     const [update, setUpdate] = useState([])
-    const [employee, setEmployee] = useState([])
+    const [newUpdate, setNewUpdate] = useState()
 
     const [firstName, setFirstName] = useState("")
     const [surName, setSurName] = useState("")
@@ -18,6 +19,7 @@ const Update =()=> {
     const [school, setSchool] = useState('')
     const [department, setDepartment] = useState('')
     const [updateid, setUpdateId] = useState('')
+    const [msg, setMsg] = useState('')
 
     const head = {
         headline: 'Update Employee Details'
@@ -47,20 +49,28 @@ const Update =()=> {
         })
     }
 
+    const handleSubmit =(e)=> {
+        e.preventDefault()
+    }
 
     const updateEmployee =()=> {
-        axios.put(`http://localhost:8000/employee/${update.id}`, {
+
+        axios.put(`http://localhost:8000/employee/${id}`, {
             staffid: updateid,
             surname: surName,    
             firstname: firstName,
             lastname: lastName,
             email: email,
             school: school,
-            department: department,
-        })
-        .then((response) => {
-            console.log(response)
-        })
+            department: department
+        });
+        setUpdateId('');
+        setSurName('');
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setSchool('');
+        setDepartment('');
     }
 
     
@@ -71,11 +81,11 @@ const Update =()=> {
             <h1>Update Employee Details</h1>
             <div>
                 <FormWrapper {...head}>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div>
                             <FormInput 
                             type="text"
-                            placeholder="id"
+                            placeholder="ID"
                             name="id"
                             value={updateid}
                             handleChange={ e=> setUpdateId(e.target.value)}
@@ -108,21 +118,87 @@ const Update =()=> {
                             value={email}
                             handleChange={ e=> setEmail(e.target.value)}
                             />
-                            <FormInput 
-                            type="text"
-                            placeholder="Department"
-                            name="department"
-                            value={department}
-                            handleChange={ e=> setDepartment(e.target.value)}
-                            />
-                            <FormInput 
-                            type="text"
-                            placeholder="School"
-                            name="school"
-                            value={school}
-                            handleChange={ e=> setSchool(e.target.value)}
-                            />
-                            <Button type="submit" onSubmit={()=> {
+                            <FormSelect
+                
+                options={[
+                {
+                    value: "School",
+                    name: "School"
+                },
+                {
+                    value: "Senior Secondary School",
+                    name: "Senior Secondary School"
+                },
+                {
+                    value: "Day School",
+                    name: "Day School"
+                }
+                , {
+                    value: "Junior Secondary School",
+                    name: "Junior Secondary School"
+                }
+                , {
+                    value: "Primary School",
+                    name: "Primary School"
+                }
+            ]}
+            handleChange={e => setSchool(e.target.value)}
+        />
+
+        <FormSelect
+            options={[
+                 {
+                    value: "Department",
+                    name: "Department"
+                },
+                {
+                    value: "Management",
+                    name: "Management"
+                },
+                 {
+                    value: "Principal Officers",
+                    name: "Principal Officers"
+                },
+                {
+                   value: "HOD",
+                   name: "HOD"
+               }
+                , 
+                {
+                    value: "Teaching",
+                    name: "Teaching"
+                },
+                {
+                    value: "Admin",
+                    name: "Admin"
+                },
+                {
+                   value: "Hostel",
+                   name: "Hostel"
+               },
+                {
+                    value: "Drivers",
+                    name: "Drivers"
+                }
+                ,{
+                    value: "Security",
+                    name: "Security"
+                }
+                , {
+                    value: "Kitchen",
+                    name: "Kitchen"
+                }, {
+                    value: "Corper",
+                    name: "Corper"
+                },
+               {
+                  value: "Utility",
+                  name: "Utility"
+              }
+            ]}
+            handleChange={e => setDepartment(e.target.value)}
+        />
+                            <Button type="submit" onClick={()=> {
                                 updateEmployee(update.id)
                             }}>
                                 Update

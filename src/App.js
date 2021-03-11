@@ -166,10 +166,10 @@ function App() {
             </SsLay>
           )}
           />
-          <Route path="/recovery" render={()=> (
-            <MainLayout>
+          <Route path="/recovery/:id" render={()=> (
+            <SsLay>
               <RecoveryPage />
-            </MainLayout>
+            </SsLay>
           )}
           />
       </Switch>
