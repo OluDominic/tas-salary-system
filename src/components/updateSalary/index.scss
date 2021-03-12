@@ -1,0 +1,46 @@
+.wrap {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    .net {
+        margin-top: 20px;
+        margin-bottom: 0;
+        width: 45%;
+        margin-left: 10px;
+
+        label {
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        .date {
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+    }
+    
+.info-header {
+    background: rgb(246, 249, 250);
+    box-shadow: rgba(80, 79, 79, 0.24) 0px 3px 8px;
+    width: 50%;
+    height: 100%;
+    float: left;
+    padding: 14px 20px;
+    margin: 5px 10px;
+
+    h2 {
+        text-transform: uppercase;
+    }
+}
+
+.info-fill {
+    background: rgb(250, 246, 249);
+    box-shadow: rgba(124, 117, 117, 0.24) 0px 3px 8px;
+    margin: 20px auto 10px;
+    padding: 10px 10px;
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+}

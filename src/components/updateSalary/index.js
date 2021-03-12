@@ -1,27 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import Button from '../forms/Button'
 import FormInput from '../forms/FormInput'
-import axios from 'axios'
+import { useParams } from 'react-router-dom'
 import {APPCONFIG} from './../../config/config'
-import moment from 'moment'
-import './index.scss'
-import { useParams, useHistory } from 'react-router-dom';
 import DatePicker from "react-datepicker";
-import Naira from 'react-naira'
-import {
-    TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
-  } from '@material-ui/core';
-  import Paper from '@material-ui/core/Paper';
-
 import "react-datepicker/dist/react-datepicker.css";
+import axios from 'axios'
 
-const SalaryInfo =()=> {
+import './index.scss';
+
+const UpdateSalary =()=> {
+
     const [salaryinfo, setSalaryinfo] = useState([]);
     const [date, setDate] = useState(new Date());
     const [hideModal, setHideModal] = useState(true);
     const [info, setInfo] = useState([]);
-    const history = useHistory();
+    const [msg, setMsg] = useState('')
 
     const [netSalary, setNetSalary] = useState('');
     const [grossSalary, setGrossSalary] = useState('');
@@ -48,12 +42,48 @@ const SalaryInfo =()=> {
 
     const handleSubmit =(event)=> {
         event.preventDefault();
-        reset();
     }
-    
-    
 
-    const reset =()=> {
+
+    let {salaryid} = useParams()
+    useEffect(()=> {
+        fetchUser()
+    }, [])
+
+    const fetchUser = () => {
+   
+        // console.log(location)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/payslipedit/${salaryid}`, {
+            headers
+        }).then((data) => {
+           
+            setInfo(data.data);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    const SalaryTotal =()=> {
+        let setNetSalary0 = parseInt(grossSalary)
+         + parseInt(leaveAllow) + 
+         parseInt(monthlyAllow) + parseInt(transportAllowance) + 
+         parseInt(hodAllowance) + parseInt(classTeacherAllow) + 
+         parseInt(arrears) + parseInt(compensation) + parseInt(otherAllowance) - 
+         parseInt(social) - parseInt(lateness) - parseInt(cooperative) - 
+         parseInt(childFees) - parseInt(absentism) - parseInt(health) - 
+         parseInt(otherDec)
+     setNetSalary(setNetSalary0)
+     }
+ 
+     const reset =()=> {
+        setGrossSalary('');
+        setNetSalary('');
         setHodAllowance(0);
         setClassTeacherAllow(0);
         setMonthlyAllow(0);
@@ -71,11 +101,10 @@ const SalaryInfo =()=> {
         setOtherDec(0)
     }
 
-    const postSalary =()=> {
-        axios.post("http://localhost:8000/salary", {
+    const updateEmployee =()=> {
+
+        axios.put(`http://localhost:8000/salaryupdate/${salaryid}`, {
             
-            id: salaryinfo.id,
-            staffid: salaryinfo.staffid,
             date: date,
             gross: grossSalary,
             hod: hodAllowance,
@@ -94,133 +123,39 @@ const SalaryInfo =()=> {
             health: health,
             othersred: otherDec,
             net: netSalary
-        })
-        window.location.replace('http://localhost:3000/salaryinfo/')
-        .then((response) => {
-            console.log(response)
-        })
-    }   
-
-    const handleClick =(salaryid)=> {
-        history.push('/updatesalary/' +salaryid)
+        });
+        setHodAllowance(0);
+        setClassTeacherAllow(0);
+        setMonthlyAllow(0);
+        setLeaveAllow(0);
+        setTransportAllowance(0);
+        setArrears(0);
+        setCompesation(0);
+        setOtherAllowance(0);
+        setSocial(300);
+        setLateness(0);
+        setCooperative(0);
+        setChildFees(0);
+        setAbsentism(0);
+        setHealth(0);
+        setOtherDec(0);
+        setMsg('Employee Salary Updated')
     }
-
-        let {id} = useParams()
-    useEffect(()=> {
-        fetchUser()
-    }, []);
-
-    useEffect(()=> {
-        fetchDataUser()
-    }, [])
-
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
-
-      const stylesHead = {
-        fontSize: '17px',
-        cursor: 'pointer',
-        width: '10%',
-        fontWeight: '500',
-        textTransform: 'uppercase'
-      };
-
-      const stylesBody = {
-        fontSize: '15px',
-        cursor: 'pointer',
-        width: '10%',
-        fontWeight: '400',
-        padding: '2px 4px'
-      };
-
-      const fetchUser = () => {
-   
-        // console.log(location)
-        const headers = {
-            "Content-Type": "application/json",
-            Authorization: `Bearer lll`,
-            "Access-Control-Allow-Origin":"*"
-        }
-        console.log('here')
-        axios.get(`${APPCONFIG.appapi}/salaryinfo/${id}`, {
-            headers
-        }).then((data) => {
-           
-         setSalaryinfo(data.data[0]);
-        }).catch((error) => {
-            console.log(error);
-        })
-    }
-
-    const fetchDataUser = () => {
-   
-        // console.log(location)
-        const headers = {
-            "Content-Type": "application/json",
-            Authorization: `Bearer lll`,
-            "Access-Control-Allow-Origin":"*"
-        }
-        console.log('here')
-        axios.get(`${APPCONFIG.appapi}/payslipedit/${id}`, {
-            headers
-        }).then((data) => {
-           
-            setInfo(data.data);
-        }).catch((error) => {
-            console.log(error);
-        })
-    }
-
-
-    const SalaryTotal =()=> {
-       let setNetSalary0 = parseInt(grossSalary)
-        + parseInt(leaveAllow) + 
-        parseInt(monthlyAllow) + parseInt(transportAllowance) + 
-        parseInt(hodAllowance) + parseInt(classTeacherAllow) + 
-        parseInt(arrears) + parseInt(compensation) + parseInt(otherAllowance) - 
-        parseInt(social) - parseInt(lateness) - parseInt(cooperative) - 
-        parseInt(childFees) - parseInt(absentism) - parseInt(health) - 
-        parseInt(otherDec)
-    setNetSalary(setNetSalary0)
-    }
-
-
     
 
     return (
-        <div className="salaryInfo">
-            <h1>Salary Profile</h1>
-            <div className="info-header">
-                <h2> {salaryinfo.surname} {salaryinfo.firstname}</h2>
-                <h3>{salaryinfo.staffid}</h3>
-                <h3><p>{salaryinfo.department}</p></h3>
-                <h3><p>{salaryinfo.school}</p></h3>
-            </div>
-
+        <div>
+            <h1>Update salary</h1>
             <div className="wrap">
             <form onSubmit={handleSubmit}>
                 
                 
                 <div className="net">
-                    <div style={{width: '150px', fontWeight: '600px'}}>
-                    <FormInput
-                        type="text"
-                        name="id"
-                        value={salaryinfo.id}
-                        />
-                        <FormInput
-                        type="text"
-                        name="id"
-                        value={salaryinfo.staffid}
-                        />
-                    </div>
                         <h3>Month & Year</h3>
                     <div className="date">
                          <DatePicker 
                         dateFormat="MMMM yyyy"
-                        showMonthYearDropdown
+                        showMonthYearPicker
                         selected={date}
                         onChange={date => setDate(date)}
                         dropdownMode= "scroll"
@@ -382,45 +317,16 @@ const SalaryInfo =()=> {
                         />
                 </div>
                     
-                    <Button onClick={postSalary} style={{width: "60%", alignItem: "center"}} type="submit">
+                    <Button onClick={()=> {
+                        updateEmployee(info.salaryid)
+                    }} style={{width: "60%", alignItem: "center"}} type="submit">
                             Submit
                         </Button>
+                        <div><p style={{color: 'green'}}>{msg} </p></div>
                 </form>
             </div>
-            <div>
-               
-               <div  ><h1 style={{marginTop: '20px'}}>Salary History</h1></div> 
-            <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell style={stylesHead}># </TableCell>
-                            <TableCell style={stylesHead}>Staff ID </TableCell>
-                            <TableCell style={stylesHead}>Gross </TableCell>
-                            <TableCell style={stylesHead}>Net </TableCell>
-                            <TableCell style={stylesHead}>Date </TableCell>
-                            <TableCell style={stylesHead}>Action </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {info.map((data, i)=> (
-                            <TableRow  key={i}>
-                                <TableCell style={stylesBody}>{i + 1}</TableCell>
-                                <TableCell style={stylesBody}>{data.staffid}</TableCell>
-                                <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
-                                <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
-                                <TableCell style={stylesBody}>{moment(data.date).format('YYYY MM')}</TableCell>
-                                <TableCell style={stylesBody}><Button onClick={()=>{
-                                                handleClick(data.salaryid)
-                                }}> Edit</Button> </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            </div>
         </div>
-    )
+    );
 }
 
-export default SalaryInfo;
+export default UpdateSalary;

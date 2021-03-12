@@ -125,7 +125,7 @@ const Payslip =()=> {
                                 <h3>Other Allowance <p><Naira>{payslip.otherallow}</Naira></p> </h3>
                             </div>
                             
-                        <div><h2>Net Salary:<Naira>{payslip.net}</Naira> {words} naira only </h2></div>
+                        <div><h2>Net Salary:<Naira>{payslip.net}</Naira> </h2></div>
                         </div>
                         
                         <div className="deductions">

@@ -12,19 +12,22 @@ import States from './states'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Avatar from 'react-avatar-edit';
+import { useParams } from 'react-router-dom'
+import {APPCONFIG} from './../../config/config'
 import axios from 'axios';
-import moment from 'moment'
+import moment from 'moment';
 
 const EmployeeInfo =()=> {
     let [userdata,setUserdata] = useState({});
+    let [useData, setUsedata] = useState({});
     const [preview, setPreview] = useState(null);
     const [startDate, setStartDate] =  useState(new Date());
     const [country, setCountry] = useState([])
     const [hideModal, setHideModal] = useState(true);
     const [id, setID] = useState('');
-    const [sot, setSot] = useState('');
+    const [state, setState] = useState('');
     const [firstName, setFirstName] = useState('');
-    const [surName, setSurname] = useState('');
+    const [getEmployee, setGetEmployee] = useState([]);
     const [lastName, setLastName] = useState('');
     const [department, setDepartment] = useState('');
     const [school, setSchool] = useState('');
@@ -112,9 +115,9 @@ const EmployeeInfo =()=> {
     const SubmitButton =()=> {
         if (userdata.staffid, userdata.surname, userdata.firstname, 
             userdata.lastname, userdata.department, userdata.school, 
-            userdata.email,phone, address,gender,startDate,passport,
+            userdata.email,phone, birthday, address,gender,startDate,passport,
             tel, marital , country, religion, bankName, accName, 
-            accNo, bvn, kinName, kinRela, kinPhone, contactName1, 
+            accNo, bvn, state, kinName, kinRela, kinPhone, contactName1, 
             contactRela1, contactPhone1, contactName2, contactRela2,
             contactPhone2
             ) {
@@ -128,6 +131,32 @@ const EmployeeInfo =()=> {
             }
     }
 
+    useEffect(()=> {
+        fetchUser()
+    }, [])
+
+    const fetchUser = () => {
+        let data = localStorage.getItem('userdata')
+
+        if (!data) {
+            console.log('Data Fetched')
+        }
+        else{
+            data=JSON.parse(data);
+            //history.push('/admin')
+           
+        setUsedata(data);
+        }
+        axios.get(`${APPCONFIG.appapi}/employeedetails?id=${data.id}`, {
+          
+        }).then((data) => {
+           
+            setGetEmployee(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     const onCrop =(pv)=> {
         setPreview(pv);
     }
@@ -138,7 +167,6 @@ const EmployeeInfo =()=> {
 
     }
 
-
     const reset =()=> {
         setPhone('');
         setAddress('');
@@ -146,7 +174,7 @@ const EmployeeInfo =()=> {
         setStartDate('');
         setPassport('');
         setTel('');
-        setSot('');
+        setState('');
         setCountry('');
         setReligion('');
         setMarital('');
@@ -167,6 +195,7 @@ const EmployeeInfo =()=> {
 
     const profileAPI =()=> {
         axios.post("http://localhost:8000/profile", {
+            id: userdata.id,
             staffid: userdata.staffid,
             surname: userdata.surname,
             firstname: userdata.firstname,
@@ -181,7 +210,7 @@ const EmployeeInfo =()=> {
             dateofjoin: startDate,
             identificationno: passport,
             telephone: tel,
-            stateoforigin: sot,
+            stateoforigin: state,
             nationality: country,
             religion: religion,
             maritalstatus: marital,
@@ -213,6 +242,11 @@ const EmployeeInfo =()=> {
                 <FormWrapper {...headline}>
                     <div>
                         <form className={handleSubmit}>
+                        <FormInput
+                            name="id"
+                            value={userdata.id}
+                            type="text"
+                            />
                             <FormInput
                             name="id"
                             value={userdata.staffid}
@@ -222,7 +256,6 @@ const EmployeeInfo =()=> {
                             name="surname"
                             value={userdata.surname}
                             type="text"
-                            ref={input => surName = input}
                             />
                             <FormInput
                             name="firstname"
@@ -262,6 +295,7 @@ const EmployeeInfo =()=> {
                             <div className="date">
                                 <DatePicker 
                                 dateFormat="MMMM dd"
+                                showMonthYearPicker
                                 monthsShown
                                 selected={birthday}
                                 onChange={date => setBirthday(date)}
@@ -293,9 +327,6 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setGender(e.target.value)}
                             />
-                            
-
-
 
                             <div className="formRow checkoutInput">
 
@@ -314,9 +345,199 @@ const EmployeeInfo =()=> {
                             name="tel"
                             handleChange={e=> setTel(e.target.value)}
                             />
-
-                            <States />
-
+                            <FormSelect
+                            options={[ 
+                            {
+                            value: "states",
+                            name: "Select State"
+                            }
+                            ,
+                            {
+                            value: "Abia",
+                            name: "Abia"
+                            }
+                            ,
+                            {
+                            value: "Adamawa",
+                            name: "Adamawa"
+                            }
+                            , {
+                            value: "Akwa Ibom",
+                            name: "Akwa Ibom"
+                            }
+                            , 
+                            {
+                            value: "Anambra",
+                            name: "Anambra"
+                            }
+                            ,
+                            {
+                            value: "Bauchi",
+                            name: "Bauchi"
+                            }
+                            , 
+                            {
+                            value: "Bayelsa",
+                            name: "Bayelsa"
+                            }
+                            , 
+                            {
+                            value: "Benue",
+                            name: "Benue"
+                            }
+                            , 
+                            {
+                            value: "Borno",
+                            name: "Borno"
+                            }
+                            , 
+                            {
+                            value: "Cross River",
+                            name: "Cross River"
+                            }
+                            , 
+                            {
+                            value: "Delta",
+                            name: "Delta"
+                            }
+                            , 
+                            {
+                            value: "Ebonyi",
+                            name: "Ebonyi"
+                            }
+                            , 
+                            {
+                            value: "Edo",
+                            name: "Edo"
+                            }
+                            , 
+                            {
+                            value: "Ekiti",
+                            name: "Ekiti"
+                            }
+                            , 
+                            {
+                            value: "Enugu",
+                            name: "Enugu"
+                            }
+                            , 
+                            {
+                            value: "Gombe",
+                            name: "Gombe"
+                            }
+                            , 
+                            {
+                            value: "Imo",
+                            name: "Imo"
+                            }
+                            , 
+                            {
+                            value: "Jigawa",
+                            name: "Jigawa"
+                            }
+                            , 
+                            {
+                            value: "Kaduna",
+                            name: "Kaduna"
+                            }
+                            , 
+                            {
+                            value: "Kano",
+                            name: "Kano"
+                            }
+                            , 
+                            {
+                            value: "Katsina",
+                            name: "Katsina"
+                            }
+                            , 
+                            {
+                            value: "Kebbi",
+                            name: "Kebbi"
+                            }
+                            , 
+                            {
+                            value: "Kogi",
+                            name: "Kogi"
+                            }
+                            , 
+                            {
+                            value: "Kwara",
+                            name: "Kwara"
+                            }
+                            , 
+                            {
+                            value: "Lagos",
+                            name: "Lagos"
+                            }
+                            , 
+                            {
+                            value: "Nasarawa",
+                            name: "Nasarawa"
+                            }
+                            , 
+                            {
+                            value: "Niger",
+                            name: "Niger"
+                            }
+                            , 
+                            {
+                            value: "Ogun",
+                            name: "Ogun"
+                            }
+                            , 
+                            {
+                            value: "Ondo",
+                            name: "Ondo"
+                            }
+                            , 
+                            {
+                            value: "Osun",
+                            name: "Osun"
+                            }
+                            , 
+                            {
+                            value: "Oyo",
+                            name: "Oyo"
+                            }
+                            , 
+                            {
+                            value: "Plateau",
+                            name: "Plateau"
+                            }
+                            , 
+                            {
+                            value: "Rivers",
+                            name: "Rivers"
+                            }
+                            , 
+                            {
+                            value: "Sokoto",
+                            name: "Sokoto"
+                            }
+                            , 
+                            {
+                            value: "Taraba",
+                            name: "Taraba"
+                            }
+                            , 
+                            {
+                            value: "Yobe",
+                            name: "Yobe"
+                            }
+                            , 
+                            {
+                            value: "Zamfara",
+                            name: "Zamfara"
+                            }
+                            , 
+                            {
+                            value: "FCT",
+                            name: "Federal Capital Territory"
+                            }
+                            ]}
+                            handleChange={e => setState(e.target.value)}
+                            />
                             <CountryDropdown
                             required
                             onChange={handleCountryChange}
@@ -366,7 +587,7 @@ const EmployeeInfo =()=> {
                                 name: "Others"
                             }
                             ]}
-                            handleChange={e => setReligion(e.target.value)}
+                            handleChange={e => setMarital(e.target.value)}
                             />
                             <label>Date of join</label>
                             <div className="date">
@@ -396,15 +617,15 @@ const EmployeeInfo =()=> {
                                 type="text"
                                 name="contact rela"
                                 value={contactRela1}
-                                placeholder="Name"
+                                placeholder="Relationship"
                                 handleChange={e=> setContactRela1(e.target.value)}
                                 />
                                 <FormInput
                                 type="text"
                                 name="contact phone1"
                                 value={contactPhone1}
-                                placeholder="Name"
-                                handleChange={e=> setContactName1(e.target.value)}
+                                placeholder="Phone No"
+                                handleChange={e=> setContactPhone1(e.target.value)}
                                 />
                                 <h3>Secondary</h3>
                                 <FormInput
@@ -418,14 +639,14 @@ const EmployeeInfo =()=> {
                                 type="text"
                                 name="contact rela"
                                 value={contactRela2}
-                                placeholder="Name"
+                                placeholder="Relationship"
                                 handleChange={e=> setContactRela2(e.target.value)}
                                 />
                                 <FormInput
                                 type="text"
                                 name="contact phone1"
                                 value={contactPhone2}
-                                placeholder="Name"
+                                placeholder="Phone No"
                                 handleChange={e=> setContactPhone2(e.target.value)}
                                 />
                             </div>
@@ -526,11 +747,11 @@ const EmployeeInfo =()=> {
                     <p>Email: <h3 style={{display: 'inline', textTransform: 'lowercase'}}>{userdata.email}</h3></p>
                 </div>
                 <div className="user-infos">
-                    <p>Phone: <h3 style={{display: 'inline'}}></h3></p>
-                    <p>Birthday: <h3 style={{display: 'inline'}}></h3></p>
-                    <p>Address: <h3 style={{display: 'inline'}}></h3></p>
-                    <p>Gender: <h3 style={{display: 'inline'}}></h3></p>
-                    <p>Date Of Join: <h3 style={{display: 'inline'}}></h3></p>
+                        <p>Phone: <h3 style={{display: 'inline'}}>{getEmployee.phone}</h3></p>
+                        <p>Birthday: <h3 style={{display: 'inline'}}>{getEmployee.birthday}</h3></p>
+                    <p>Address: <h3 style={{display: 'inline'}}>{getEmployee.address}</h3></p>
+                    <p>Gender: <h3 style={{display: 'inline'}}>{getEmployee.gender}</h3></p>
+                    <p>Date Of Join: <h3 style={{display: 'inline'}}>{getEmployee.dateofjoin}</h3></p>
                 </div>
             </div>
             <div className="personal">
@@ -539,12 +760,12 @@ const EmployeeInfo =()=> {
                     <h2>Personal Informations</h2>
                     {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
-                    <p>Passport No: </p>
-                    <p>Tel 2: </p>
-                    <p>State of Origin</p>
-                    <p>Nationality</p>
-                    <p>Religion</p>
-                    <p>Marital Status</p>
+                    <p>Passport No: <h3 style={{display: 'inline'}}>{getEmployee.identificationno}</h3></p>
+                    <p>Tel 2: <h3 style={{display: 'inline'}}>{getEmployee.telephone}</h3></p>
+                    <p>State of Origin <h3 style={{display: 'inline'}}>{getEmployee.stateoforigin}</h3></p>
+                    <p>Nationality <h3 style={{display: 'inline'}}>{getEmployee.nationality}</h3></p>
+                    <p>Religion: <h3 style={{display: 'inline'}}>{getEmployee.religion}</h3></p>
+                    <p>Marital Status <h3 style={{display: 'inline'}}>{getEmployee.maritalstatus}</h3></p>
                 </div>
                 <div className="personal-second">
                     <div className="fontAwesome">
@@ -552,13 +773,13 @@ const EmployeeInfo =()=> {
                     {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
                     <label>Primary </label>
-                    <p>Name </p>
-                    <p>Relationship</p>
-                    <p>Phone</p>
+                    <p>Name: <h3 style={{display: 'inline'}}>{getEmployee.ecname}</h3> </p>
+                    <p>Relationship: <h3 style={{display: 'inline'}}>{getEmployee.ecrelationship}</h3></p>
+                    <p>Phone: <h3 style={{display: 'inline'}}>{getEmployee.ecphone}</h3></p>
                     <label>Secondary</label>
-                    <p>Name </p>
-                    <p>Relationship</p>
-                    <p>Phone</p>
+                    <p>Name: <h3 style={{display: 'inline'}}>{getEmployee.ecsname}</h3></p>
+                    <p>Relationship: <h3 style={{display: 'inline'}}>{getEmployee.ecrelationship}</h3></p>
+                    <p>Phone: <h3 style={{display: 'inline'}}>{getEmployee.ecphone}</h3></p>
                 </div>
             </div>
             <div className="user-bank">
@@ -567,19 +788,19 @@ const EmployeeInfo =()=> {
                     <h2>Bank Informations</h2>
                     {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
-                    <p>Bank Name </p>
-                    <p>Account Name</p>
-                    <p>Account Number</p>
-                    <p>Bank Verification Number(BVN)</p>
+                    <p>Bank Name: <h3 style={{display: 'inline'}}>{getEmployee.bankname}</h3> </p>
+                    <p>Account Name: <h3 style={{display: 'inline'}}>{getEmployee.accountname}</h3></p>
+                    <p>Account Number: <h3 style={{display: 'inline'}}>{getEmployee.accountnumber}</h3></p>
+                    <p>Bank Verification Number(BVN): <h3 style={{display: 'inline'}}>{getEmployee.bvn}</h3></p>
                 </div>
                 <div className="userBankSecond">
                     <div className="fontAwesome">
                     <h2>Next Of Kin</h2>
                     {/* <FontAwesomeIcon icon={faEdit} /> */}
                     </div>
-                    <p>Name </p>
-                    <p>Relationship</p>
-                    <p>Phone</p>
+                    <p>Name: <h3 style={{display: 'inline'}}>{getEmployee.nameofkin}</h3> </p>
+                    <p>Relationship: <h3 style={{display: 'inline'}}>{getEmployee.relationshipofkin}</h3></p>
+                    <p>Phone: <h3 style={{display: 'inline'}}>{getEmployee.phoneofkin}</h3></p>
                 </div>
             </div>
         </div>
