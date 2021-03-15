@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/OluDominic/tas-salary-systemstatic/css/main.a9d884ef.chunk.css",
+    "main.js": "/OluDominic/tas-salary-systemstatic/js/main.21662a8e.chunk.js",
+    "main.js.map": "/OluDominic/tas-salary-systemstatic/js/main.21662a8e.chunk.js.map",
+    "runtime-main.js": "/OluDominic/tas-salary-systemstatic/js/runtime-main.69303ee3.js",
+    "runtime-main.js.map": "/OluDominic/tas-salary-systemstatic/js/runtime-main.69303ee3.js.map",
+    "static/js/2.7baaf686.chunk.js": "/OluDominic/tas-salary-systemstatic/js/2.7baaf686.chunk.js",
+    "static/js/2.7baaf686.chunk.js.map": "/OluDominic/tas-salary-systemstatic/js/2.7baaf686.chunk.js.map",
+    "index.html": "/OluDominic/tas-salary-systemindex.html",
+    "static/css/main.a9d884ef.chunk.css.map": "/OluDominic/tas-salary-systemstatic/css/main.a9d884ef.chunk.css.map",
+    "static/js/2.7baaf686.chunk.js.LICENSE.txt": "/OluDominic/tas-salary-systemstatic/js/2.7baaf686.chunk.js.LICENSE.txt",
+    "static/media/default.scss": "/OluDominic/tas-salary-systemstatic/media/Promo-Facebook-Event Cover.f9e8740c.jpeg",
+    "static/media/logo.6ce24c58.svg": "/OluDominic/tas-salary-systemstatic/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.69303ee3.js",
+    "static/js/2.7baaf686.chunk.js",
+    "static/css/main.a9d884ef.chunk.css",
+    "static/js/main.21662a8e.chunk.js"
+  ]
+}
