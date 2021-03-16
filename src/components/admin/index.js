@@ -88,7 +88,7 @@ const Admin =()=> {
                 </ul>
             </div>
             <span></span>
-            <h2 onClick={handleClick} >Welcome, {useData.adminid} <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faArrowDown} /></span>  </h2> 
+            <h2 onClick={handleClick} >Welcome, {useData.adminid} <span style={{marginLeft:"4px", display:'inline'}}><FontAwesomeIcon icon={faArrowDown} /></span>  </h2> 
             <StyledMenu
         id="customized-menu"
         anchorEl={openMenu}

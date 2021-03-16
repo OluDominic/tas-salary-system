@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {APPCONFIG} from './../../config/config'
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 import './index.scss'
 
 const UserProfileEdit =()=> {
@@ -9,7 +10,7 @@ const UserProfileEdit =()=> {
     const [profile, setProfile] = useState([]);
     const [profileId, setProfileId] = useState('');
 
-    let {staffid} = useParams()
+    let {id} = useParams()
     useEffect(()=> {
         fetchUser();
     }, [])
@@ -23,7 +24,7 @@ const UserProfileEdit =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log('here')
-        axios.get(`${APPCONFIG.appapi}/profileinfo/${staffid}`, {
+        axios.get(`${APPCONFIG.appapi}/profileinfo/${id}`, {
             headers
         }).then((data) => {
            
@@ -41,52 +42,52 @@ const UserProfileEdit =()=> {
                     <h2>{profile.staffid}</h2>
                     <p>{profile.department}</p>
                     <p>{profile.school}</p>
-                    <p>Date of Join : Jan, 2021</p>
+                    <p>Date of Join : {profile.date}</p>
                 </div>
                 <div className="useredit-info">
-                    <span>Phone: </span> <span style={{fontSize: '17px', color: 'blue'}}>0123456789</span> <br/>
-                    <span>Email: </span> <span style={{fontSize: '14px', color: 'blue', textTransform: 'none'}}>domolu@admin.com</span><br/>
-                    <span>Birthday: </span> <span style={{fontSize: '15px', color: 'gray'}}>15th, May</span> <br/>
-                    <span>Address: </span> <span style={{fontSize: '15px', color: 'gray'}}>9/11 Igberen Road</span> <br/>
-                    <span>Gender: </span> <span style={{fontSize: '15px', color: 'gray'}}>Male</span> <br/>
+                    <span>Phone: </span> <span style={{fontSize: '17px', color: 'blue'}}>{profile.phone}</span> <br/>
+                    <span>Email: </span> <span style={{fontSize: '13px', color: 'blue', textTransform: 'none'}}>{profile.email}</span><br/>
+                    <span>Birthday: </span> <span style={{fontSize: '15px', color: 'gray'}}>{moment(profile.birthday).format('yyyy mm')}</span> <br/>
+                    <span>Address: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.address}</span> <br/>
+                    <span>Gender: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.gender}</span> <br/>
                 </div>
             </div>
 
             <div className="personalCombined">
                 <div className="personalInformation">
                     <h2 style={{textTransform: 'capitalize'}}>Personal Informations</h2>
-                    <h4>Passport No </h4>
-                    <h4>Tel </h4>
-                    <h4>State of Origin </h4>
-                    <h4>Nationality </h4>
-                    <h4>Religion </h4>
-                    <h4>Marital status</h4>
+                    <span>Identification Number: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.identificationno}</span> <br/>
+                    <span>Phone 2: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.telephone}</span> <br/>
+                    <span>State of Origin: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.stateoforigin}</span> <br/>
+                    <span>Country: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.nationality}</span> <br/>
+                    <span>Religion: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.religion}</span> <br/>
+                    <span>Marital Status: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.maritalstatus}</span> <br/>
                 </div>
                 <div className="emergencyContact">
                     <h2 style={{textTransform: 'capitalize'}}>Emergency Contact</h2>
                     <label>Primary</label>
-                    <h4>Name </h4>
-                    <h4>Relationship </h4>
-                    <h4>Phone </h4>
+                    <span>Name: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.ecname}</span> <br/>
+                    <span>Relationship: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.ecrelationship}</span> <br/>
+                    <span>phoneofkin: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.ecphone}</span> <br/>
                     <label>Secondary</label>
-                    <h4>Name </h4>
-                    <h4>Relationship </h4>
-                    <h4>Phone </h4>
+                    <span>Name: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.ecsphone}</span> <br/>
+                    <span>Relationship: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.ecsrelationship}</span> <br/>
+                    <span>Phone: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.ecsphone}</span> <br/>
                 </div>
             </div>
 
             <div className="information">
                 <div className="bankInformation">
                     <h2 style={{textTransform: 'capitalize'}}>Bank Informations</h2>
-                    <h4>Bank name </h4> <span>UBA</span>
-                    <h4>Account name </h4>
-                    <h4>Account number </h4>
+                    <span>Bank: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.bankname}</span> <br/>
+                    <span>Account Name: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.accountname}</span> <br/>
+                    <span>Account No: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.accountnumber}</span> <br/>
                 </div>
                 <div className="nextOfKin">
                     <h2 style={{textTransform: 'capitalize'}}>Next of Kin</h2>
-                    <h4>Name </h4>
-                    <h4>Relationship </h4>
-                    <h4>Phone </h4>
+                    <span>Name: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.nameofkin}</span> <br/>
+                    <span>Relationship: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.relationshipofkin}</span> <br/>
+                    <span>Phone: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.phoneofkin}</span> <br/>
                 </div>
             </div>
         </div>

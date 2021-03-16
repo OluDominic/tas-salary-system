@@ -107,7 +107,7 @@ function App() {
             </AdminLayout>
           )}
           />
-          <Route path="/userprofileedit" render={()=> (
+          <Route path="/userprofileedit/:id" render={()=> (
             <AdminLayout>
               <UserProfileEditPage />
             </AdminLayout>

@@ -151,7 +151,7 @@ const EmployeeInfo =()=> {
           
         }).then((data) => {
            
-            setGetEmployee(data.data[0]);
+            setGetEmployee(data.data);
         }).catch((error) => {
             console.log(error);
         })

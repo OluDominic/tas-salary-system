@@ -87,10 +87,10 @@ const Employees =()=> {
             })
         }
 
-        // let oldlist = employees.map(employees => {
-        //     return {surname: employees.surname, school: employees.school, 
-        //         department: employees.department, staffid: employees.staffid, firstname: employees.firstname};
-        // });
+        let oldlist = employees.map(employees => {
+            return {surname: employees.surname, school: employees.school, 
+                department: employees.department, staffid: employees.staffid, firstname: employees.firstname};
+        });
 
 
     const toggleModal =()=> setHideModal(!hideModal);

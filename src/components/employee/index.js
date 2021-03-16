@@ -90,7 +90,7 @@ const Employee =()=> {
                     </li>
                 </ul>
             </div> */}
-            <h2 onClick={handleClick} style={{textTransform: "none"}}> {useData.firstname}'s Profile <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faUser} /></span>  </h2>
+            <h2 onClick={handleClick} style={{textTransform: "none", display: 'inline'}}> {useData.firstname}'s Profile <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faUser} /></span>  </h2>
             <StyledMenu
                 id="customized-menu"
                 anchorEl={openMenu}
