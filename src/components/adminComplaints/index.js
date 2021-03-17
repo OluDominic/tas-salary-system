@@ -7,6 +7,7 @@ import FormSelect from '../forms/FormSelect';
 import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput';
 import Button from '../forms/Button';
+import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import {
     TableContainer, Table, TableHead,
@@ -135,6 +136,9 @@ const AdminComplaints =()=> {
 
     return (
         <div>
+            <Helmet>
+                    <title>HR Management | Complaints Page</title>
+            </Helmet>
             <h1>Complaints Page</h1>
 
             <div>

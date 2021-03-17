@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 import {APPCONFIG} from './../../config/config'
 import './index.scss'
 import { useHistory } from 'react-router-dom';
@@ -105,6 +106,9 @@ const UserProfile =()=> {
 
     return (
         <div className="userProfile">
+            <Helmet>
+                    <title>HR Management | Employees Profile</title>
+            </Helmet>
             <h1>Employee Profile</h1>
             <div className="search">
                 <div className="search-input">

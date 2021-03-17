@@ -3,6 +3,7 @@ import Button from '../forms/Button'
 import FormInput from '../forms/FormInput'
 import FormWrapper from '../forms/FormWrapper'
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom'
 import './index.scss'
@@ -57,6 +58,9 @@ const Login =()=> {
 
     return (
         <div className="login">
+            <Helmet>
+                    <title>HR Management | Login Page</title>
+            </Helmet>
         <FormWrapper {...headline}>
             <div>
                 <form onSubmit={handleSubmit}>

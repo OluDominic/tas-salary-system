@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import SearchBar from "material-ui-search-bar"
 import { APPCONFIG } from '../../config/config';
 import axios from 'axios';
-
+import { Helmet } from 'react-helmet'
 import './index.scss'
 import FormSelect from '../forms/FormSelect';
 import { useHistory } from 'react-router-dom';
@@ -110,6 +110,9 @@ const SalaryEdit =()=> {
 
     return (
         <div className="salaryedit">
+            <Helmet>
+                    <title>HR Management | Employees Payroll</title>
+            </Helmet>
             <h1>Salary Edit Page</h1>
             <div className="search">
                 <div className="search-input">

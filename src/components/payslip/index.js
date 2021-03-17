@@ -7,6 +7,7 @@ import Naira from 'react-naira';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import moment from 'moment'
+import { Helmet } from 'react-helmet'
 import { ToWords } from 'to-words';
 import converter from 'number-to-words'
 import {APPCONFIG} from './../../config/config'
@@ -71,6 +72,9 @@ const Payslip =()=> {
     return (
         <div id="my-node"  className="payslip">
             <div className="payslip-header">
+            <Helmet>
+                    <title>HR Management | Salary Payslip</title>
+            </Helmet>
                 <h1>Payslip</h1>
                 <div className="payslip-print">
                     <ul>

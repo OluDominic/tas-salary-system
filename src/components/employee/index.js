@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './index.scss'
-import { faIcons, faTachometerAlt, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faIcons, faTachometerAlt, faUser } from '@fortawesome/free-solid-svg-icons'
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
@@ -90,7 +90,7 @@ const Employee =()=> {
                     </li>
                 </ul>
             </div> */}
-            <h2 onClick={handleClick} style={{textTransform: "none", display: 'inline'}}> {useData.firstname}'s Profile <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faUser} /></span>  </h2>
+            <h2 onClick={handleClick} style={{textTransform: "none"}}> {useData.firstname}'s Profile <span style={{marginLeft:"4px"}}><FontAwesomeIcon icon={faArrowDown} /></span>  </h2>
             <StyledMenu
                 id="customized-menu"
                 anchorEl={openMenu}

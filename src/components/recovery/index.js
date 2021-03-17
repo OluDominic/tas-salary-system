@@ -4,6 +4,7 @@ import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 import './index.scss'
 
 const Recovery =()=> {
@@ -49,6 +50,9 @@ const Recovery =()=> {
 
     return (
         <div>
+            <Helmet>
+                    <title>HR Management | Password Reset</title>
+            </Helmet>
             <h1>Recover Password</h1>
             <div><p style={{color: 'green'}}>{msg} </p></div>
             <div>

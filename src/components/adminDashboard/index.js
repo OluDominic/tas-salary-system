@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import  {APPCONFIG} from '../../config/config';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
+import Logo from './../../taclog1.png';
 import './index.scss'
 
 const AdminDashboard =()=> {
@@ -30,6 +32,12 @@ const AdminDashboard =()=> {
 
     return (
         <div className="admindash">
+            <Helmet>
+                    <meta charSet="UTF-8" />
+                    <title>HR Management | Admin Home </title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <link rel="icon" href={Logo} />
+            </Helmet>
             <h1> Admin dashboard</h1>
             <div className="admindash-sub">
                 <div className="admindash-sub-sub">Employees <p>{employees.id}</p> </div>

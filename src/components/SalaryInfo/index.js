@@ -4,6 +4,7 @@ import FormInput from '../forms/FormInput'
 import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import moment from 'moment'
+import { Helmet } from 'react-helmet'
 import './index.scss'
 import { useParams, useHistory } from 'react-router-dom';
 import DatePicker from "react-datepicker";
@@ -191,6 +192,9 @@ const SalaryInfo =()=> {
 
     return (
         <div className="salaryInfo">
+            <Helmet>
+                    <title>HR Management | Employees Payroll Edit</title>
+            </Helmet>
             <h1>Salary Profile</h1>
             <div className="info-header">
                 <h2> {salaryinfo.surname} {salaryinfo.firstname}</h2>

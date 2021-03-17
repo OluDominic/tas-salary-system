@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '../forms/Button'
 import FormInput from '../forms/FormInput'
 import { useParams } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import {APPCONFIG} from './../../config/config'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -145,6 +146,9 @@ const UpdateSalary =()=> {
 
     return (
         <div>
+            <Helmet>
+                    <title>HR Management | Salary Edit Page</title>
+            </Helmet>
             <h1>Update salary</h1>
             <div className="wrap">
             <form onSubmit={handleSubmit}>

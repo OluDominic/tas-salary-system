@@ -5,7 +5,8 @@ import FormInput from '../forms/FormInput'
 import FormSelect from '../forms/FormSelect'
 import './index.scss'
 import FormWrapper from '../forms/FormWrapper'
-import axios from 'axios'
+import axios from 'axios';
+import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom'
 import  {APPCONFIG} from '../../config/config';
 import Popup from './../department/popup'
@@ -167,6 +168,9 @@ const Employees =()=> {
 
     return (
         <div className="employees">
+            <Helmet>
+                    <title>HR Management | Employees Page</title>
+            </Helmet>
             <h1> Employees section</h1>
             <div className="employee-sub">
                 <div className="employee">employees</div>

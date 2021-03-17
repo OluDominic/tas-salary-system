@@ -6,6 +6,7 @@ import {
   } from '@material-ui/core';
   import Paper from '@material-ui/core/Paper';
 import Modal from '../modal';
+import { Helmet } from 'react-helmet'
 import FormInput from '../forms/FormInput';
 import Button from '../forms/Button';
 import FormWrapper from '../forms/FormWrapper';
@@ -123,6 +124,9 @@ const Schools =()=> {
 
     return (
         <div className="school">
+            <Helmet>
+                    <title>HR Management | Schools</title>
+            </Helmet>
             <h1>Schools</h1>
             <div className="school-but">
                 <Button onClick={toggleModal}>

@@ -4,13 +4,14 @@ import {
     TableContainer, Table, TableHead,
     TableRow, TableBody, TableCell, makeStyles
   } from '@material-ui/core';
-  import Paper from '@material-ui/core/Paper';
+import Paper from '@material-ui/core/Paper';
 import Modal from '../modal';
 import FormInput from '../forms/FormInput';
 import Button from '../forms/Button';
 import FormWrapper from '../forms/FormWrapper';
 import  {APPCONFIG} from '../../config/config';
 import axios from 'axios';
+import { Helmet } from 'react-helmet'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt  } from '@fortawesome/free-solid-svg-icons';
 import Popup from './popup'
@@ -129,6 +130,9 @@ const Department =()=> {
     return (
 
         <div className="departments">
+            <Helmet>
+                    <title>HR Management | Departments</title>
+            </Helmet>
             <h1>Departments</h1>
             <div className="depart-but">
                 <Button onClick={toggleModal}>

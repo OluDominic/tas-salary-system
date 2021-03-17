@@ -3,6 +3,7 @@ import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput'
 import FormSelect from '../forms/FormSelect'
 import axios from 'axios'
+import { Helmet } from 'react-helmet'
 import {APPCONFIG} from './../../config/config'
 import { useParams } from 'react-router-dom';
 import './index.scss'
@@ -78,6 +79,9 @@ const Update =()=> {
 
     return (
         <div>
+            <Helmet>
+                    <title>HR Management | Employee Details Update</title>
+            </Helmet>
             <h1>Update Employee Details</h1>
             <div>
                 <FormWrapper {...head}>

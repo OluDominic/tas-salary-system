@@ -1,6 +1,8 @@
 import React from 'react'
 import Login from '../login'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet';
+import Logo from './../../taclog1.png'
 import './index.scss'
 
 const Home =()=> {
@@ -8,6 +10,12 @@ const Home =()=> {
     return (
         <div className="homepage">
             <div className="home-write">
+                <Helmet>
+                    <meta charSet="UTF-8" />
+                    <title>TAS HR Management System </title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <link rel="icon" href={Logo} />
+                </Helmet>
                 <h1> the ambassadors employee management system</h1>
                 <div className="home-login">
                 <span>Click here to  </span>

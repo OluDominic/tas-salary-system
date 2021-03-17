@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './index.scss'
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import Modal from './../modal'
+import Modal from './../modal';
+import { Helmet } from 'react-helmet'
 import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput';
 import FormSelect from '../forms/FormSelect'
@@ -238,6 +239,9 @@ const EmployeeInfo =()=> {
 
     return (
         <div className="employeeInfo">
+            <Helmet>
+                    <title>HR Management | Employees Info</title>
+            </Helmet>
             <Modal {...configModal}>
                 <FormWrapper {...headline}>
                     <div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../forms/Button';
 import FormInput from '../forms/FormInput';
+import { Helmet } from 'react-helmet';
 import FormWrapper from '../forms/FormWrapper';
 import axios from 'axios'
 import './index.scss';
@@ -79,6 +80,9 @@ const Complaint =()=> {
 
     return (
         <div className="complaints">
+            <Helmet>
+                    <title>HR Management | Complaints Page</title>
+            </Helmet>
             <h1>complaint form</h1>
             <div className="complaints-form">
                 <FormWrapper {...headline}>

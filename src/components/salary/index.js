@@ -9,6 +9,7 @@ import {
   import Naira from 'react-naira';
   import Paper from '@material-ui/core/Paper';
   import moment from 'moment'
+  import { Helmet } from 'react-helmet'
   import {useHistory} from 'react-router-dom'
 import './index.scss'
 import TableButton from '../forms/TableButton';
@@ -72,6 +73,9 @@ const Salary =()=> {
 
     return (
         <div className="salary">
+            <Helmet>
+                    <title>HR Management | Salary Page</title>
+            </Helmet>
             <h1>Salary Info</h1>
             <div>
                 <h2>Payroll Table</h2>

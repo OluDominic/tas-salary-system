@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet'
+import Logo from './../../taclog1.png';
 import './index.scss'
 
 const Profile =()=> {
@@ -37,6 +39,12 @@ const Profile =()=> {
     return (
         <div className="profile">
             <div className="name">
+            <Helmet>
+                    <meta charSet="UTF-8" />
+                    <title>HR Management | Employee Home </title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+                    <link rel="icon" href={Logo} />
+            </Helmet>
                 <h2>Welcome, {userdata.usertype=='admin'?'Admin':userdata.surname}</h2>
                 <div className="date">
                     <p>{date.toLocaleTimeString()}</p>

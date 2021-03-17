@@ -3,6 +3,7 @@ import {APPCONFIG} from './../../config/config'
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
+import { Helmet } from 'react-helmet'
 import './index.scss'
 
 const UserProfileEdit =()=> {
@@ -36,6 +37,9 @@ const UserProfileEdit =()=> {
 
     return (
         <div className="user-edit">
+            <Helmet>
+                    <title>HR Management | Employees Profile Details</title>
+            </Helmet>
             <h1>Profile Edit</h1>
             <div className="combined">
                 <div className="useredit-header">

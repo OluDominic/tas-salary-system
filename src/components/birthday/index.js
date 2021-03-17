@@ -6,6 +6,7 @@ import {
     TableRow, TableBody, TableCell, makeStyles
   } from '@material-ui/core';
   import Paper from '@material-ui/core/Paper';
+  import { Helmet } from 'react-helmet'
 import './index.scss'
 
 
@@ -60,6 +61,9 @@ const Birthday =()=> {
 
     return (
         <div className="birthday">
+            <Helmet>
+                    <title>HR Management | Employees Birthday</title>
+            </Helmet>
             <h1>Birthday's</h1>
             <div className="birthday-sub">
             <h2>Today's Birthday</h2>
