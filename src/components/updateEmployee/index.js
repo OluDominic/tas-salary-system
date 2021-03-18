@@ -20,7 +20,8 @@ const Update =()=> {
     const [school, setSchool] = useState('')
     const [department, setDepartment] = useState('')
     const [updateid, setUpdateId] = useState('')
-    const [msg, setMsg] = useState('')
+    const [msg, setMsg] = useState('');
+    const [errMsg, setErrMsg] = useState('');
 
     const head = {
         headline: 'Update Employee Details'
@@ -42,9 +43,14 @@ const Update =()=> {
         console.log('here')
         axios.get(`${APPCONFIG.appapi}/salaryinfo/${id}`, {
             headers
-        }).then((data) => {
+        }).then((data, response) => {
            
             setUpdate(data.data[0]);
+            if (response.data.message) {
+                setErrMsg(response.data.message)
+            } else {
+                setErrMsg(response.data[0])
+            }
         }).catch((error) => {
             console.log(error);
         })
@@ -57,7 +63,7 @@ const Update =()=> {
     const updateEmployee =()=> {
 
         axios.put(`http://localhost:8000/employee/${id}`, {
-            staffid: updateid,
+           // staffid: updateid,
             surname: surName,    
             firstname: firstName,
             lastname: lastName,
@@ -72,6 +78,7 @@ const Update =()=> {
         setEmail('');
         setSchool('');
         setDepartment('');
+        setMsg('Employee Details Update Successful!!')
     }
 
     
@@ -84,16 +91,28 @@ const Update =()=> {
             </Helmet>
             <h1>Update Employee Details</h1>
             <div>
+                <ul>
+                    <li><p>{update.surname}</p></li>
+                    <li><p>{update.firstname}</p></li>
+                    <li><p>{update.lastname}</p></li>
+                    <li><p>{update.email}</p></li>
+                    <li><p>{update.school}</p></li>
+                    <li><p>{update.department}</p></li>
+                </ul>
+            </div>
+            <div>
                 <FormWrapper {...head}>
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <FormInput 
+                            <div><p style={{color: 'green'}}>{msg}</p></div>
+                            <div><p style={{color: 'red'}}>{errMsg}</p></div>
+                            {/* <FormInput 
                             type="text"
                             placeholder="ID"
                             name="id"
                             value={updateid}
                             handleChange={ e=> setUpdateId(e.target.value)}
-                            />
+                            /> */}
                             <FormInput 
                             type="text"
                             placeholder="Surname"

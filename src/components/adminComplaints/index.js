@@ -54,7 +54,7 @@ const AdminComplaints =()=> {
         })
     }
 
-    let {id} = useParams()
+    let {complaintid} = useParams()
     useEffect(()=> {
         fetchUser()
     }, [])
@@ -68,7 +68,7 @@ const AdminComplaints =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log('here')
-        axios.get(`${APPCONFIG.appapi}/fetchcomplaints/${id}`, {
+        axios.get(`${APPCONFIG.appapi}/fetchcomplaints/${complaintid}`, {
             headers
         }).then((data) => {
            
@@ -89,8 +89,12 @@ const AdminComplaints =()=> {
         setIsOpen(false)
     }
 
-    const toggleModal =()=> 
-    setHideModal(!hideModal);
+    const toggleModal =(complaintid)=> 
+    {
+        setHideModal(!hideModal)
+        setCom(complaintid)
+        
+    }
 
     const configModal = {
         hideModal,
@@ -180,7 +184,7 @@ const AdminComplaints =()=> {
                             handleChange={e => setComplaint(e.target.value)}
                             />
                             <Button type="submit">
-                                Sign Up
+                                Confirm
                             </Button>
                         </form>
                         </div>
@@ -211,7 +215,7 @@ const AdminComplaints =()=> {
                                 <TableCell style={stylesBody}><h3>Approved</h3></TableCell>
                                 <TableCell style={stylesBody}>
                                 <span>
-                                    <button onClick={()=>{ toggleModal(data.id)}}>
+                                    <button onClick={()=>{ toggleModal(com.complaintid)}}>
                               <FontAwesomeIcon icon={faEdit} />
                             </button>
                             <button onClick={()=>{togglePopup(data.id)}}>

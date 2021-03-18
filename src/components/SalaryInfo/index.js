@@ -5,10 +5,13 @@ import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import moment from 'moment'
 import { Helmet } from 'react-helmet'
+import Popup from './../department/popup'
 import './index.scss'
 import { useParams, useHistory } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import Naira from 'react-naira'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import {
     TableContainer, Table, TableHead,
     TableRow, TableBody, TableCell, makeStyles
@@ -23,6 +26,8 @@ const SalaryInfo =()=> {
     const [hideModal, setHideModal] = useState(true);
     const [info, setInfo] = useState([]);
     const history = useHistory();
+    const [employeeId, setEmployeeId] = useState('')
+    const [isOpen, setIsOpen] = useState(false)
 
     const [netSalary, setNetSalary] = useState('');
     const [grossSalary, setGrossSalary] = useState('');
@@ -46,13 +51,25 @@ const SalaryInfo =()=> {
     const [absentism, setAbsentism] = useState(0);
     const [health, setHealth] = useState(0);
     const [otherDec, setOtherDec] = useState(0);
+    const [msg, setmsg] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit =(event)=> {
         event.preventDefault();
         reset();
     }
     
-    
+    const SubmitButton=()=> {
+        if (grossSalary && netSalary) {
+            return <Button onClick={postSalary} style={{width: "60%", alignItem: "center"}} type="submit">
+            Submit
+        </Button>;
+        } else {
+           return <Button onClick={postSalary} style={{width: "60%", alignItem: "center"}} type="submit" disabled>
+                            Submit
+                        </Button>
+        }
+    }
 
     const reset =()=> {
         setHodAllowance(0);
@@ -72,7 +89,7 @@ const SalaryInfo =()=> {
         setOtherDec(0)
     }
 
-    const postSalary =()=> {
+    const postSalary =(salaryid)=> {
         axios.post("http://localhost:8000/salary", {
             
             id: salaryinfo.id,
@@ -96,14 +113,41 @@ const SalaryInfo =()=> {
             othersred: otherDec,
             net: netSalary
         })
-        window.location.replace('http://localhost:3000/salaryinfo/')
         .then((response) => {
+            // if (response.data.message) {
+            //     setErrorMessage(response.data.message)
+            // } else {
+            //     setErrorMessage(response.data[0])
+            // }
+            console.log(response.data)
             console.log(response)
         })
+        setmsg('Employee Salary Information Uploaded Successful')
+        setGrossSalary('')
+        setNetSalary('')
+        
     }   
+
+    const deleteSalary=()=> {
+        axios.delete(`http://localhost:8000/deletesalary/${employeeId}`, {
+           
+        })
+        window.location.replace('http://localhost:3000/salaryinfo/'+salaryinfo.id)
+        .then((response)=> {
+            console.log(response)
+        });
+        setIsOpen(false)
+    }
+    
+    //window.location.replace('http://localhost:3000/salaryinfo/'+salaryinfo.id)
 
     const handleClick =(salaryid)=> {
         history.push('/updatesalary/' +salaryid)
+    }
+
+    const togglePopup =(salaryid)=> {
+        setEmployeeId(salaryid)
+        setIsOpen(!isOpen);
     }
 
         let {id} = useParams()
@@ -223,7 +267,7 @@ const SalaryInfo =()=> {
                         <h3>Month & Year</h3>
                     <div className="date">
                          <DatePicker 
-                        dateFormat="MMMM yyyy"
+                        dateFormat="yyyy MMMM"
                         showMonthYearDropdown
                         selected={date}
                         onChange={date => setDate(date)}
@@ -384,11 +428,11 @@ const SalaryInfo =()=> {
                         value={netSalary}
                         type="number"
                         />
+                        <div><p style={{color: 'red'}}>{errorMessage}</p></div>
+                        <div><p style={{color: 'green'}}>{msg}</p></div>
                 </div>
                     
-                    <Button onClick={postSalary} style={{width: "60%", alignItem: "center"}} type="submit">
-                            Submit
-                        </Button>
+                    <SubmitButton />
                 </form>
             </div>
             <div>
@@ -414,14 +458,30 @@ const SalaryInfo =()=> {
                                 <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
                                 <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
                                 <TableCell style={stylesBody}>{moment(data.date).format('YYYY MM')}</TableCell>
-                                <TableCell style={stylesBody}><Button onClick={()=>{
-                                                handleClick(data.salaryid)
-                                }}> Edit</Button> </TableCell>
+                                <TableCell style={stylesBody}><span>
+                                    <button onClick={()=> {
+                                        handleClick(data.salaryid)
+                                    }}>
+                              <FontAwesomeIcon icon={faEdit} />
+                            </button>
+                            <button onClick={()=>{togglePopup(data.salaryid)}}>
+                              <FontAwesomeIcon icon={faTrashAlt} />
+                            </button>
+                                        </span> </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+            {isOpen && <Popup 
+                content={
+                    <>
+                        <h3>Are you sure?</h3>
+                        <Button onClick={deleteSalary}>Confirm Delete</Button>
+                    </>
+                         }
+                handleClose={togglePopup}
+            />}
             </div>
         </div>
     )

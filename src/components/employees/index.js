@@ -172,11 +172,12 @@ const Employees =()=> {
                     <title>HR Management | Employees Page</title>
             </Helmet>
             <h1> Employees section</h1>
-            <div className="employee-sub">
+            
+            {/* <div className="employee-sub">
                 <div className="employee">employees</div>
                 <div className="department">departments</div>
                 <div className="schools">schools</div>
-            </div>
+            </div> */}
 
             <div className="reg-all">
                 <span className="reg">
