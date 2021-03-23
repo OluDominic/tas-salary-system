@@ -9,11 +9,11 @@ import FormInput from '../forms/FormInput';
 import FormSelect from '../forms/FormSelect'
 import { CountryDropdown } from 'react-country-region-selector';
 import Button from '../forms/Button';
-import States from './states'
+//import States from './states'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Avatar from 'react-avatar-edit';
-import { useParams } from 'react-router-dom'
+// import Avatar from 'react-avatar-edit';
+// import { useParams } from 'react-router-dom'
 import {APPCONFIG} from './../../config/config'
 import axios from 'axios';
 import moment from 'moment';
@@ -54,7 +54,6 @@ const EmployeeInfo =()=> {
     const [bankName, setBankName] = useState('');
     const [accName, setAccName] = useState('');
     const [accNo, setAccNo] = useState('');
-    const [bvn, setBvn] = useState('');
 
     //emergency contact
     const [contactName1, setContactName1] = useState('');
@@ -118,7 +117,7 @@ const EmployeeInfo =()=> {
             userdata.lastname, userdata.department, userdata.school, 
             userdata.email,phone, birthday, address,gender,startDate,passport,
             tel, marital , country, religion, bankName, accName, 
-            accNo, bvn, state, kinName, kinRela, kinPhone, contactName1, 
+            accNo, state, kinName, kinRela, kinPhone, contactName1, 
             contactRela1, contactPhone1, contactName2, contactRela2,
             contactPhone2
             ) {
@@ -182,7 +181,6 @@ const EmployeeInfo =()=> {
         setBankName('');
         setAccNo('')
         setAccName('');
-        setBvn('');
         setKinName('');
         setKinRela('');
         setKinPhone('');
@@ -218,7 +216,6 @@ const EmployeeInfo =()=> {
             bankname: bankName,
             accountname: accName,
             accountnumber: accNo,
-            bvn:bvn,
             nameofkin: kinName,
             relationshipofkin: kinRela,
             phoneofkin: kinPhone,
@@ -678,13 +675,6 @@ const EmployeeInfo =()=> {
                                 value={accNo}
                                 handleChange={e => setAccNo(e.target.value)}
                                 />
-                                <FormInput
-                                type="text"
-                                name="bvn"
-                                placeholder="BVN"
-                                value={bvn}
-                                handleChange={e => setBvn(e.target.value)}
-                                />
                             </div>
 
                             <br />
@@ -723,7 +713,7 @@ const EmployeeInfo =()=> {
             
             <h1>Employee Info</h1>
             <div className="user-info">
-                    <div>
+                    {/* <div>
                         <Avatar
                         width={150}
                         height={150}
@@ -736,7 +726,7 @@ const EmployeeInfo =()=> {
                         src={null}
                         />
                         {preview && <img src={preview} alt="Preview" />}
-                    </div>
+                    </div> */}
                 <div className="user-names">
                     <div className="fontAwesome">
                     <h2>Profile</h2>
@@ -795,7 +785,6 @@ const EmployeeInfo =()=> {
                     <p>Bank Name: <h3 style={{display: 'inline'}}>{getEmployee.bankname}</h3> </p>
                     <p>Account Name: <h3 style={{display: 'inline'}}>{getEmployee.accountname}</h3></p>
                     <p>Account Number: <h3 style={{display: 'inline'}}>{getEmployee.accountnumber}</h3></p>
-                    <p>Bank Verification Number(BVN): <h3 style={{display: 'inline'}}>{getEmployee.bvn}</h3></p>
                 </div>
                 <div className="userBankSecond">
                     <div className="fontAwesome">

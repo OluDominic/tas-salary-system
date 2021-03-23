@@ -7,10 +7,10 @@ import {
   TableRow, TableBody, TableCell, makeStyles
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import axios from 'axios'
-import { Helmet } from 'react-helmet'
-import {APPCONFIG} from './../../config/config'
-import './index.scss'
+import axios from 'axios';
+import { Helmet } from 'react-helmet';
+import {APPCONFIG} from './../../config/config';
+import './index.scss';
 import { useHistory } from 'react-router-dom';
 
 const UserProfile =()=> {
@@ -36,7 +36,6 @@ const UserProfile =()=> {
             setEmployees(employees)
         }
     }
-
     useEffect(() => {
         console.log("Behavior when the value of 'foo' changes.");
        fetchEmployees() 
@@ -50,7 +49,7 @@ const UserProfile =()=> {
                 "Access-Control-Allow-Origin":"*"
             }
         console.log('here')
-            axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
+            axios.get(`${APPCONFIG.appapi}/fetchemp`, {
                 headers
             }).then((data) => {
                

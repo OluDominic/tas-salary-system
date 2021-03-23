@@ -92,12 +92,12 @@ const Update =()=> {
             <h1>Update Employee Details</h1>
             <div>
                 <ul>
-                    <li><p>{update.surname}</p></li>
-                    <li><p>{update.firstname}</p></li>
-                    <li><p>{update.lastname}</p></li>
-                    <li><p>{update.email}</p></li>
-                    <li><p>{update.school}</p></li>
-                    <li><p>{update.department}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.surname}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.firstname}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.lastname}</p></li>
+                    <li><p style={{textTransform: 'lowercase'}}>{update.email}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.school}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.department}</p></li>
                 </ul>
             </div>
             <div>

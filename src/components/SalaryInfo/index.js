@@ -25,6 +25,7 @@ const SalaryInfo =()=> {
     const [date, setDate] = useState(new Date());
     const [hideModal, setHideModal] = useState(true);
     const [info, setInfo] = useState([]);
+    const [fetchSocial, setFetchSocial] = useState([]);
     const history = useHistory();
     const [employeeId, setEmployeeId] = useState('')
     const [isOpen, setIsOpen] = useState(false)
@@ -127,6 +128,28 @@ const SalaryInfo =()=> {
         setNetSalary('')
         
     }   
+
+    useEffect(()=> {
+        fetchSocialP()
+    },[])
+
+    const fetchSocialP = () => {
+
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/fetchsocial`, {
+            headers
+        }).then((data) => {
+           
+            setFetchSocial(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    };
 
     const deleteSalary=()=> {
         axios.delete(`http://localhost:8000/deletesalary/${employeeId}`, {
@@ -362,7 +385,7 @@ const SalaryInfo =()=> {
                         <FormInput
                         required 
                         name="social"
-                        value={social}
+                        value={fetchSocial.social}
                         type="number"
                         readOnly
                         />

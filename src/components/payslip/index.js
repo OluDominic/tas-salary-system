@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { faFilePdf, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,7 @@ import './index.scss'
 const Payslip =()=> {
 
     const [payslip, setPayslip] = useState([]);
+    const [address, setAddress] = useState([]);
     let [userdata,setUserdata] = useState({});
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1)
@@ -69,6 +70,30 @@ const Payslip =()=> {
         })
     };
 
+    useEffect(()=> {
+        fetchSchoolDetails()
+    },[])
+
+    const fetchSchoolDetails = () => {
+
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/fetchaddress`, {
+            headers
+        }).then((data) => {
+           
+            setAddress(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    };
+
+    
+
     return (
         <div id="my-node"  className="payslip">
             <div className="payslip-header">
@@ -103,9 +128,8 @@ const Payslip =()=> {
                     </div>
                 </div>
                 <div className="payslip-info">
-                    <h3>The Ambassadors Schools</h3>
-                    <h3>1-7, Igberen Road,</h3>
-                    <h3>Idi-Iroko Road, Ota Ogun State.</h3>
+                    <h3>{address.schoolname}</h3>
+                    <h3>{address.schooladdress}</h3>
                 </div>
                 <div className="payslip-personal">
                     <h3 style={{fontWeight: 'bold'}}>{userdata.surname} {userdata.firstname}</h3>
@@ -118,7 +142,7 @@ const Payslip =()=> {
                         <div className="earnings">
                             <h2>Earnings</h2>
                             <div>
-                                <div><h3>Basic Salary <p><Naira>{payslip.gross}</Naira></p> </h3></div>
+                                <div><h3>Basic Salary <p style={{color: 'black', fontWeight: 'bold', fontSize: '15px'}}><Naira>{payslip.gross}</Naira></p> </h3></div>
                                 <h3>HOD Allowance <p><Naira>{payslip.hod}</Naira></p> </h3>
                                 <h3>Class Teacher Allowance <p><Naira>{payslip.classteacher}</Naira></p> </h3>
                                 <h3>Monthly Allowance <p><Naira>{payslip.monthly}</Naira></p> </h3>

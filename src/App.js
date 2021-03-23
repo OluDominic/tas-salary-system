@@ -31,6 +31,7 @@ import RecoveryPage from './pages/RecoveryPage';
 import UpdateEmployee from './pages/UpdateEmployeePage';
 import AdminComplaintsPage from './pages/AdminComplaintsPage';
 import UpdateSalaryPage from './pages/UpdateSalaryPage';
+import AdminSettings from './pages/AdminSettings';
 //import './App.css';
 
 function App() {
@@ -134,6 +135,12 @@ function App() {
           <Route path="/admincomplaints" render={()=> (
             <AdminLayout>
               <AdminComplaintsPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/settings" render={()=> (
+            <AdminLayout>
+              <AdminSettings />
             </AdminLayout>
           )}
           />

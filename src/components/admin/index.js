@@ -74,6 +74,10 @@ const Admin =()=> {
         window.location.replace('http://localhost:3000/')
     }
 
+    const settings=()=> {
+      history.push('/settings')
+  }
+
     return (
         <div className="admin-comp">
             <div className="admin-drop">
@@ -96,7 +100,7 @@ const Admin =()=> {
         open={Boolean(openMenu)}
         onClose={handleClose}
       >
-          <StyledMenuItem>
+          <StyledMenuItem onClick={settings}>
           <ListItemIcon>
             <SettingsIcon fontSize="small" />
           </ListItemIcon>
