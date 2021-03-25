@@ -9,6 +9,7 @@ import FormInput from '../forms/FormInput';
 import Button from '../forms/Button';
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
+import Select from 'react-select'
 import {
     TableContainer, Table, TableHead,
     TableRow, TableBody, TableCell, makeStyles
@@ -89,10 +90,9 @@ const AdminComplaints =()=> {
         setIsOpen(false)
     }
 
-    const toggleModal =(complaintid)=> 
+    const toggleModal =()=> 
     {
         setHideModal(!hideModal)
-        setCom(complaintid)
         
     }
 
@@ -215,7 +215,7 @@ const AdminComplaints =()=> {
                                 <TableCell style={stylesBody}><h3>Approved</h3></TableCell>
                                 <TableCell style={stylesBody}>
                                 <span>
-                                    <button onClick={()=>{ toggleModal(com.complaintid)}}>
+                                    <button onClick={()=>{ toggleModal()}}>
                               <FontAwesomeIcon icon={faEdit} />
                             </button>
                             <button onClick={()=>{togglePopup(data.id)}}>

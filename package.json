@@ -48,6 +48,7 @@
     "react-pdf": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-select": "^4.3.0",
     "react-table": "^7.6.3",
     "react-to-pdf": "0.0.13",
     "react-transition-group": "^4.4.1",

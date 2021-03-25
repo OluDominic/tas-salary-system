@@ -66,7 +66,7 @@ const Birthday =()=> {
             </Helmet>
             <h1>Birthday's</h1>
             <div className="birthday-sub">
-            <h2>Today's Birthday</h2>
+            <h2>This Month's Birthday</h2>
             <TableContainer component={Paper}>
                 <Table className={useStyles.table}>
                     <TableHead>

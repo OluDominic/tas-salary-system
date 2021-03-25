@@ -53,7 +53,7 @@ const Recovery =()=> {
             <Helmet>
                     <title>HR Management | Password Reset</title>
             </Helmet>
-            <h1>Recover Password</h1>
+            <h1>Reset Password Page</h1>
             <div><p style={{color: 'green'}}>{msg} </p></div>
             <div>
                 <FormWrapper {...head}>
