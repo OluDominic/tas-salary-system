@@ -352,7 +352,7 @@ const Employees =()=> {
                                   setSearch(e.target.value);
                               }}
                             />
-                </div>
+            </div>
             <TableContainer component={Paper}>
                 <Table className={useStyles.table}>
                     <TableHead>

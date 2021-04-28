@@ -23,7 +23,7 @@ const AdminSideBar =()=> {
                     </li>
                     
                     <li>
-                        <Link to="/employees"> <FontAwesomeIcon icon={faUserFriends} /> Employee </Link>
+                        <Link to="/employees"> <FontAwesomeIcon icon={faUserFriends} /> Employees </Link>
                     </li>
                     <li>
                         <Link to="/userprofile"> <FontAwesomeIcon icon={faSuitcase} /> User Profile </Link>
@@ -32,16 +32,16 @@ const AdminSideBar =()=> {
                         <Link to="/birthday"> <FontAwesomeIcon icon={faBirthdayCake} /> Birthdays </Link>
                     </li>
                     <li>
-                        <Link to="/salaryedit"> <FontAwesomeIcon icon={faMoneyBill} /> Salary Info </Link>
+                        <Link to="/salaryedit"> <FontAwesomeIcon icon={faMoneyBill} /> Salary </Link>
+                    </li>
+                    <li>
+                        <Link to="/salarytotal"> <FontAwesomeIcon icon={faComment} /> Salary History </Link>
                     </li>
                     <li>
                         <Link to="/schools"> <FontAwesomeIcon icon={faSchool} /> Schools </Link>
                     </li>
                     <li>
                         <Link to="/departments"> <FontAwesomeIcon icon={faTachometerAlt} /> Departments </Link>
-                    </li>
-                    <li>
-                        <Link to="/admincomplaints"> <FontAwesomeIcon icon={faComment} /> Complaints </Link>
                     </li>
                 </ul>
         </div>

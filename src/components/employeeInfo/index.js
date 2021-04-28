@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './index.scss'
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import Modal from './../modal';
+import Modal from './../modals';
 import { Helmet } from 'react-helmet'
 import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput';

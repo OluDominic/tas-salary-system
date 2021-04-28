@@ -32,6 +32,7 @@ import UpdateEmployee from './pages/UpdateEmployeePage';
 import AdminComplaintsPage from './pages/AdminComplaintsPage';
 import UpdateSalaryPage from './pages/UpdateSalaryPage';
 import AdminSettings from './pages/AdminSettings';
+import SalaryTotalPage from './pages/SalaryTotalPage';
 //import './App.css';
 
 function App() {
@@ -141,6 +142,12 @@ function App() {
           <Route path="/settings" render={()=> (
             <AdminLayout>
               <AdminSettings />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/salarytotal" render={()=> (
+            <AdminLayout>
+              <SalaryTotalPage />
             </AdminLayout>
           )}
           />

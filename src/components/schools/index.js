@@ -108,6 +108,10 @@ const Schools =()=> {
         textTransform: 'uppercase'
       };
 
+      const head = {
+          headline: 'Add School'
+      }
+
       const stylesBody = {
         fontSize: '17px',
         cursor: 'pointer',
@@ -134,7 +138,7 @@ const Schools =()=> {
                 </Button>
             </div>
             <Modal {...configModal}>
-                <FormWrapper>
+                <FormWrapper {...head}>
                     <form onSubmit={handleForm}>
                         <FormInput
                         type="text"

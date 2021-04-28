@@ -112,8 +112,11 @@ const SalaryInfo =()=> {
             absentism: absentism,
             health: health,
             othersred: otherDec,
-            net: netSalary
+            net: netSalary,
+            surname: salaryinfo.surname,
+            firstname: salaryinfo.firstname
         })
+        window.location.replace('http://localhost:3000/salaryinfo/'+salaryinfo.id)
         .then((response) => {
             // if (response.data.message) {
             //     setErrorMessage(response.data.message)
@@ -254,9 +257,6 @@ const SalaryInfo =()=> {
     setNetSalary(setNetSalary0)
     }
 
-
-    
-
     return (
         <div className="salaryInfo">
             <Helmet>
@@ -276,11 +276,13 @@ const SalaryInfo =()=> {
                 
                 <div className="net">
                     <div style={{width: '150px', fontWeight: '600px'}}>
+                    <div style={{display: 'none'}}>
                     <FormInput
                         type="text"
                         name="id"
                         value={salaryinfo.id}
                         />
+                        </div>
                         <FormInput
                         type="text"
                         name="id"
@@ -290,8 +292,8 @@ const SalaryInfo =()=> {
                         <h3>Month & Year</h3>
                     <div className="date">
                          <DatePicker 
-                        dateFormat="yyyy MMMM"
-                        showMonthYearDropdown
+                        dateFormat="MMMM yyyy"
+                        showMonthYearPicker
                         selected={date}
                         onChange={date => setDate(date)}
                         dropdownMode= "scroll"
@@ -308,7 +310,7 @@ const SalaryInfo =()=> {
                         required
                         name="grossSalary"
                         value={grossSalary}
-                        type="number"
+                        type="text"
                         handleChange={e => setGrossSalary(e.target.value)}
                         />
                 </div>
@@ -319,7 +321,7 @@ const SalaryInfo =()=> {
                         required 
                         name="hod allowance"
                         value={hodAllowance}
-                        type="number"
+                        type="text"
                         handleChange={e => setHodAllowance(e.target.value)}
                         />
                         <label>Class Teacher Allowance</label>
@@ -327,7 +329,7 @@ const SalaryInfo =()=> {
                         required 
                         name="class teacher allowance"
                         value={classTeacherAllow}
-                        type="number"
+                        type="text"
                         handleChange={e => setClassTeacherAllow(e.target.value)}
                         />
                         <label>Monthly Allowance</label>
@@ -335,7 +337,7 @@ const SalaryInfo =()=> {
                         required 
                         name="monthlyAllowance"
                         value={monthlyAllow}
-                        type="number"
+                        type="text"
                         handleChange={e => setMonthlyAllow(e.target.value)}
                         />
                         <label>Leave Allowance</label>
@@ -343,7 +345,7 @@ const SalaryInfo =()=> {
                         required 
                         name="leaveAllowance"
                         value={leaveAllow}
-                        type="number"
+                        type="text"
                         handleChange={e => setLeaveAllow(e.target.value)}
                         />
                         <label>Transport Allowance</label>
@@ -351,7 +353,7 @@ const SalaryInfo =()=> {
                         required 
                         name="transport allowance"
                         value={transportAllowance}
-                        type="number"
+                        type="text"
                         handleChange={e => setTransportAllowance(e.target.value)}
                         />
                         <label>Arrears</label>
@@ -359,7 +361,7 @@ const SalaryInfo =()=> {
                         required 
                         name="arrears"
                         value={arrears}
-                        type="number"
+                        type="text"
                         handleChange={e => setArrears(e.target.value)}
                         />
                         <label>Compensations</label>
@@ -367,7 +369,7 @@ const SalaryInfo =()=> {
                         required 
                         name="compensation"
                         value={compensation}
-                        type="number"
+                        type="text"
                         handleChange={e => setCompesation(e.target.value)}
                         />
                         <label>Other Allowance</label>
@@ -375,7 +377,7 @@ const SalaryInfo =()=> {
                         required 
                         name="other allowance"
                         value={otherAllowance}
-                        type="number"
+                        type="text"
                         handleChange={e => setOtherAllowance(e.target.value)}
                         />
                 </div>
@@ -386,7 +388,7 @@ const SalaryInfo =()=> {
                         required 
                         name="social"
                         value={fetchSocial.social}
-                        type="number"
+                        type="text"
                         readOnly
                         />
                         <label>Lateness</label>
@@ -394,7 +396,7 @@ const SalaryInfo =()=> {
                         required 
                         name="lateness"
                         value={lateness}
-                        type="number"
+                        type="text"
                         handleChange={e => setLateness(e.target.value)}
                         />
                         <label>Co-operative</label>
@@ -402,7 +404,7 @@ const SalaryInfo =()=> {
                         required 
                         name="cooperative"
                         value={cooperative}
-                        type="number"
+                        type="text"
                         handleChange={e => setCooperative(e.target.value)}
                         />
                         <label>Child Fees</label>
@@ -410,7 +412,7 @@ const SalaryInfo =()=> {
                         required 
                         name="childfees"
                         value={childFees}
-                        type="number"
+                        type="text"
                         handleChange={e => setChildFees(e.target.value)}
                         />
                         <label>Absentism</label>
@@ -418,7 +420,7 @@ const SalaryInfo =()=> {
                         required 
                         name="absentism"
                         value={absentism}
-                        type="number"
+                        type="text"
                         handleChange={e => setAbsentism(e.target.value)}
                         />
                         <label>Health</label>
@@ -426,7 +428,7 @@ const SalaryInfo =()=> {
                         required 
                         name="health"
                         value={health}
-                        type="number"
+                        type="text"
                         handleChange={e => setHealth(e.target.value)}
                         />
                         <label>Others</label>
@@ -434,22 +436,23 @@ const SalaryInfo =()=> {
                         required 
                         name="others"
                         value={otherDec}
-                        type="number"
+                        type="text"
                         handleChange={e => setOtherDec(e.target.value)}
                         />
                     </div>
                     <div className="net">
-                        <Button onClick={reset}>
+                        {/* <Button onClick={reset}>
                             Reset
-                        </Button>
+                        </Button> */}
                         <Button onClick={()=> SalaryTotal()}>
                             Get Total
                         </Button>
+                        <br/>
                         <label>Net Salary (N)</label>
                         <FormInput 
                         name="netsalary"
                         value={netSalary}
-                        type="number"
+                        type="text"
                         />
                         <div><p style={{color: 'red'}}>{errorMessage}</p></div>
                         <div><p style={{color: 'green'}}>{msg}</p></div>
