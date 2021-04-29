@@ -33,6 +33,7 @@ import AdminComplaintsPage from './pages/AdminComplaintsPage';
 import UpdateSalaryPage from './pages/UpdateSalaryPage';
 import AdminSettings from './pages/AdminSettings';
 import SalaryTotalPage from './pages/SalaryTotalPage';
+import AdminPayslip from './pages/AdminPayslip';
 //import './App.css';
 
 function App() {
@@ -148,6 +149,12 @@ function App() {
           <Route path="/salarytotal" render={()=> (
             <AdminLayout>
               <SalaryTotalPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/adminpayslip/:staffid" render={()=> (
+            <AdminLayout>
+              <AdminPayslip />
             </AdminLayout>
           )}
           />

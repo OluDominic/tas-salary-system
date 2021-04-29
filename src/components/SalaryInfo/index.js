@@ -19,11 +19,11 @@ import {
   import Paper from '@material-ui/core/Paper';
 
 import "react-datepicker/dist/react-datepicker.css";
+import { faFileInvoice, faInfo } from '@fortawesome/free-solid-svg-icons'
 
 const SalaryInfo =()=> {
     const [salaryinfo, setSalaryinfo] = useState([]);
     const [date, setDate] = useState(new Date());
-    const [hideModal, setHideModal] = useState(true);
     const [info, setInfo] = useState([]);
     const [fetchSocial, setFetchSocial] = useState([]);
     const history = useHistory();
@@ -169,6 +169,10 @@ const SalaryInfo =()=> {
 
     const handleClick =(salaryid)=> {
         history.push('/updatesalary/' +salaryid)
+    }
+
+    const handleClicks =(salaryid)=> {
+        history.push('/adminpayslip/' +salaryid)
     }
 
     const togglePopup =(salaryid)=> {
@@ -485,6 +489,11 @@ const SalaryInfo =()=> {
                                 <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
                                 <TableCell style={stylesBody}>{moment(data.date).format('YYYY MM')}</TableCell>
                                 <TableCell style={stylesBody}><span>
+                                <button onClick={()=> {
+                                        handleClicks(data.salaryid)
+                                    }}>
+                              <FontAwesomeIcon icon={faFileInvoice} />
+                            </button>
                                     <button onClick={()=> {
                                         handleClick(data.salaryid)
                                     }}>

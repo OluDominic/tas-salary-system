@@ -1,59 +1,87 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import taclogo from './../../taclogo.jpg';
 import { faFilePdf, faPrint } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
-import taclogo from './../../taclogo.jpg';
 import Naira from 'react-naira';
-import ReactToPrint from 'react-to-print';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import moment from 'moment'
-import { Helmet } from 'react-helmet'
+import {useReactToPrint} from 'react-to-print';
 import { ToWords } from 'to-words';
-import converter from 'number-to-words'
+import { Helmet } from 'react-helmet'
 import {APPCONFIG} from './../../config/config'
-
-import './index.scss'
+import './index.scss';
 import Button from '../forms/Button';
 
-const Payslip =()=> {
-
+const PayslipAdmin =()=> {
     const [payslip, setPayslip] = useState([]);
     const [address, setAddress] = useState([]);
     let [userdata,setUserdata] = useState({});
-    const [numPages, setNumPages] = useState(null);
+    const [info, setInfo] = useState([]);
     const componentRef = useRef();
-    const [pageNumber, setPageNumber] = useState(1)
-    const toWords = new ToWords({
-        localeCode: 'en-IN'
-    })
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+      });
 
-    const onDocumentLoadSuccess =({ numPages })=> {
-        setNumPages(numPages);
-    }
+    // const fetchDataUser = () => {
+   
+    //     // console.log(location)
+    //     const headers = {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer lll`,
+    //         "Access-Control-Allow-Origin":"*"
+    //     }
+    //     console.log('here')
+    //     axios.get(`${APPCONFIG.appapi}/payslipedit/${id}`, {
+    //         headers
+    //     }).then((data) => {
+           
+    //         setInfo(data.data);
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     })
+    // }
+
+    //let {id} = useParams()
+
+    // useEffect(()=> {
+    //     fetchDataUser()
+    // }, [])
+
 
     let {staffid} = useParams();
     useEffect(()=> {
         fetchUser()
     }, [])
 
-    const convert =()=> {
-        converter.toWords(parseInt(payslip.net))
+    // const convert =()=> {
+    //     converter.toWords(parseInt(payslip.net))
+    // }
+
+    let {id} = useParams()
+    useEffect(()=> {
+        fetchUserProfile()
+    }, []);
+
+    const fetchUserProfile = () => {
+   
+        // console.log(location)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/salaryinfo/${id}`, {
+            headers
+        }).then((data) => {
+           
+            setInfo(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
-    let words = toWords.convert(39700)
-    useEffect(() => {
-        let data = localStorage.getItem('userdata')
-
-        if (!data) {
-           // history.push('/')
-        }
-        else{
-            data=JSON.parse(data);
-            console.log(data,'popop')
-      setUserdata(data);
-        }
-    },[]);
     
     const fetchUser = () => {
 
@@ -95,17 +123,21 @@ const Payslip =()=> {
         })
     };
 
-    
 
-    return (
+    return(
         <div id="my-node"  className="payslip">
             <div className="payslip-header">
+                
             <Helmet>
                     <title>HR Management | Salary Payslip</title>
             </Helmet>
+            
                 <h1>Payslip</h1>
                 <div className="payslip-print">
                     <ul>
+                        {/* <li>
+                        <button onClick={onButtonClick}><FontAwesomeIcon icon={faFilePdf} /> PDF</button>
+                        </li> */}
                         <li>
                             <button onClick={()=> window.print()}><FontAwesomeIcon icon={faPrint} /> Print</button>
                         </li>
@@ -115,7 +147,7 @@ const Payslip =()=> {
 
             <div ref={componentRef} className="pays">
                 <div className="payslip-head">
-                    <h2 className="slip">Payslip for the month {moment(payslip.date).format('MM/YYYY')} <hr/></h2>
+                    <h2 className="slip">{payslip.surname} {payslip.firstname} Payslip for the month of {moment(payslip.date).format('MM/YYYY')} <hr/></h2>
                 </div>
 
                 <div className="payslip-logo">
@@ -132,10 +164,10 @@ const Payslip =()=> {
                     <h3>{address.schooladdress}</h3>
                 </div>
                 <div className="payslip-personal">
-                    <h3 style={{fontWeight: 'bold'}}>{userdata.surname} {userdata.firstname}</h3>
-                    <h3>{userdata.department}</h3>
-                    <h3>{userdata.school}</h3>
-                    <h3>{userdata.staffid}</h3>
+                    <h3 style={{fontWeight: 'bold'}}>{info.surname} {info.firstname}</h3>
+                    <h3>{info.department}</h3>
+                    <h3>{info.school}</h3>
+                    <h3>{info.staffid}</h3>
                 </div>
 
                     <div className="payslip-table">
@@ -166,6 +198,11 @@ const Payslip =()=> {
                                 <h3>Absentism <p><Naira>{payslip.absentism}</Naira></p> </h3>
                                 <h3>Health <p><Naira>{payslip.health}</Naira></p> </h3>
                                 <h3>Other Reductions <p><Naira>{payslip.othersred}</Naira></p> </h3>
+                                <br />
+                                <h3>Name:</h3>
+                                <br />
+                                <br />
+                                <h3>Signature:</h3>
                                 
                             </div>
                         </div>
@@ -176,4 +213,4 @@ const Payslip =()=> {
     );
 }
 
-export default Payslip;
+export default PayslipAdmin;
