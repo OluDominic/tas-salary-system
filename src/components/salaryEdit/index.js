@@ -6,6 +6,8 @@ import {
   TableRow, TableBody, TableCell, makeStyles
 } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Link } from 'react-router-dom';
 import SearchBar from "material-ui-search-bar"
 import { APPCONFIG } from '../../config/config';
 import axios from 'axios';
@@ -119,7 +121,7 @@ const SalaryEdit =()=> {
                             <FormInput 
                             name="employee"
                             value={searchTerm || ""}
-                            placeholder="Seacrh Bar"
+                            placeholder="Search Bar"
                             handleChange={handleChange}
                             />
                 </div>
@@ -157,31 +159,45 @@ const SalaryEdit =()=> {
                 onChange={(searchVal) => requestSearch(searchVal)}
                 onCancelSearch={() => cancelSearch()}
             /> */}
+            <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                filename="salaryextractXls"
+                sheet="tablexls"
+                buttonText="Download as XLS" 
+                />
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table id="table-to-xls" className={useStyles.table}>
                     <TableHead>
                         <TableRow>
+                            <TableCell style={stylesHead}># </TableCell>
                             <TableCell style={stylesHead}>ID </TableCell>
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Fistname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
-                            <TableCell style={stylesHead}>Action </TableCell>
+                            {/* <TableCell style={stylesHead}>Action </TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                    
                         {employees.map((data, i)=> (
-                            <TableRow  key={i}>
+                            
+                            <TableRow className="linkss" component={Link} to={'/salaryinfo/'+data.id} key={i}>
+                                <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
-                                <TableCell style={stylesBody}><TableButton onClick={()=>{
+                                {/* <TableCell style={stylesBody}><TableButton onClick={()=>{
                                                 handleClick(data.id)
-                                }}> Edit</TableButton> </TableCell>
+                                }}> Edit</TableButton> </TableCell> */}
                             </TableRow>
+                           
                         ))}
+                        
                     </TableBody>
                 </Table>
             </TableContainer>

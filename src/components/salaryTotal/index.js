@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, } from 'react';
 import './index.scss';
 import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import moment from 'moment'
 import FormInput from '../forms/FormInput'
+import { useParams } from 'react-router-dom';
 import Naira from 'react-naira'
 import {
     TableContainer, Table, TableHead,
@@ -15,6 +16,7 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 const SalaryTotal =()=> {
 
     const [total, setTotal] = useState([]);
+    const [gross, setGross] = useState([])
     const [searched, setSearched] = useState("");
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -60,6 +62,30 @@ const SalaryTotal =()=> {
             console.log(error);
         })
     };
+
+    let {id} = useParams()
+    useEffect(()=> {
+        fetchUserId()
+    }, [])
+
+    const fetchUserId = () => {
+   
+        // console.log(location)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/grossinfo?id=${total.id}`, {
+            headers
+        }).then((data) => {
+           
+            setGross(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
 
     const useStyles = makeStyles({
         table: {

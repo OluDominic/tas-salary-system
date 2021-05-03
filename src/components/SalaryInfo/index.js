@@ -4,6 +4,7 @@ import FormInput from '../forms/FormInput'
 import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import moment from 'moment'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Helmet } from 'react-helmet'
 import Popup from './../department/popup'
 import './index.scss'
@@ -61,7 +62,7 @@ const SalaryInfo =()=> {
     }
     
     const SubmitButton=()=> {
-        if (grossSalary && netSalary) {
+        if (salaryinfo.pay && netSalary) {
             return <Button onClick={postSalary} style={{width: "60%", alignItem: "center"}} type="submit">
             Submit
         </Button>;
@@ -96,7 +97,7 @@ const SalaryInfo =()=> {
             id: salaryinfo.id,
             staffid: salaryinfo.staffid,
             date: date,
-            gross: grossSalary,
+            gross: salaryinfo.pay,
             hod: hodAllowance,
             classteacher: classTeacherAllow,
             monthly: monthlyAllow,
@@ -250,7 +251,7 @@ const SalaryInfo =()=> {
 
 
     const SalaryTotal =()=> {
-       let setNetSalary0 = parseInt(grossSalary)
+       let setNetSalary0 = parseInt(salaryinfo.pay)
         + parseInt(leaveAllow) + 
         parseInt(monthlyAllow) + parseInt(transportAllowance) + 
         parseInt(hodAllowance) + parseInt(classTeacherAllow) + 
@@ -313,9 +314,8 @@ const SalaryInfo =()=> {
                         <FormInput 
                         required
                         name="grossSalary"
-                        value={grossSalary}
+                        value={salaryinfo.pay}
                         type="text"
-                        handleChange={e => setGrossSalary(e.target.value)}
                         />
                 </div>
                 <div className="info-fill">
@@ -468,8 +468,16 @@ const SalaryInfo =()=> {
             <div>
                
                <div  ><h1 style={{marginTop: '20px'}}>Salary History</h1></div> 
+               <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                filename="employeeXls"
+                sheet="tablexls"
+                buttonText="Download as XLS" 
+                />
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table id="table-to-xls" className={useStyles.table}>
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -485,9 +493,9 @@ const SalaryInfo =()=> {
                             <TableRow  key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>
-                                <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
+                                <TableCell style={stylesBody}><Naira>{salaryinfo.pay}</Naira></TableCell>
                                 <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
-                                <TableCell style={stylesBody}>{moment(data.date).format('YYYY MM')}</TableCell>
+                                <TableCell style={stylesBody}>{moment(data.date).format('YYYY-MM')}</TableCell>
                                 <TableCell style={stylesBody}><span>
                                 <button onClick={()=> {
                                         handleClicks(data.salaryid)

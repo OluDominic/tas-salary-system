@@ -11,7 +11,7 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import {APPCONFIG} from './../../config/config';
 import './index.scss';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 const UserProfile =()=> {
 
@@ -156,21 +156,21 @@ const UserProfile =()=> {
                             <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
-                            <TableCell style={stylesHead}>Action </TableCell>
+                            {/* <TableCell style={stylesHead}>Action </TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {employees.map((data, i)=> (
-                            <TableRow key={i}>
+                            <TableRow className="linkss" component={Link} to={'/userprofileedit/'+data.id} key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
-                                <TableCell style={stylesBody}><TableButton type="submit" onClick={()=> {
+                                {/* <TableCell style={stylesBody}><TableButton type="submit" onClick={()=> {
                                     handleClick(data.id)
-                                }}> Edit</TableButton> </TableCell>
+                                }}> Edit</TableButton> </TableCell> */}
                             </TableRow>
                         ))}
                     </TableBody>

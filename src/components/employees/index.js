@@ -9,6 +9,7 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom'
 import  {APPCONFIG} from '../../config/config';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Popup from './../department/popup'
 //import JwPagination from 'jw-react-pagination';
 import {
@@ -18,6 +19,7 @@ import {
   import Paper from '@material-ui/core/Paper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import SearchBar from 'material-ui-search-bar'
 
 const Employees =()=> {
 
@@ -34,7 +36,10 @@ const Employees =()=> {
     const [department, setDepartment] = useState([])
     const [id, setId] = useState('');
     const [search, setSearch] = React.useState("");
-    const [employeeId, setEmployeeId] = useState('')
+    const [employeeId, setEmployeeId] = useState('');
+    const [pay, setPay] = useState('');
+
+    const [searched, setSearched] = useState("");
 
     const history = useHistory()
 
@@ -57,6 +62,19 @@ const Employees =()=> {
         setPassword('');
         setDepartment('');
         setSchool('');
+        setPay('');
+    }
+
+    //const classes = useStyles();
+    const requestSearch =(searchedVal)=> {
+        const filteredRows = employees.filter((employees)=> {
+            return employees.surname.toLowerCase().includes(searchedVal.toLowerCase());
+        });
+        setEmployees(filteredRows);
+    };
+    const cancelSearch=()=> {
+        setSearched("");
+        requestSearch(searched)
     }
 
     const togglePopup =(id)=> {
@@ -111,6 +129,7 @@ const Employees =()=> {
             password: password,
             school: school,
             department: department,
+            pay: pay
         })
         window.location.replace('http://localhost:3000/employees')
         .then((response) => {
@@ -245,6 +264,14 @@ const Employees =()=> {
                 value={password}
                 handleChange={ e=> setPassword(e.target.value)}
                 />
+                <FormInput
+                required 
+                type="text"
+                placeholder="Salary (N)"
+                name="pay"
+                value={pay}
+                handleChange={ e=> setPay(e.target.value)}
+                />
                 <FormSelect
                 
                         options={[
@@ -283,7 +310,7 @@ const Employees =()=> {
                             name: "Management"
                         },
                          {
-                            value: "Principal Officers",
+                            value: "Principal Officer",
                             name: "Principal Officers"
                         },
                         {
@@ -304,7 +331,7 @@ const Employees =()=> {
                            name: "Hostel"
                        },
                         {
-                            value: "Drivers",
+                            value: "Driver",
                             name: "Drivers"
                         }
                         ,{
@@ -325,6 +352,7 @@ const Employees =()=> {
                     ]}
                     handleChange={e => setDepartment(e.target.value)}
                 />
+                
                 <Button onClick={register} type="submit">
                     Sign Up
                 </Button>
@@ -343,7 +371,10 @@ const Employees =()=> {
                             handleChange={e => {
                                 if (e.target.value) {
                                     const filteredTeams = employees.filter(employees => {
-                                      return employees.surname.toLowerCase().includes(e.target.value.toLowerCase());
+                                      return employees.surname.toLowerCase().includes(e.target.value.toLowerCase()) || employees.staffid.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                                      employees.firstname.toLowerCase().includes(e.target.value.toLowerCase()) || 
+                                      employees.department.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                                      employees.school.toLowerCase().includes(e.target.value.toLowerCase());
                                     });
                                     setEmployees(filteredTeams);
                                   } else {
@@ -352,9 +383,22 @@ const Employees =()=> {
                                   setSearch(e.target.value);
                               }}
                             />
+                            {/* <SearchBar 
+                            value={searched}
+                            onChange={(searchedVal)=> requestSearch(searchedVal)}
+                            onCancelSearch={()=> cancelSearch()}
+                            /> */}
             </div>
+            <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                filename="employeesXls"
+                sheet="tablexls"
+                buttonText="Download as XLS" 
+                />
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table id="table-to-xls" className={useStyles.table}>
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
