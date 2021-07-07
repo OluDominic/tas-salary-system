@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './index.scss'
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import Modal from './../modals';
+import Modal from './../modal';
 import { Helmet } from 'react-helmet'
 import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput';
@@ -70,6 +70,11 @@ const EmployeeInfo =()=> {
     const [kinRela, setKinRela] = useState('');
     const [kinPhone, setKinPhone] = useState('');
 
+    //edu
+    const [ssce, setSsce] = useState('');
+    const [bsc, setBsc] = useState('');
+    const [msc, setMsc] = useState('');
+    const [phd, setPhd] = useState('');
 
     const toggleModal =()=> setHideModal(!hideModal);
 
@@ -119,7 +124,7 @@ const EmployeeInfo =()=> {
             tel, marital , country, religion, bankName, accName, 
             accNo, state, kinName, kinRela, kinPhone, contactName1, 
             contactRela1, contactPhone1, contactName2, contactRela2,
-            contactPhone2
+            contactPhone2, ssce, bsc, msc, phd
             ) {
                 return <Button onClick={profileAPI} type="submit">
                                 Update
@@ -151,7 +156,7 @@ const EmployeeInfo =()=> {
           
         }).then((data) => {
            
-            setGetEmployee(data.data);
+            setGetEmployee(data.data[0]);
         }).catch((error) => {
             console.log(error);
         })
@@ -190,10 +195,14 @@ const EmployeeInfo =()=> {
         setContactRela2('');
         setContactPhone2('');
         setContactName2('');
+        setSsce('');
+        setBsc('');
+        setMsc('');
+        setPhd('');
     }
 
     const profileAPI =()=> {
-        axios.post("http://localhost:8000/profile", {
+        axios.post("http://192.168.43.9:3000/profile", {
             id: userdata.id,
             staffid: userdata.staffid,
             surname: userdata.surname,
@@ -224,7 +233,11 @@ const EmployeeInfo =()=> {
             ecphone: contactPhone1,
             ecsname: contactName2,
             ecsrelationship: contactRela2,
-            ecsphone: contactPhone2
+            ecsphone: contactPhone2,
+            ssce: ssce,
+            uni: bsc,
+            msc: msc,
+            phd: phd
         })
     }
 
@@ -246,7 +259,7 @@ const EmployeeInfo =()=> {
                         <FormInput
                             name="id"
                             value={userdata.id}
-                            type="text"
+                            type="hidden"
                             />
                             <FormInput
                             name="id"
@@ -284,7 +297,12 @@ const EmployeeInfo =()=> {
                             value={userdata.email}
                             type="text"
                             />
-                            <FormInput
+                            
+
+                            <div className="formRow checkoutInput">
+
+                                <h2>Personal Informations</h2>
+                                <FormInput
                             name="phone"
                             value={phone}
                             placeholder="Phone No"
@@ -328,10 +346,6 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setGender(e.target.value)}
                             />
-
-                            <div className="formRow checkoutInput">
-
-                                <h2>Personal Informations</h2>
                             <FormInput
                             type="text"
                             value={passport}
@@ -545,6 +559,7 @@ const EmployeeInfo =()=> {
                             value={country}
                             valueType="short"
                             /> 
+                            <br />
                             <FormSelect
                             options={[ 
                             {
@@ -703,6 +718,82 @@ const EmployeeInfo =()=> {
                                 value={kinPhone}
                                 handleChange={e => setKinPhone(e.target.value)}
                                 />
+                            </div>
+
+                            <div>
+                                <h2>Educational Background</h2>
+                            <FormSelect
+                            options={[ 
+                            {
+                            value: "SSCE",
+                            name: "Select ssce"
+                            }
+                            ,
+                            {
+                            value: "Yes",
+                            name: "Yes"
+                            }
+                            , {
+                            value: "No",
+                            name: "No"
+                            }
+                            ]}
+                            handleChange={e => setSsce(e.target.value)}
+                            />
+                            <FormSelect
+                            options={[ 
+                            {
+                            value: "University Degree",
+                            name: "University Degree"
+                            }
+                            ,
+                            {
+                            value: "Yes",
+                            name: "Yes"
+                            }
+                            , {
+                            value: "No",
+                            name: "No"
+                            }
+                            ]}
+                            handleChange={e => setBsc(e.target.value)}
+                            />
+                            <FormSelect
+                            options={[ 
+                            {
+                            value: "MSc",
+                            name: "Msc"
+                            }
+                            ,
+                            {
+                            value: "Yes",
+                            name: "Yes"
+                            }
+                            , {
+                            value: "No",
+                            name: "No"
+                            }
+                            ]}
+                            handleChange={e => setMsc(e.target.value)}
+                            />
+                            <FormSelect
+                            options={[ 
+                            {
+                            value: "Phd",
+                            name: "Phd"
+                            }
+                            ,
+                            {
+                            value: "Yes",
+                            name: "Yes"
+                            }
+                            , {
+                            value: "No",
+                            name: "No"
+                            }
+                            ]}
+                            handleChange={e => setPhd(e.target.value)}
+                            />
                             </div>
 
                             <SubmitButton />

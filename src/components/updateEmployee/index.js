@@ -11,15 +11,6 @@ import Button from '../forms/Button';
 
 const Update =()=> {
     const [update, setUpdate] = useState([])
-    const [newUpdate, setNewUpdate] = useState()
-
-    const [firstName, setFirstName] = useState("")
-    const [surName, setSurName] = useState("")
-    const [lastName, setLastName] = useState("")
-    const [email, setEmail] = useState("")
-    const [school, setSchool] = useState('')
-    const [department, setDepartment] = useState('')
-    const [updateid, setUpdateId] = useState('')
     const [msg, setMsg] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
@@ -60,24 +51,26 @@ const Update =()=> {
         e.preventDefault()
     }
 
+    const handleChange =(e)=> {
+        const {name, value} = e.target;
+        setUpdate({...update, [name]: value})
+    }
+
     const updateEmployee =()=> {
 
-        axios.put(`http://localhost:8000/employee/${id}`, {
-           // staffid: updateid,
-            surname: surName,    
-            firstname: firstName,
-            lastname: lastName,
-            email: email,
-            school: school,
-            department: department
+        axios.put(`http://192.168.43.9:3000/employee/${id}`, {
+            staffid: update.id,
+            surname: update.surname,    
+            firstname: update.firstname,
+            lastname: update.lastname,
+            email: update.email,
+            school: update.school,
+            department: update.department,
+            pay: update.pay,
+            bankname: update.bankname,
+            accountname: update.accountname,
+            accountno: update.accountno
         });
-        setUpdateId('');
-        setSurName('');
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setSchool('');
-        setDepartment('');
         setMsg('Employee Details Update Successful!!')
     }
 
@@ -96,8 +89,12 @@ const Update =()=> {
                     <li><p style={{textTransform: 'none'}}>{update.firstname}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.lastname}</p></li>
                     <li><p style={{textTransform: 'lowercase'}}>{update.email}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.pay}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.school}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.department}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.bankname}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.accountname}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.accountno}</p></li>
                 </ul>
             </div>
             <div>
@@ -106,42 +103,92 @@ const Update =()=> {
                         <div>
                             <div><p style={{color: 'green'}}>{msg}</p></div>
                             <div><p style={{color: 'red'}}>{errMsg}</p></div>
-                            {/* <FormInput 
-                            type="text"
-                            placeholder="ID"
+                            <FormInput 
+                            type="hidden"
                             name="id"
-                            value={updateid}
-                            handleChange={ e=> setUpdateId(e.target.value)}
-                            /> */}
+                            value={update.id}
+                            />
+                            <label>Surname</label>
                             <FormInput 
                             type="text"
                             placeholder="Surname"
                             name="surname"
-                            value={surName}
-                            handleChange={ e=> setSurName(e.target.value)}
+                            value={update.surname}
+                            handleChange={handleChange}
                             />
+                            <label>Firstname</label>
                             <FormInput 
                             type="text"
                             placeholder="Firstname"
-                            name="firstName"
-                            value={firstName}
-                            handleChange={ e=> setFirstName(e.target.value)}
+                            name="firstname"
+                            value={update.firstname}
+                            handleChange={handleChange}
                             />
+                            <label>Surname</label>
                             <FormInput 
                             type="text"
                             placeholder="Lastname"
-                            name="lastName"
-                            value={lastName}
-                            handleChange={ e=> setLastName(e.target.value)}
+                            name="lastname"
+                            value={update.lastname}
+                            handleChange={handleChange}
                             />
+                            <label>Email</label>
                             <FormInput 
                             type="text"
                             placeholder="Email"
                             name="email"
-                            value={email}
-                            handleChange={ e=> setEmail(e.target.value)}
+                            value={update.email}
+                            handleChange={handleChange}
                             />
-                            <FormSelect
+                            <label>Gross Pay</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Salary(N)"
+                            name="pay"
+                            value={update.pay}
+                            handleChange={handleChange}
+                            />
+                            <label>School</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Salary(N)"
+                            name="school"
+                            value={update.school}
+                            handleChange={handleChange}
+                            />
+                            <label>Department</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Salary(N)"
+                            name="department"
+                            value={update.department}
+                            handleChange={handleChange}
+                            />
+                            <label>Bank</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Salary(N)"
+                            name="bankname"
+                            value={update.bankname}
+                            handleChange={handleChange}
+                            />
+                            <label>Account Name</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Salary(N)"
+                            name="accountname"
+                            value={update.accountname}
+                            handleChange={handleChange}
+                            />
+                            <label>Account Number</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Salary(N)"
+                            name="accountno"
+                            value={update.accountno}
+                            handleChange={handleChange}
+                            />
+                            {/* <FormSelect
                 
                 options={[
                 {
@@ -165,10 +212,10 @@ const Update =()=> {
                     name: "Primary School"
                 }
             ]}
-            handleChange={e => setSchool(e.target.value)}
-        />
+            handleChange={handleChange}
+        /> */}
 
-        <FormSelect
+        {/* <FormSelect
             options={[
                  {
                     value: "Department",
@@ -219,8 +266,8 @@ const Update =()=> {
                   name: "Utility"
               }
             ]}
-            handleChange={e => setDepartment(e.target.value)}
-        />
+            handleChange={handleChange}
+        /> */}
                             <Button type="submit" onClick={()=> {
                                 updateEmployee(update.id)
                             }}>

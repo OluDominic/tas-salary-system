@@ -12,8 +12,9 @@ import moment from 'moment';
 import Select from 'react-select'
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
   import Paper from '@material-ui/core/Paper';
   import Modal from './../modal';
   import Popup from './../department/popup';
@@ -80,7 +81,7 @@ const AdminComplaints =()=> {
     }
 
     const deleteComplaints =()=> {
-        axios.delete(`http://localhost:8000/deletecomplaints/${complaintId}`, {
+        axios.delete(`http://localhost:3000/deletecomplaints/${complaintId}`, {
            
         })
         window.location.replace('http://localhost:3000/admincomplaints')
@@ -106,10 +107,10 @@ const AdminComplaints =()=> {
     }
 
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
       const togglePopup =(id)=> {
         setComplaintId(id)
@@ -194,7 +195,7 @@ const AdminComplaints =()=> {
             <div className="birthday-sub">
             <h2>Mail</h2>
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table >
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>

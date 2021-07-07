@@ -11,40 +11,23 @@ import axios from 'axios'
 import './index.scss';
 
 const UpdateSalary =()=> {
-
-    const [salaryinfo, setSalaryinfo] = useState([]);
-    const [date, setDate] = useState(new Date());
-    const [hideModal, setHideModal] = useState(true);
     const [info, setInfo] = useState([]);
     const [msg, setMsg] = useState('')
 
     const [netSalary, setNetSalary] = useState('');
-    const [grossSalary, setGrossSalary] = useState('');
-    const [selectedDate, handleDateChange] = useState(new Date());
-
-    //addition
-    const [leaveAllow, setLeaveAllow] = useState(0);
-    const [monthlyAllow, setMonthlyAllow] = useState(0);
-    const [transportAllowance, setTransportAllowance] = useState(0);
-    const [hodAllowance, setHodAllowance] = useState(0);
-    const [classTeacherAllow, setClassTeacherAllow] = useState(0);
-    const [arrears, setArrears] = useState(0);
-    const [compensation, setCompesation] = useState(0);
-    const [otherAllowance, setOtherAllowance] = useState(0);
 
     //dedection
     const [social, setSocial] = useState(300);
-    const [lateness, setLateness] = useState(0);
-    const [cooperative, setCooperative] = useState(0);
-    const [childFees, setChildFees] = useState(0);
-    const [absentism, setAbsentism] = useState(0);
-    const [health, setHealth] = useState(0);
-    const [otherDec, setOtherDec] = useState(0);
 
     const handleSubmit =(event)=> {
         event.preventDefault();
     }
 
+    const handleChange =(e)=> {
+        const {name, value} = e.target;
+        setInfo({...info, [name]: value});
+
+    }
 
     let {salaryid} = useParams()
     useEffect(()=> {
@@ -59,87 +42,69 @@ const UpdateSalary =()=> {
             Authorization: `Bearer lll`,
             "Access-Control-Allow-Origin":"*"
         }
-        console.log('here')
-        axios.get(`${APPCONFIG.appapi}/payslipedit/${salaryid}`, {
+        console.log(salaryid)
+        axios.get(`${APPCONFIG.appapi}/payslip/${salaryid}`, {
             headers
         }).then((data) => {
            
-            setInfo(data.data);
+            setInfo(data.data[0]);
         }).catch((error) => {
             console.log(error);
         })
     }
 
     const SalaryTotal =()=> {
-        let setNetSalary0 = parseInt(grossSalary)
-         + parseInt(leaveAllow) + 
-         parseInt(monthlyAllow) + parseInt(transportAllowance) + 
-         parseInt(hodAllowance) + parseInt(classTeacherAllow) + 
-         parseInt(arrears) + parseInt(compensation) + parseInt(otherAllowance) - 
-         parseInt(social) - parseInt(lateness) - parseInt(cooperative) - 
-         parseInt(childFees) - parseInt(absentism) - parseInt(health) - 
-         parseInt(otherDec)
+        let setNetSalary0 = parseInt(info.gross)
+         + parseInt(info.leaveallow) + 
+         parseInt(info.monthly) + parseInt(info.transport) + 
+         parseInt(info.hod) + parseInt(info.classteacher) + 
+         parseInt(info.arrears) + parseInt(info.compensations) + parseInt(info.otherallow) - 
+         parseInt(social) - parseInt(info.lateness) - parseInt(info.cooperative) - 
+         parseInt(info.childfees) - parseInt(info.absentism) - parseInt(info.health) - 
+         parseInt(info.othersred)
      setNetSalary(setNetSalary0)
      }
- 
-     const reset =()=> {
-        setGrossSalary('');
-        setNetSalary('');
-        setHodAllowance(0);
-        setClassTeacherAllow(0);
-        setMonthlyAllow(0);
-        setLeaveAllow(0);
-        setTransportAllowance(0);
-        setArrears(0);
-        setCompesation(0);
-        setOtherAllowance(0);
-        setSocial(300);
-        setLateness(0);
-        setCooperative(0);
-        setChildFees(0);
-        setAbsentism(0);
-        setHealth(0);
-        setOtherDec(0)
+
+     const SubmitButton=()=> {
+        if ( netSalary) {
+            return <Button onClick={()=> {
+                updateEmployee(info.salaryid)
+            }} style={{width: "60%", alignItem: "center"}} type="submit">
+                    Submit
+                </Button>
+        } else {
+           return <Button onClick={()=> {
+            updateEmployee(info.salaryid)
+        }} style={{width: "60%", alignItem: "center"}} type="submit" disabled>
+                Submit
+            </Button>
+        }
     }
+ 
 
     const updateEmployee =()=> {
 
-        axios.put(`http://localhost:8000/salaryupdate/${salaryid}`, {
+        axios.put(`http://localhost:3000/salaryupdate/${salaryid}`, {
             
-            date: date,
-            gross: grossSalary,
-            hod: hodAllowance,
-            classteacher: classTeacherAllow,
-            monthly: monthlyAllow,
-            leaveallow: leaveAllow,
-            transport: transportAllowance,
-            arrears: arrears,
-            compensations: compensation,
-            otherallow: otherAllowance,
+            gross: info.gross,
+            hod: info.hod,
+            classteacher: info.classteacher,
+            monthly: info.monthly,
+            leaveallow: info.leaveallow,
+            transport: info.transport,
+            arrears: info.arrears,
+            compensations: info.compensations,
+            otherallow: info.otherallow,
             social: social,
-            lateness: lateness,
-            cooperative: cooperative,
-            childfees: childFees,
-            absentism: absentism,
-            health: health,
-            othersred: otherDec,
+            lateness: info.lateness,
+            cooperative: info.cooperative,
+            childfees: info.childfees,
+            absentism: info.absentism,
+            health: info.health,
+            othersred: info.othersred,
             net: netSalary
         });
-        setHodAllowance(0);
-        setClassTeacherAllow(0);
-        setMonthlyAllow(0);
-        setLeaveAllow(0);
-        setTransportAllowance(0);
-        setArrears(0);
-        setCompesation(0);
-        setOtherAllowance(0);
-        setSocial(300);
-        setLateness(0);
-        setCooperative(0);
-        setChildFees(0);
-        setAbsentism(0);
-        setHealth(0);
-        setOtherDec(0);
+        setNetSalary('')
         setMsg('Employee Salary Updated')
     }
     
@@ -156,28 +121,13 @@ const UpdateSalary =()=> {
                 
                 <div className="net">
                         <h3>Month & Year</h3>
-                    <div className="date">
-                         <DatePicker 
-                        dateFormat="MMMM yyyy"
-                        showMonthYearPicker
-                        selected={date}
-                        onChange={date => setDate(date)}
-                        dropdownMode= "scroll"
-                        />
-                    </div> 
-                        {/* <FormInput
-                        type="month"
-                        name="date"
-                        value={date}
-                        handleChange={e => setDate(e.target.value)}
-                        /> */}
                         <label>Gross Salary (N)</label>
                         <FormInput 
                         required
-                        name="grossSalary"
-                        value={grossSalary}
-                        type="number"
-                        handleChange={e => setGrossSalary(e.target.value)}
+                        name="gross"
+                        value={info.gross}
+                        type="text"
+                        handleChange={handleChange}
                         />
                 </div>
                 <div className="info-fill">
@@ -185,66 +135,66 @@ const UpdateSalary =()=> {
                         <label>HOD Allowance</label>
                         <FormInput
                         required 
-                        name="hod allowance"
-                        value={hodAllowance}
-                        type="number"
-                        handleChange={e => setHodAllowance(e.target.value)}
+                        name="hod"
+                        value={info.hod}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Class Teacher Allowance</label>
                         <FormInput
                         required 
-                        name="class teacher allowance"
-                        value={classTeacherAllow}
-                        type="number"
-                        handleChange={e => setClassTeacherAllow(e.target.value)}
+                        name="classteacher"
+                        value={info.classteacher}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Monthly Allowance</label>
                         <FormInput
                         required 
-                        name="monthlyAllowance"
-                        value={monthlyAllow}
-                        type="number"
-                        handleChange={e => setMonthlyAllow(e.target.value)}
+                        name="monthly"
+                        value={info.monthly}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Leave Allowance</label>
                         <FormInput
                         required 
-                        name="leaveAllowance"
-                        value={leaveAllow}
-                        type="number"
-                        handleChange={e => setLeaveAllow(e.target.value)}
+                        name="leaveallow"
+                        value={info.leaveallow}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Transport Allowance</label>
                         <FormInput
                         required 
-                        name="transport allowance"
-                        value={transportAllowance}
-                        type="number"
-                        handleChange={e => setTransportAllowance(e.target.value)}
+                        name="transport"
+                        value={info.transport}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Arrears</label>
                         <FormInput
                         required 
                         name="arrears"
-                        value={arrears}
-                        type="number"
-                        handleChange={e => setArrears(e.target.value)}
+                        value={info.arrears}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Compensations</label>
                         <FormInput
                         required 
-                        name="compensation"
-                        value={compensation}
-                        type="number"
-                        handleChange={e => setCompesation(e.target.value)}
+                        name="compensations"
+                        value={info.compensations}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Other Allowance</label>
                         <FormInput
                         required 
-                        name="other allowance"
-                        value={otherAllowance}
-                        type="number"
-                        handleChange={e => setOtherAllowance(e.target.value)}
+                        name="otherallow"
+                        value={info.otherallow}
+                        type="text"
+                        handleChange={handleChange}
                         />
                 </div>
                 <div className="info-fill">
@@ -254,62 +204,59 @@ const UpdateSalary =()=> {
                         required 
                         name="social"
                         value={social}
-                        type="number"
+                        type="text"
                         readOnly
                         />
                         <label>Lateness</label>
                         <FormInput
                         required 
                         name="lateness"
-                        value={lateness}
-                        type="number"
-                        handleChange={e => setLateness(e.target.value)}
+                        value={info.lateness}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Co-operative</label>
                         <FormInput
                         required 
                         name="cooperative"
-                        value={cooperative}
-                        type="number"
-                        handleChange={e => setCooperative(e.target.value)}
+                        value={info.cooperative}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Child Fees</label>
                         <FormInput
                         required 
                         name="childfees"
-                        value={childFees}
-                        type="number"
-                        handleChange={e => setChildFees(e.target.value)}
+                        value={info.childfees}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Absentism</label>
                         <FormInput
                         required 
                         name="absentism"
-                        value={absentism}
-                        type="number"
-                        handleChange={e => setAbsentism(e.target.value)}
+                        value={info.absentism}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Health</label>
                         <FormInput
                         required 
                         name="health"
-                        value={health}
-                        type="number"
-                        handleChange={e => setHealth(e.target.value)}
+                        value={info.health}
+                        type="text"
+                        handleChange={handleChange}
                         />
                         <label>Others</label>
                         <FormInput
                         required 
-                        name="others"
-                        value={otherDec}
-                        type="number"
-                        handleChange={e => setOtherDec(e.target.value)}
+                        name="othersred"
+                        value={info.othersred}
+                        type="text"
+                        handleChange={handleChange}
                         />
                     </div>
                     <div className="net">
-                        <Button onClick={reset}>
-                            Reset
-                        </Button>
                         <Button onClick={()=> SalaryTotal()}>
                             Get Total
                         </Button>
@@ -317,15 +264,11 @@ const UpdateSalary =()=> {
                         <FormInput 
                         name="netsalary"
                         value={netSalary}
-                        type="number"
+                        type="text"
                         />
                 </div>
                     
-                    <Button onClick={()=> {
-                        updateEmployee(info.salaryid)
-                    }} style={{width: "60%", alignItem: "center"}} type="submit">
-                            Submit
-                        </Button>
+                    <SubmitButton />
                         <div><p style={{color: 'green'}}>{msg} </p></div>
                 </form>
             </div>

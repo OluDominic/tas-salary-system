@@ -39,7 +39,7 @@ const Recovery =()=> {
     },[])
 
     const resetPassword =()=> {
-        axios.put(`http://localhost:8000/setpassword/${id}`, {
+        axios.put(`http://192.168.43.9:3000/setpassword/${id}`, {
             password: password,
             confirm: confirm,
         })

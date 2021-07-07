@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react'
 import './index.scss'
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
   import Paper from '@material-ui/core/Paper';
 import Modal from '../modal';
 import { Helmet } from 'react-helmet'
@@ -27,14 +28,14 @@ const Schools =()=> {
     const [isOpen, setIsOpen] = useState(false)
 
     const addSchool =()=> {
-        axios.post("http://localhost:8000/school", {
+        axios.post("http://localhost:3000/school", {
             school: school
         })
         window.location.replace('http://localhost:3000/schools')
     }
 
     const deleteSchool =(id)=> {
-        axios.delete(`http://localhost:8000/deleteschool/${schoolId}`, {
+        axios.delete(`http://localhost:3000/deleteschool/${schoolId}`, {
            
         });
         window.location.replace('http://localhost:3000/schools')
@@ -95,10 +96,10 @@ const Schools =()=> {
         setIsOpen(!isOpen);
     }
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
     const stylesHead = {
         fontSize: '20px',
@@ -153,7 +154,7 @@ const Schools =()=> {
             </Modal>
             <div className="school-table">
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -163,7 +164,7 @@ const Schools =()=> {
                     </TableHead>
                     <TableBody>
                         {
-                        schools.map((data, i)=> (
+                        schools.map && schools.map((data, i)=> (
                             <TableRow key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>

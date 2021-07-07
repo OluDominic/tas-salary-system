@@ -4,8 +4,9 @@ import FormInput from '../forms/FormInput'
 import FormWrapper from '../forms/FormWrapper'
 import {
   TableContainer, Table, TableHead,
-  TableRow, TableBody, TableCell, makeStyles
+  TableRow, TableBody, TableCell
 } from '@material-ui/core';
+//import {makeStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
@@ -80,10 +81,10 @@ const UserProfile =()=> {
         }
     }
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
       const stylesHead = {
         fontSize: '20px',
@@ -147,7 +148,7 @@ const UserProfile =()=> {
                 </div> */}
             </div>
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table >
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -160,7 +161,7 @@ const UserProfile =()=> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {employees.map((data, i)=> (
+                        {employees.map && employees.map((data, i)=> (
                             <TableRow className="linkss" component={Link} to={'/userprofileedit/'+data.id} key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>

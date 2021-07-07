@@ -4,8 +4,9 @@ import Button from './../forms/Button'
 import {APPCONFIG} from './../../config/config'
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
   import Naira from 'react-naira';
   import Paper from '@material-ui/core/Paper';
   import moment from 'moment'
@@ -50,10 +51,10 @@ const Salary =()=> {
         })
     }
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
       const stylesHead = {
         fontSize: '17px',
@@ -81,7 +82,7 @@ const Salary =()=> {
                 <h2>Payroll Table</h2>
                 <div className="payrollTable">
                     <TableContainer component={Paper}>
-                    <Table className={useStyles.table}>
+                    <Table >
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}># </TableCell>
@@ -94,7 +95,7 @@ const Salary =()=> {
                         </TableHead>
                         <TableBody>
                             { 
-                            payroll.map((data, i)=> {
+                            payroll.map && payroll.map((data, i)=> {
                                 console.log(data)
                                 return (
                                     <TableRow key={i}>

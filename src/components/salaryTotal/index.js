@@ -8,8 +8,9 @@ import { useParams } from 'react-router-dom';
 import Naira from 'react-naira'
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
@@ -87,10 +88,10 @@ const SalaryTotal =()=> {
         })
     }
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
     const stylesHead = {
         fontSize: '17px',
@@ -134,7 +135,7 @@ const SalaryTotal =()=> {
                 buttonText="Download as XLS" 
                 />
                 <TableContainer component={Paper}>
-                    <Table id="table-to-xls" className={useStyles.table}>
+                    <Table id="table-to-xls" >
                         <TableHead>
                             <TableRow>
                                 <TableCell style={stylesHead}># </TableCell>
@@ -149,7 +150,7 @@ const SalaryTotal =()=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {total.map((data, i)=> (
+                            {total.map && total.map((data, i)=> (
                                 <TableRow  key={i}>
                                     <TableCell style={stylesBody}>{i + 1}</TableCell>
                                     {/* <TableCell style={stylesBody}>{data.staffid}</TableCell> */}

@@ -1,18 +1,19 @@
 .footer {
 
     .footer-sub {
-        padding: 80px 100px;
         background: black;
         width: 100%;
-        margin: 0;
-        width: 100%;
-        max-width: 1450px;
+        position: absolute;
+        max-width: 1850px;
+        height: 150px;
+        bottom: 0;
 
         .font-icon {
             color: grey;
             font-size: 14px;
             text-transform: capitalize;
             top: 20px;
+            margin-left: 50px;
         }
 
         .rights {
@@ -20,6 +21,7 @@
             color: grey;
             font-size: 14px;
             text-transform: capitalize;
+            margin-left: 50px;
         }
     }
 }

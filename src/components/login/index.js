@@ -24,7 +24,7 @@ const Login =()=> {
     }
 
     const loginUser =()=> {
-        axios.post("http://localhost:8000/login", {
+        axios.post("http://192.168.43.9:3000/login", {
             email : id,
             password: password
         },{
@@ -36,9 +36,9 @@ const Login =()=> {
             let data = response.data;
             localStorage.setItem("userdata",JSON.stringify(data));
             if (data.usertype=='admin') {
-               window.location.replace('http://localhost:3000/admin')
+               window.location.replace('http://192.168.43.9:3000/admin')
             } else {
-                window.location.replace('http://localhost:3000/profile')
+                window.location.replace('http://192.168.43.9:3000/profile')
             }
 
             if (response.data.message) {

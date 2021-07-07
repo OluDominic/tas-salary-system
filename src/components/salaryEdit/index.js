@@ -3,8 +3,9 @@ import TableButton from '../forms/TableButton'
 import FormInput from '../forms/FormInput'
 import {
   TableContainer, Table, TableHead,
-  TableRow, TableBody, TableCell, makeStyles
+  TableRow, TableBody, TableCell
 } from '@material-ui/core';
+//import {makeStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Link } from 'react-router-dom';
@@ -78,7 +79,7 @@ const SalaryEdit =()=> {
             headers
         })
         .then((data) => {
-            setEmployees(data.data);
+            setEmployees(data.data[0]);
         })
         .catch((error)=> {
             console.log(error);
@@ -87,10 +88,10 @@ const SalaryEdit =()=> {
 
     
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
       const stylesHead = {
         fontSize: '20px',
@@ -168,7 +169,7 @@ const SalaryEdit =()=> {
                 buttonText="Download as XLS" 
                 />
             <TableContainer component={Paper}>
-                <Table id="table-to-xls" className={useStyles.table}>
+                <Table id="table-to-xls" >
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -182,7 +183,7 @@ const SalaryEdit =()=> {
                     </TableHead>
                     <TableBody>
                     
-                        {employees.map((data, i)=> (
+                        {employees.map && employees.map((data, i)=> (
                             
                             <TableRow className="linkss" component={Link} to={'/salaryinfo/'+data.id} key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>

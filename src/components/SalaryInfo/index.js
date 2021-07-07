@@ -9,27 +9,33 @@ import { Helmet } from 'react-helmet'
 import Popup from './../department/popup'
 import './index.scss'
 import { useParams, useHistory } from 'react-router-dom';
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
+import DateFnsUtils from '@date-io/date-fns';
 import Naira from 'react-naira'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell, makeStyles, Collapse
   } from '@material-ui/core';
   import Paper from '@material-ui/core/Paper';
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { faFileInvoice, faInfo } from '@fortawesome/free-solid-svg-icons'
+import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
+import KeyboardArrowUp from "@material-ui/icons/KeyboardArrowUp";
 
 const SalaryInfo =()=> {
     const [salaryinfo, setSalaryinfo] = useState([]);
+    const [banks, setBanks] = useState([])
     const [date, setDate] = useState(new Date());
     const [info, setInfo] = useState([]);
     const [fetchSocial, setFetchSocial] = useState([]);
     const history = useHistory();
     const [employeeId, setEmployeeId] = useState('')
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const [netSalary, setNetSalary] = useState('');
     const [grossSalary, setGrossSalary] = useState('');
@@ -56,9 +62,10 @@ const SalaryInfo =()=> {
     const [msg, setmsg] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+
     const handleSubmit =(event)=> {
         event.preventDefault();
-        reset();
+        
     }
     
     const SubmitButton=()=> {
@@ -92,11 +99,11 @@ const SalaryInfo =()=> {
     }
 
     const postSalary =(salaryid)=> {
-        axios.post("http://localhost:8000/salary", {
+        axios.post("http://192.168.43.9:3000/salary", {
             
             id: salaryinfo.id,
             staffid: salaryinfo.staffid,
-            date: date,
+            date: selectedDate,
             gross: salaryinfo.pay,
             hod: hodAllowance,
             classteacher: classTeacherAllow,
@@ -115,9 +122,12 @@ const SalaryInfo =()=> {
             othersred: otherDec,
             net: netSalary,
             surname: salaryinfo.surname,
-            firstname: salaryinfo.firstname
+            firstname: salaryinfo.firstname,
+            bankname: salaryinfo.bankname,
+            accountname: salaryinfo.accountname,
+            accountno: salaryinfo.accountno
         })
-        window.location.replace('http://localhost:3000/salaryinfo/'+salaryinfo.id)
+        window.location.replace('http://192.168.43.9:3000/salaryinfo/'+salaryinfo.id)
         .then((response) => {
             // if (response.data.message) {
             //     setErrorMessage(response.data.message)
@@ -156,10 +166,10 @@ const SalaryInfo =()=> {
     };
 
     const deleteSalary=()=> {
-        axios.delete(`http://localhost:8000/deletesalary/${employeeId}`, {
+        axios.delete(`http://192.168.43.9:3000/deletesalary/${employeeId}`, {
            
         })
-        window.location.replace('http://localhost:3000/salaryinfo/'+salaryinfo.id)
+        window.location.replace('http://192.168.43.9:3000/salaryinfo/'+salaryinfo.id)
         .then((response)=> {
             console.log(response)
         });
@@ -230,9 +240,29 @@ const SalaryInfo =()=> {
         })
     }
 
+
+    useEffect(()=> {
+        fetchBanks()
+    },[])
+
+    const fetchBanks =()=> {
+        console.log(banks)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorisation: `Bearer 111`,
+            "Access-Control-Allow-Origin":"*"
+        }
+
+        axios.get(`${APPCONFIG.appapi}/empinfo/${id}`, {
+            headers
+        })
+        .then((data)=> {
+            setBanks(data.data)
+        })
+    }
+
     const fetchDataUser = () => {
    
-        // console.log(location)
         const headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer lll`,
@@ -293,23 +323,42 @@ const SalaryInfo =()=> {
                         name="id"
                         value={salaryinfo.staffid}
                         />
+                        <FormInput
+                        type="hidden"
+                        name="id"
+                        value={salaryinfo.bankname}
+                        />
+                        <FormInput
+                        type="hidden"
+                        name="id"
+                        value={salaryinfo.accountname}
+                        />
+                        <FormInput
+                        type="hidden"
+                        name="id"
+                        value={salaryinfo.accountno}
+                        />
                     </div>
                         <h3>Month & Year</h3>
-                    <div className="date">
-                         <DatePicker 
-                        dateFormat="MMMM yyyy"
+                    <div style={{cursor: 'pointer'}} className="date">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                         {/* <DatePicker 
+                        dateFormat="MMMM-yyyy"
                         showMonthYearPicker
                         selected={date}
                         onChange={date => setDate(date)}
                         dropdownMode= "scroll"
-                        />
-                    </div> 
-                        {/* <FormInput
-                        type="month"
-                        name="date"
-                        value={date}
-                        handleChange={e => setDate(e.target.value)}
                         /> */}
+                        <DatePicker
+                            variant="inline"
+                            openTo="year"
+                            views={["year", "month"]}
+                            helperText="Start from month selection"
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                        />
+                    </MuiPickersUtilsProvider>
+                    </div> 
                         <label>Gross Salary (N)</label>
                         <FormInput 
                         required
@@ -479,8 +528,8 @@ const SalaryInfo =()=> {
             <TableContainer component={Paper}>
                 <Table id="table-to-xls" className={useStyles.table}>
                     <TableHead>
-                        <TableRow>
-                            <TableCell style={stylesHead}># </TableCell>
+                        <TableRow hover onClick={()=> {setOpen(!open)}}>
+                            <TableCell style={stylesHead}>{open ? <KeyboardArrowUp /> : <KeyboardArrowDown />} </TableCell>
                             <TableCell style={stylesHead}>Staff ID </TableCell>
                             <TableCell style={stylesHead}>Gross </TableCell>
                             <TableCell style={stylesHead}>Net </TableCell>
@@ -490,13 +539,14 @@ const SalaryInfo =()=> {
                     </TableHead>
                     <TableBody>
                         {info.map((data, i)=> (
+                            
                             <TableRow  key={i}>
-                                <TableCell style={stylesBody}>{i + 1}</TableCell>
-                                <TableCell style={stylesBody}>{data.staffid}</TableCell>
-                                <TableCell style={stylesBody}><Naira>{salaryinfo.pay}</Naira></TableCell>
-                                <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
-                                <TableCell style={stylesBody}>{moment(data.date).format('YYYY-MM')}</TableCell>
-                                <TableCell style={stylesBody}><span>
+                                <TableCell style={stylesBody}><Collapse hidden={!open} in={open} style={{display: 'block'}}>{i + 1}</Collapse></TableCell>
+                                <TableCell style={stylesBody}><Collapse hidden={!open} in={open} style={{display: 'block'}}>{data.staffid}</Collapse></TableCell>
+                                <TableCell style={stylesBody}><Collapse hidden={!open} in={open} style={{display: 'block'}}><Naira>{data.gross}</Naira></Collapse></TableCell>
+                                <TableCell style={stylesBody}><Collapse hidden={!open} in={open} style={{display: 'block'}}><Naira>{data.net}</Naira></Collapse></TableCell>
+                                <TableCell style={stylesBody}><Collapse hidden={!open} in={open} style={{display: 'block'}}>{moment(data.date).format('YYYY-MM')}</Collapse></TableCell>
+                                <TableCell style={stylesBody}><Collapse hidden={!open} in={open} style={{display: 'block'}}><span>
                                 <button onClick={()=> {
                                         handleClicks(data.salaryid)
                                     }}>
@@ -510,7 +560,8 @@ const SalaryInfo =()=> {
                             <button onClick={()=>{togglePopup(data.salaryid)}}>
                               <FontAwesomeIcon icon={faTrashAlt} />
                             </button>
-                                        </span> </TableCell>
+                                        </span></Collapse> </TableCell>
+                                        
                             </TableRow>
                         ))}
                     </TableBody>

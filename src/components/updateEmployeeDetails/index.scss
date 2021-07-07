@@ -1,0 +1,23 @@
+.update-total {
+    width: 100%;
+    display: block;
+
+    .update-form {
+        display: block;
+        width: 100%;
+
+        .update-sub1 {
+            display: block;
+            width: 50%;
+            float: left;
+            height: 100%;
+        }
+
+        .update-sub2 {
+            display: block;
+            width: 50%;
+            float: left;
+            height: 100%;
+        }
+    }
+}

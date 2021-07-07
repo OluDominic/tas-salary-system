@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import { Switch, Route} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import MainLayout from './layouts/mainLay/mainLay';
 import LoginPage from './pages/LoginPage';
 import HomeLayout from './layouts/homeLay';
@@ -34,6 +34,8 @@ import UpdateSalaryPage from './pages/UpdateSalaryPage';
 import AdminSettings from './pages/AdminSettings';
 import SalaryTotalPage from './pages/SalaryTotalPage';
 import AdminPayslip from './pages/AdminPayslip';
+import BankPage from './pages/BankPage';
+import EmployeeDetailsUpdatePage from './pages/EmployeeDetailsUpdatePage';
 //import './App.css';
 
 function App() {
@@ -107,6 +109,18 @@ function App() {
           <Route path="/salaryinfo/:id" render={()=> (
             <AdminLayout>
               <SalaryInfoPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/employeebank" render={()=> (
+            <AdminLayout>
+              <BankPage />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/employeeupdate/:id" render={()=> (
+            <AdminLayout>
+              <EmployeeDetailsUpdatePage />
             </AdminLayout>
           )}
           />

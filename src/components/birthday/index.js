@@ -3,8 +3,9 @@ import axios from 'axios';
 import {APPCONFIG} from './../../config/config';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
   import Paper from '@material-ui/core/Paper';
   import { Helmet } from 'react-helmet'
 import './index.scss'
@@ -39,10 +40,10 @@ const Birthday =()=> {
     }
 
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
       const stylesHead = {
         fontSize: '20px',
@@ -68,7 +69,7 @@ const Birthday =()=> {
             <div className="birthday-sub">
             <h2>This Month's Birthday</h2>
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table >
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}>ID </TableCell>
@@ -80,7 +81,7 @@ const Birthday =()=> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {birthday.map((data, i)=> (
+                        {birthday.map && birthday.map((data, i)=> (
                             <TableRow key={i}>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>

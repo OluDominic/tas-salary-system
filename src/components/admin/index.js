@@ -71,7 +71,7 @@ const Admin =()=> {
     const logout=()=> {
         localStorage.clear();
         setuseData({});
-        window.location.replace('http://localhost:3000/')
+        window.location.replace('http://192.168.43.9:3000/')
     }
 
     const settings=()=> {

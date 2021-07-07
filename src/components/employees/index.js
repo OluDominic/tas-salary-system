@@ -14,8 +14,9 @@ import Popup from './../department/popup'
 //import JwPagination from 'jw-react-pagination';
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
   import Paper from '@material-ui/core/Paper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
@@ -95,7 +96,7 @@ const Employees =()=> {
                 Authorization: `Bearer lll`,
                 "Access-Control-Allow-Origin":"*"
             }
-            console.log(page,'here')
+            console.log(employees)
             axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
                 headers
             }).then((data) => {
@@ -106,7 +107,7 @@ const Employees =()=> {
             })
         }
 
-        let oldlist = employees.map(employees => {
+        let oldlist = employees.map && employees.map(employees => {
             return {surname: employees.surname, school: employees.school, 
                 department: employees.department, staffid: employees.staffid, firstname: employees.firstname};
         });
@@ -120,7 +121,7 @@ const Employees =()=> {
     }
 
     const register =()=> {
-        axios.post("http://localhost:8000/register", {
+        axios.post("http://192.168.43.9:3000/register", {
             staffid: id,
             surname: surName,    
             firstname: firstName,
@@ -131,17 +132,17 @@ const Employees =()=> {
             department: department,
             pay: pay
         })
-        window.location.replace('http://localhost:3000/employees')
+        window.location.replace('http://192.168.43.9:3000/employees')
         .then((response) => {
             console.log(response)
         })
     }
 
     const deleteEmployee =()=> {
-        axios.delete(`http://localhost:8000/deleteemployees/${employeeId}`, {
+        axios.delete(`http://192.168.43.9:3000/deleteemployees/${employeeId}`, {
            
         })
-        window.location.replace('http://localhost:3000/employees')
+        window.location.replace('http://192.168.43.9:3000/employees')
         .then((response)=> {
             console.log(response)
         });
@@ -163,10 +164,10 @@ const Employees =()=> {
         }
     }
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
       const stylesHead = {
         fontSize: '18px',
@@ -398,7 +399,7 @@ const Employees =()=> {
                 buttonText="Download as XLS" 
                 />
             <TableContainer component={Paper}>
-                <Table id="table-to-xls" className={useStyles.table}>
+                <Table id="table-to-xls" >
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -411,8 +412,7 @@ const Employees =()=> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        { 
-                        employees.map((data, i)=> {
+                        {employees.map && employees.map((data, i)=> {
                             console.log(data)
                             return (
                                 <TableRow key={i}>

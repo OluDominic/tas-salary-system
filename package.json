@@ -2,6 +2,7 @@
   "name": "tas-salary-system",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "engines": {
     "node": "14.16.0",
     "npm": "6.14.11"
@@ -16,10 +17,11 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@material-ui/core": "^5.0.0-alpha.25",
+    "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^5.0.0-alpha.25",
     "@material-ui/pickers": "^3.2.10",
+    "@material-ui/styles": "^4.11.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.3",
@@ -31,6 +33,7 @@
     "jw-react-pagination": "^1.1.0",
     "material-table": "^1.69.2",
     "material-ui-icons": "^1.0.0-beta.36",
+    "material-ui-pickers": "^3.0.0-alpha.2",
     "material-ui-search-bar": "^1.0.0",
     "moment": "^2.29.1",
     "naija-state-local-government": "^1.1.2",
@@ -52,7 +55,7 @@
     "react-scripts": "4.0.3",
     "react-select": "^4.3.0",
     "react-table": "^7.6.3",
-    "react-to-pdf": "0.0.13",
+    "react-to-pdf": "0.0.14",
     "react-to-print": "^2.12.4",
     "react-transition-group": "^4.4.1",
     "sass": "^1.32.8",
@@ -60,10 +63,11 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "npm run build && (cd tas-salary-api && npm start)"
   },
   "eslintConfig": {
     "extends": [
@@ -89,5 +93,6 @@
     "babel-preset-react": "^6.24.1",
     "html-webpack-plugin": "^5.2.0",
     "react-url-loader": "0.0.3"
-  }
+  },
+  "proxy": "http://192.168.43.9:3000"
 }

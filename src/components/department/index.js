@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './index.scss'
 import {
     TableContainer, Table, TableHead,
-    TableRow, TableBody, TableCell, makeStyles
+    TableRow, TableBody, TableCell
   } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper';
 import Modal from '../modal';
 import FormInput from '../forms/FormInput';
@@ -26,10 +27,10 @@ const Department =()=> {
     const [hideModal, setHideModal] = useState(true)
 
     const addDepartment =()=> {
-        axios.post("http://localhost:8000/department", {
+        axios.post("http://192.168.43.9:3000/department", {
             department: department
         })
-        window.location.replace('http://localhost:3000/departments')
+        window.location.replace('http://192.168.43.9:3000/departments')
     }
 
     useEffect(()=> {
@@ -50,7 +51,7 @@ const Department =()=> {
 
     
     const fetchDepartment = () => {
-        console.log(8999)
+        console.log(departments)
         const headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer lll`,
@@ -68,10 +69,10 @@ const Department =()=> {
     }
 
     const deleteDepart =()=> {
-        axios.delete(`http://localhost:8000/deletedepartment/${departmentId}`, {
+        axios.delete(`http://192.168.43.9:3000/deletedepartment/${departmentId}`, {
            
         })
-        window.location.replace('http://localhost:3000/departments')
+        window.location.replace('http://192.168.43.9:3000/departments')
         .then((response)=> {
             console.log(response)
         });
@@ -93,10 +94,10 @@ const Department =()=> {
         reset();
     }
 
-    const useStyles = makeStyles({
-        table: {
-        },
-      });
+    // const useStyles = makeStyles({
+    //     table: {
+    //     },
+    //   });
 
     const stylesHead = {
         fontSize: '20px',
@@ -121,6 +122,10 @@ const Department =()=> {
 
       const togle=()=> setHideModal(!hideModal);
 
+      const head = {
+        headline: 'Add Department'
+    }
+
 
     const configModal = {
         hideModal,
@@ -140,7 +145,7 @@ const Department =()=> {
                 </Button>
             </div>
             <Modal {...configModal}>
-                <FormWrapper>
+                <FormWrapper {...head}>
                     <form onSubmit={handleForm}>
                         <FormInput
                         type="text"
@@ -158,7 +163,7 @@ const Department =()=> {
 
             <div className="depart-table">
             <TableContainer component={Paper}>
-                <Table className={useStyles.table}>
+                <Table >
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -167,7 +172,7 @@ const Department =()=> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {departments.map((data, i)=> (
+                        {departments.map && departments.map((data, i)=> (
                             <TableRow key={i}>
                                 <TableCell style={stylesBody}>{i+1}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
