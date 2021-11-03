@@ -5,6 +5,7 @@ import FormInput from '../forms/FormInput';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import { Helmet } from 'react-helmet'
+import {APPCONFIG} from './../../config/config.js'
 import './index.scss'
 
 const Recovery =()=> {
@@ -39,7 +40,7 @@ const Recovery =()=> {
     },[])
 
     const resetPassword =()=> {
-        axios.put(`http://192.168.43.9:3000/setpassword/${id}`, {
+        axios.put(`${APPCONFIG.appapi}/setpassword/${id}`, {
             password: password,
             confirm: confirm,
         })

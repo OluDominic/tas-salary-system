@@ -46,12 +46,12 @@ const UserProfileEdit =()=> {
                     <h2>{profile.staffid}</h2>
                     <p>{profile.department}</p>
                     <p>{profile.school}</p>
-                    <p>Date of Join : {profile.date}</p>
+                    <p>Date of Join : {moment(profile.dateofjoin).format("MMM YYYY")}</p>
                 </div>
                 <div className="useredit-info">
                     <span>Phone: </span> <span style={{fontSize: '17px', color: 'blue'}}>{profile.phone}</span> <br/>
                     <span>Email: </span> <span style={{fontSize: '13px', color: 'blue', textTransform: 'none'}}>{profile.email}</span><br/>
-                    <span>Birthday: </span> <span style={{fontSize: '15px', color: 'gray'}}>{moment(profile.birthday).format('yyyy mm')}</span> <br/>
+                    <span>Birthday: </span> <span style={{fontSize: '15px', color: 'gray'}}>{moment(profile.birthday).format('Do MMMM')}</span> <br/>
                     <span>Address: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.address}</span> <br/>
                     <span>Gender: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.gender}</span> <br/>
                 </div>
@@ -92,6 +92,17 @@ const UserProfileEdit =()=> {
                     <span>Name: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.nameofkin}</span> <br/>
                     <span>Relationship: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.relationshipofkin}</span> <br/>
                     <span>Phone: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.phoneofkin}</span> <br/>
+                </div>
+            </div>
+
+            <div className="educa">
+                <div className="admin-edu">
+                    <h2 style={{textTransform: 'capitalize'}}>Bank Informations</h2>
+                    <span>SSCE: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.ssce}</span> <br/>
+                    <span>University Degree: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.bsc}</span> <br/>
+                    <span>Masters: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.msc}</span> <br/>
+                    <span>PHD: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.phd}</span> <br/>
+                    <span>Other Qualfications: </span> <span style={{fontSize: '15px', color: 'gray'}}>{profile.otherqual}</span> <br/>
                 </div>
             </div>
         </div>

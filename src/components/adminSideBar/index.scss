@@ -41,3 +41,56 @@
         }
     }
 }
+
+@media only screen and (max-width: 580px) {
+    .adminsidebar {
+        position: fixed;
+        top: 30px;
+        width: 100px;
+        height: 95vh;
+
+        h2 {
+            padding: 10px 20px;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        ul {
+            padding: 0;
+    
+            li {
+    
+                a, span {
+                    padding: 1.2rem;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 330px) {
+    .adminsidebar {
+        top: 30px;
+        width: 75px;
+        height: 95vh;
+
+        h2 {
+            padding: 8px 14px;
+            margin: 0;
+            font-size: 12px;
+        }
+
+        ul {
+            padding: 0;
+    
+            li {
+    
+                a, span {
+                    padding: 1rem;
+                    font-size: 9px;
+                }
+            }
+        }
+    }
+}

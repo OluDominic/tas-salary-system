@@ -85,12 +85,12 @@ const Salary =()=> {
                     <Table >
                         <TableHead>
                             <TableRow>
-                                <TableCell style={stylesHead}># </TableCell>
-                                <TableCell style={stylesHead}>ID </TableCell>
-                                <TableCell style={stylesHead}>Salary Date </TableCell>
-                                <TableCell style={stylesHead}>Gross salary </TableCell>
-                                <TableCell style={stylesHead}>Net Salary </TableCell>
-                                <TableCell style={stylesHead}>Actions </TableCell>
+                                <TableCell className="salaryTable" style={stylesHead}># </TableCell>
+                                <TableCell  className="salaryTable" style={stylesHead}>ID </TableCell>
+                                <TableCell  className="salaryTable" style={stylesHead}>Salary Date </TableCell>
+                                <TableCell  className="salaryTable" style={stylesHead}>Gross salary </TableCell>
+                                <TableCell  className="salaryTable" style={stylesHead}>Net Salary </TableCell>
+                                <TableCell  className="salaryTable" style={stylesHead}>Actions </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -99,12 +99,12 @@ const Salary =()=> {
                                 console.log(data)
                                 return (
                                     <TableRow key={i}>
-                                        <TableCell style={stylesBody}>{i + 1} </TableCell>
-                                        <TableCell style={stylesBody}>{data.staffid}</TableCell>
-                                        <TableCell style={stylesBody}>{moment(data.date).format("MM/YYYY")}</TableCell>
-                                        <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
-                                        <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
-                                        <TableCell style={stylesBody}><div  className="button"><TableButton onClick={()=>{
+                                        <TableCell className="salTable" style={stylesBody}>{i + 1} </TableCell>
+                                        <TableCell className="salTable" style={stylesBody}>{data.staffid}</TableCell>
+                                        <TableCell className="salTable" style={stylesBody}>{moment(data.date).format("MM/YYYY")}</TableCell>
+                                        <TableCell className="salTable" style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
+                                        <TableCell className="salTable" style={stylesBody}><Naira>{data.net}</Naira></TableCell>
+                                        <TableCell className="salTable" style={stylesBody}><div  className="button"><TableButton onClick={()=>{
                                                 handleClick(data.salaryid)
                                 }}>
                                 Payslip

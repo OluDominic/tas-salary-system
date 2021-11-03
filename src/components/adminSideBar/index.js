@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import './index.scss'
 import { faBirthdayCake, faHome, faMoneyBill, faPiggyBank, faSchool, faSpaceShuttle, faSuitcase, faTachometerAlt, faUser, faUserFriends } from '@fortawesome/free-solid-svg-icons'
@@ -19,29 +19,29 @@ const AdminSideBar =()=> {
                     </li>
                     */}
                     <li>
-                        <Link to="/admin"> <FontAwesomeIcon icon={faHome} /> Home </Link>
+                        <NavLink to="/admin" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faHome} /> Home </NavLink>
                     </li>
                     
                     <li>
-                        <Link to="/employees"> <FontAwesomeIcon icon={faUserFriends} /> Employees </Link>
+                        <NavLink to="/employees" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faUserFriends} /> Employees </NavLink>
                     </li>
                     <li>
-                        <Link to="/userprofile"> <FontAwesomeIcon icon={faSuitcase} /> User Profile </Link>
+                        <NavLink to="/userprofile" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faSuitcase} /> Employee Profile </NavLink>
                     </li>
                     <li>
-                        <Link to="/employeebank"> <FontAwesomeIcon icon={faPiggyBank} /> Bank Details </Link>
+                        <NavLink to="/employeebank" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faPiggyBank} /> Bank Details </NavLink>
                     </li>
                     <li>
-                        <Link to="/salaryedit"> <FontAwesomeIcon icon={faMoneyBill} /> Salary </Link>
+                        <NavLink to="/salaryedit" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faMoneyBill} /> Salary Info </NavLink>
                     </li>
                     <li>
-                        <Link to="/salarytotal"> <FontAwesomeIcon icon={faComment} /> Salary History </Link>
+                        <NavLink to="/salarytotal" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faComment} /> Salary History </NavLink>
                     </li>
                     <li>
-                        <Link to="/schools"> <FontAwesomeIcon icon={faSchool} /> Schools </Link>
+                        <NavLink to="/birthday" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faBirthdayCake} /> Birthdays </NavLink>
                     </li>
                     <li>
-                        <Link to="/departments"> <FontAwesomeIcon icon={faTachometerAlt} /> Departments </Link>
+                        <NavLink to="/admincomplaints" activeStyle={{background:'grey'}}> <FontAwesomeIcon icon={faTachometerAlt} /> Complaints </NavLink>
                     </li>
                 </ul>
         </div>

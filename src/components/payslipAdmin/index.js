@@ -58,7 +58,7 @@ const PayslipAdmin =()=> {
     //     converter.toWords(parseInt(payslip.net))
     // }
 
-    let {id} = useParams()
+    let {salaryid} = useParams()
     useEffect(()=> {
         fetchUserProfile()
     }, []);
@@ -72,14 +72,16 @@ const PayslipAdmin =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log('here')
-        axios.get(`${APPCONFIG.appapi}/salaryinfo/${id}`, {
+        axios.get(`${APPCONFIG.appapi}/payslips/${salaryid}`, {
             headers
-        }).then((data) => {
+        })
+        .then((data) => {
            
             setInfo(data.data[0]);
-        }).catch((error) => {
+        }) 
+        .catch((error) => {
             console.log(error);
-        })
+        });
     }
 
     
@@ -91,7 +93,7 @@ const PayslipAdmin =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log('here')
-        axios.get(`${APPCONFIG.appapi}/payslip/${staffid}`, {
+        axios.get(`${APPCONFIG.appapi}/payslips/${salaryid}`, {
             headers
         }).then((data) => {
            
@@ -147,7 +149,7 @@ const PayslipAdmin =()=> {
 
             <div ref={componentRef} className="pays">
                 <div className="payslip-head">
-                    <h2 className="slip">{payslip.surname} {payslip.firstname} Payslip for the month of {moment(payslip.date).format('MM/YYYY')} <hr/></h2>
+                    <h2 className="slip">{info.surname} {info.firstname} Payslip for the month of {moment(payslip.date).format('MMM-YYYY')} <hr/></h2>
                 </div>
 
                 <div className="payslip-logo">

@@ -26,7 +26,7 @@ const Settings =()=> {
     }
 
     const SchoolSettings =()=> {
-        axios.post('http://localhost:8000/companysettings', {
+        axios.post(`${APPCONFIG.appapi}/companysettings`, {
             schoolname: schoolName,
             schooladdress: schoolAddress,
             country: country,
@@ -67,7 +67,7 @@ const Settings =()=> {
     };
 
     const socialSettings=()=> {
-        axios.post("http://localhost:8000/salarysettings", {
+        axios.post(`${APPCONFIG.appapi}/salarysettings`, {
         social: social
         })
         .then((response)=> {

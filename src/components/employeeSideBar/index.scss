@@ -1,7 +1,7 @@
 .employeeSidebar {
     display: block;
     position: fixed;
-    top: 56px;
+    top: 30px;
     padding: 0;
     margin: 0;
     background: linear-gradient(180deg,#3488a1,#69725e);
@@ -49,5 +49,69 @@
                 background-color: grey;
             }
         }
+    }
+}
+
+@media only screen and (max-width: 1080px) {
+    .employeeSidebar {
+        display: block;
+        position: fixed;
+        top: 56px;
+        padding: 0;
+        margin: 0;
+        background: linear-gradient(180deg,#3488a1,#69725e);
+        height: 100vh;
+        width: 100px;
+
+        i {
+            display: flex;
+            justify-content: flex-end;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+            position: relative;
+        }
+    
+        
+    h2 {
+        padding: 15px 40px;
+        font-size: 12px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 0;
+    }
+        
+    ul {
+        padding: 0;
+
+        li {
+            width: 100%;
+
+            a, span {
+                display: block;
+                width: 100%;
+                padding: 1.2rem;
+                font-size: 11px;
+                line-height: 0.8;
+                color: white;
+                cursor: pointer;
+            }
+
+            &:hover {
+                background-color: grey;
+            }
+        }
+    }
+    }
+
+}
+
+@media only screen and (max-width: 380px) {
+    .employeeSidebar {
+        top: 0;
     }
 }

@@ -28,17 +28,17 @@ const Schools =()=> {
     const [isOpen, setIsOpen] = useState(false)
 
     const addSchool =()=> {
-        axios.post("http://localhost:3000/school", {
+        axios.post(`${APPCONFIG.appapi}/school`, {
             school: school
         })
-        window.location.replace('http://localhost:3000/schools')
+        window.location.replace(`${APPCONFIG.appapi}schools`)
     }
 
     const deleteSchool =(id)=> {
-        axios.delete(`http://localhost:3000/deleteschool/${schoolId}`, {
+        axios.delete(`${APPCONFIG.appapi}/deleteschool/${schoolId}`, {
            
         });
-        window.location.replace('http://localhost:3000/schools')
+        window.location.replace(`${APPCONFIG.appapi}/schools`)
         .then((response)=> {
             console.log(response)
         })

@@ -10,7 +10,9 @@ import FormSelect from '../forms/FormSelect'
 import { CountryDropdown } from 'react-country-region-selector';
 import Button from '../forms/Button';
 //import States from './states'
-import DatePicker from "react-datepicker";
+import DatePickers from "react-datepicker";
+import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import "react-datepicker/dist/react-datepicker.css";
 // import Avatar from 'react-avatar-edit';
 // import { useParams } from 'react-router-dom'
@@ -22,7 +24,8 @@ const EmployeeInfo =()=> {
     let [userdata,setUserdata] = useState({});
     let [useData, setUsedata] = useState({});
     const [preview, setPreview] = useState(null);
-    const [startDate, setStartDate] =  useState(new Date());
+    const [startDate, setStartDate] =  useState('');
+    const [selectedDate, handleDateChange] = useState(new Date());
     const [country, setCountry] = useState([])
     const [hideModal, setHideModal] = useState(true);
     const [id, setID] = useState('');
@@ -34,7 +37,7 @@ const EmployeeInfo =()=> {
     const [school, setSchool] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [birthday, setBirthday] = useState(new Date());
+    const [birthday, setBirthday] = useState('');
     const [address, setAddress] = useState('');
     const [gender, setGender] = useState('');
 
@@ -75,6 +78,7 @@ const EmployeeInfo =()=> {
     const [bsc, setBsc] = useState('');
     const [msc, setMsc] = useState('');
     const [phd, setPhd] = useState('');
+    const [otherqual, setOtherqual] = useState('');
 
     const toggleModal =()=> setHideModal(!hideModal);
 
@@ -156,7 +160,7 @@ const EmployeeInfo =()=> {
           
         }).then((data) => {
            
-            setGetEmployee(data.data[0]);
+            setGetEmployee(data.data);
         }).catch((error) => {
             console.log(error);
         })
@@ -199,10 +203,11 @@ const EmployeeInfo =()=> {
         setBsc('');
         setMsc('');
         setPhd('');
+        setOtherqual('');
     }
 
     const profileAPI =()=> {
-        axios.post("http://192.168.43.9:3000/profile", {
+        axios.post(`${APPCONFIG.appapi}/profile`, {
             id: userdata.id,
             staffid: userdata.staffid,
             surname: userdata.surname,
@@ -237,7 +242,8 @@ const EmployeeInfo =()=> {
             ssce: ssce,
             uni: bsc,
             msc: msc,
-            phd: phd
+            phd: phd,
+            otherqual: otherqual
         })
     }
 
@@ -275,7 +281,6 @@ const EmployeeInfo =()=> {
                             name="firstname"
                             value={userdata.firstname}
                             type="text"
-                            ref={input => firstName = input}
                             />
                             <FormInput
                             name="lastname"
@@ -302,6 +307,7 @@ const EmployeeInfo =()=> {
                             <div className="formRow checkoutInput">
 
                                 <h2>Personal Informations</h2>
+                            <label>Phone Number</label>
                                 <FormInput
                             name="phone"
                             value={phone}
@@ -310,17 +316,38 @@ const EmployeeInfo =()=> {
                             handleChange={e => setPhone(e.target.value)}
                             />
 
-                            <label>Birthday</label>
+                            <label>Date of Birth</label>
                             <div className="date">
-                                <DatePicker 
-                                dateFormat="MMMM dd"
-                                showMonthYearPicker
-                                monthsShown
+                                <DatePickers 
+                                showMonthDropdown
                                 selected={birthday}
+                                peekNextMonth
+                                showYearDropdown
+                                dropdownMode="select"
                                 onChange={date => setBirthday(date)}
                                 />
-                            </div> 
-
+                            </div>
+                            {/* <div style={{cursor: 'pointer'}} className="date">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                         {/* <DatePicker 
+                        dateFormat="MMMM-yyyy"
+                        showMonthYearPicker
+                        selected={date}
+                        onChange={date => setDate(date)}
+                        dropdownMode= "scroll"
+                        /> */}
+                        {/* <DatePicker
+                            openTo="year"
+                            views={["year", "month", "day"]}
+                            label="Year, month and date"
+                            value={selectedDate}
+                            onChange={(newValue) => {
+                                handleDateChange(newValue);
+                              }}
+                        />
+                        </MuiPickersUtilsProvider>
+                    </div> */} 
+                            <label>Address</label>
                             <FormInput
                             name="address"
                             value={address}
@@ -328,6 +355,7 @@ const EmployeeInfo =()=> {
                             type="text"
                             handleChange={e => setAddress(e.target.value)}
                             />
+                            <label>Gender</label>
                             <FormSelect
                             options={[ 
                             {
@@ -346,6 +374,7 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setGender(e.target.value)}
                             />
+                            <label>Identification No</label>
                             <FormInput
                             type="text"
                             value={passport}
@@ -353,6 +382,7 @@ const EmployeeInfo =()=> {
                             name="passport"
                             handleChange={e=> setPassport(e.target.value)}
                             />
+                            <label>Phone Number (2)</label>
                             <FormInput
                             type="text"
                             value={tel}
@@ -360,6 +390,7 @@ const EmployeeInfo =()=> {
                             name="tel"
                             handleChange={e=> setTel(e.target.value)}
                             />
+                            <label>State of Origin</label>
                             <FormSelect
                             options={[ 
                             {
@@ -553,6 +584,7 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setState(e.target.value)}
                             />
+                            <label>Country</label>
                             <CountryDropdown
                             required
                             onChange={handleCountryChange}
@@ -560,6 +592,7 @@ const EmployeeInfo =()=> {
                             valueType="short"
                             /> 
                             <br />
+                            <label>Religion</label>
                             <FormSelect
                             options={[ 
                             {
@@ -583,6 +616,7 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setReligion(e.target.value)}
                             />
+                            <label>Marital Status</label>
                         <FormSelect
                             options={[ 
                             {
@@ -606,7 +640,7 @@ const EmployeeInfo =()=> {
                             handleChange={e => setMarital(e.target.value)}
                             />
                             <label>Date of join</label>
-                            <div className="date">
+                            {/* <div className="date">
                                 <DatePicker 
                                 dateFormat="MMMM yyyy"
                                 showMonthYearPicker
@@ -614,14 +648,33 @@ const EmployeeInfo =()=> {
                                 onChange={date => setStartDate(date)}
                                 dropdownMode= "scroll"
                                 />
-                            </div>
-
+                            </div> */}
+                            <div style={{cursor: 'pointer'}} className="date">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                         {/* <DatePicker 
+                        dateFormat="MMMM-yyyy"
+                        showMonthYearPicker
+                        selected={date}
+                        onChange={date => setDate(date)}
+                        dropdownMode= "scroll"
+                        /> */}
+                        <DatePicker
+                            variant="inline"
+                            openTo="year"
+                            views={["year", "month"]}
+                            helperText="Start from month selection"
+                            value={startDate}
+                            onChange={setStartDate}
+                        />
+                    </MuiPickersUtilsProvider> 
+                    </div>
                             
                             </div>
 
                             <div>
                                 <h2>Emergency Contact</h2>
                                 <h3>Primary</h3>
+                                <label>Name</label>
                                 <FormInput
                                 type="text"
                                 name="econtactname"
@@ -629,6 +682,7 @@ const EmployeeInfo =()=> {
                                 placeholder="Name"
                                 handleChange={e=> setContactName1(e.target.value)}
                                 />
+                                <label>Relationship pf contact</label>
                                 <FormInput
                                 type="text"
                                 name="contact rela"
@@ -636,6 +690,7 @@ const EmployeeInfo =()=> {
                                 placeholder="Relationship"
                                 handleChange={e=> setContactRela1(e.target.value)}
                                 />
+                                <label>Phone Number</label>
                                 <FormInput
                                 type="text"
                                 name="contact phone1"
@@ -644,6 +699,7 @@ const EmployeeInfo =()=> {
                                 handleChange={e=> setContactPhone1(e.target.value)}
                                 />
                                 <h3>Secondary</h3>
+                                <label>Name</label>
                                 <FormInput
                                 type="text"
                                 name="econtactname"
@@ -651,6 +707,7 @@ const EmployeeInfo =()=> {
                                 placeholder="Name"
                                 handleChange={e=> setContactName2(e.target.value)}
                                 />
+                                <label>Relationship of contact</label>
                                 <FormInput
                                 type="text"
                                 name="contact rela"
@@ -658,6 +715,7 @@ const EmployeeInfo =()=> {
                                 placeholder="Relationship"
                                 handleChange={e=> setContactRela2(e.target.value)}
                                 />
+                                <label>Phone Number</label>
                                 <FormInput
                                 type="text"
                                 name="contact phone1"
@@ -669,6 +727,7 @@ const EmployeeInfo =()=> {
 
                             <div>
                                 <h2>Bank Informations</h2>
+                                <label>Bank name</label>
                                 <FormInput
                                 type="text"
                                 name="bankname"
@@ -676,6 +735,7 @@ const EmployeeInfo =()=> {
                                 value={bankName}
                                 handleChange={e => setBankName(e.target.value)}
                                 />
+                                <label>Account name</label>
                                 <FormInput
                                 type="text"
                                 name="account name"
@@ -683,6 +743,7 @@ const EmployeeInfo =()=> {
                                 value={accName}
                                 handleChange={e => setAccName(e.target.value)}
                                 />
+                                <label>Account Number</label>
                                 <FormInput
                                 type="text"
                                 name="acc no"
@@ -697,6 +758,7 @@ const EmployeeInfo =()=> {
 
                             <div>
                                 <h2>Next of kin</h2>
+                                <label>Name of Kin</label>
                                 <FormInput
                                 type="text"
                                 name="kinname"
@@ -704,6 +766,7 @@ const EmployeeInfo =()=> {
                                 value={kinName}
                                 handleChange={e => setKinName(e.target.value)}
                                 />
+                                <label>Relationship of Kin</label>
                                 <FormInput
                                 type="text"
                                 name="kinrel"
@@ -711,6 +774,7 @@ const EmployeeInfo =()=> {
                                 value={kinRela}
                                 handleChange={e => setKinRela(e.target.value)}
                                 />
+                                <label>Contact Number of Kin</label>
                                 <FormInput
                                 type="text"
                                 name="kinphone"
@@ -722,6 +786,7 @@ const EmployeeInfo =()=> {
 
                             <div>
                                 <h2>Educational Background</h2>
+                                <label>SSCE Qualification? (Please select an option)</label>
                             <FormSelect
                             options={[ 
                             {
@@ -740,6 +805,7 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setSsce(e.target.value)}
                             />
+                            <label>University Degree? (Please select an option)</label>
                             <FormSelect
                             options={[ 
                             {
@@ -758,6 +824,7 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setBsc(e.target.value)}
                             />
+                            <label>Masters Qualification? (Please select an option)</label>
                             <FormSelect
                             options={[ 
                             {
@@ -776,6 +843,7 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setMsc(e.target.value)}
                             />
+                            <label>PHD Qualification? (Please select an option)</label>
                             <FormSelect
                             options={[ 
                             {
@@ -794,6 +862,14 @@ const EmployeeInfo =()=> {
                             ]}
                             handleChange={e => setPhd(e.target.value)}
                             />
+                            <label>Others please state here.</label>
+                            <FormInput
+                                type="text"
+                                name="otherqual"
+                                placeholder="otherqual"
+                                value={otherqual}
+                                handleChange={e => setOtherqual(e.target.value)}
+                                />
                             </div>
 
                             <SubmitButton />
@@ -832,11 +908,11 @@ const EmployeeInfo =()=> {
                     <p>Email: <h3 style={{display: 'inline', textTransform: 'lowercase'}}>{userdata.email}</h3></p>
                 </div>
                 <div className="user-infos">
-                        <p>Phone: <h3 style={{display: 'inline'}}>{getEmployee.phone}</h3></p>
-                        <p>Birthday: <h3 style={{display: 'inline'}}>{getEmployee.birthday}</h3></p>
+                    <p>Phone: <h3 style={{display: 'inline'}}>{getEmployee.phone}</h3></p>
+                    <p>Birthday: <h3 style={{display: 'inline'}}>{moment(getEmployee.birthday).format('Do, MMMM')}</h3></p>
                     <p>Address: <h3 style={{display: 'inline'}}>{getEmployee.address}</h3></p>
                     <p>Gender: <h3 style={{display: 'inline'}}>{getEmployee.gender}</h3></p>
-                    <p>Date Of Join: <h3 style={{display: 'inline'}}>{getEmployee.dateofjoin}</h3></p>
+                    <p>Date Of Join: <h3 style={{display: 'inline'}}>{moment(getEmployee.dateofjoin).format('MMMM, YYYY')}</h3></p>
                 </div>
             </div>
             <div className="personal">
@@ -885,6 +961,19 @@ const EmployeeInfo =()=> {
                     <p>Name: <h3 style={{display: 'inline'}}>{getEmployee.nameofkin}</h3> </p>
                     <p>Relationship: <h3 style={{display: 'inline'}}>{getEmployee.relationshipofkin}</h3></p>
                     <p>Phone: <h3 style={{display: 'inline'}}>{getEmployee.phoneofkin}</h3></p>
+                </div>
+            </div>
+            <div className="education">
+                <div className="edu">
+                    <div className="fontAwesome">
+                    <h2>Education Background</h2>
+                    {/* <FontAwesomeIcon icon={faEdit} /> */}
+                    </div>
+                    <p>SSCE: <h3 style={{display: 'inline'}}>{getEmployee.ssce}</h3> </p>
+                    <p>BSC: <h3 style={{display: 'inline'}}>{getEmployee.uni}</h3></p>
+                    <p>MSC: <h3 style={{display: 'inline'}}>{getEmployee.msc}</h3></p>
+                    <p>PHD: <h3 style={{display: 'inline'}}>{getEmployee.phd}</h3></p>
+                    <p>Others: <h3 style={{display: 'inline'}}>{getEmployee.others}</h3></p>
                 </div>
             </div>
         </div>

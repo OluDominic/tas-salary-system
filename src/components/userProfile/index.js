@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import TableButton from '../forms/TableButton'
 import FormInput from '../forms/FormInput'
-import FormWrapper from '../forms/FormWrapper'
 import {
   TableContainer, Table, TableHead,
   TableRow, TableBody, TableCell
@@ -12,13 +10,14 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import {APPCONFIG} from './../../config/config';
 import './index.scss';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import moment from 'moment'
 
 const UserProfile =()=> {
 
     const [employees, setEmployees] = useState([])
     const [search, setSearch] = useState("")
-    const history = useHistory();
 
     const handleChange=(e)=> {
         setSearch(e);
@@ -60,34 +59,18 @@ const UserProfile =()=> {
             })
         }
 
-    const handleClick =(id)=> {
-        history.push('/userprofileedit/'+id)
-    }
+    // const handleClick =(id)=> {
+    //     history.push('/userprofileedit/'+id)
+    // }
 
-    const headline = {
-        headline : "Employee search"
-    }
+    // const headline = {
+    //     headline : "Employee search"
+    // }
 
 
-
-    const createdData = (firstname, surname, id, department, school, action) => {
-        return {
-            firstname,
-            surname,
-            id,
-            department,
-            school,
-            action
-        }
-    }
-
-    // const useStyles = makeStyles({
-    //     table: {
-    //     },
-    //   });
 
       const stylesHead = {
-        fontSize: '20px',
+        fontSize: '14px',
         cursor: 'pointer',
         width: '10%',
         fontWeight: '500',
@@ -96,7 +79,7 @@ const UserProfile =()=> {
       };
 
       const stylesBody = {
-        fontSize: '15px',
+        fontSize: '12px',
         cursor: 'pointer',
         width: '15%',
         fontWeight: '400',
@@ -147,8 +130,16 @@ const UserProfile =()=> {
                             />
                 </div> */}
             </div>
+            <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                filename="employeedetailsXls"
+                sheet="tablexls"
+                buttonText="Download as XLS" 
+                />
             <TableContainer component={Paper}>
-                <Table >
+                <Table id="table-to-xls">
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
@@ -157,6 +148,34 @@ const UserProfile =()=> {
                             <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
+                            <TableCell style={stylesHead}>Email </TableCell>
+                            <TableCell style={stylesHead}>Birthday </TableCell>
+                            <TableCell style={stylesHead}>Address </TableCell>
+                            <TableCell style={stylesHead}>Phone </TableCell>
+                            <TableCell style={stylesHead}>Date of join </TableCell>
+                            <TableCell style={stylesHead}>Identification No </TableCell>
+                            <TableCell style={stylesHead}>Phone 2 </TableCell>
+                            <TableCell style={stylesHead}>State of Origin</TableCell>
+                            <TableCell style={stylesHead}>Country </TableCell>
+                            <TableCell style={stylesHead}>Religion </TableCell>
+                            <TableCell style={stylesHead}>Marital Status </TableCell>
+                            <TableCell style={stylesHead}>Bank Name </TableCell>
+                            <TableCell style={stylesHead}>Account Name </TableCell>
+                            <TableCell style={stylesHead}>Account No </TableCell>
+                            <TableCell style={stylesHead}>Name of Kin </TableCell>
+                            <TableCell style={stylesHead}>Relationship of Kin </TableCell>
+                            <TableCell style={stylesHead}>Phone of Kin </TableCell>
+                            <TableCell style={stylesHead}>Emergency Contact Name(1) </TableCell>
+                            <TableCell style={stylesHead}>Emergency Contact Relationship(1) </TableCell>
+                            <TableCell style={stylesHead}>Emergency Contact Phone(1) </TableCell>
+                            <TableCell style={stylesHead}>Emergency Contact Name(2) </TableCell>
+                            <TableCell style={stylesHead}>Emergency Contact Relationshi(2) </TableCell>
+                            <TableCell style={stylesHead}>Emergency Contact Phone(2) </TableCell>
+                            <TableCell style={stylesHead}>SSCE </TableCell>
+                            <TableCell style={stylesHead}>University Degree </TableCell>
+                            <TableCell style={stylesHead}>Masters </TableCell>
+                            <TableCell style={stylesHead}>PHD </TableCell>
+                            <TableCell style={stylesHead}>Other Qualifications </TableCell>
                             {/* <TableCell style={stylesHead}>Action </TableCell> */}
                         </TableRow>
                     </TableHead>
@@ -169,6 +188,34 @@ const UserProfile =()=> {
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
+                                <TableCell style={stylesBody}>{data.email}</TableCell>
+                                <TableCell style={stylesBody}>{moment(data.birthday).format('Do MMMM')}</TableCell>
+                                <TableCell style={stylesBody}>{data.address}</TableCell>
+                                <TableCell style={stylesBody}>{data.phone}</TableCell>
+                                <TableCell style={stylesBody}>{moment(data.dateofjoin).format('MMMM YYYY')}</TableCell>
+                                <TableCell style={stylesBody}>{data.identificationno}</TableCell>
+                                <TableCell style={stylesBody}>{data.telephone}</TableCell>
+                                <TableCell style={stylesBody}>{data.stateoforigin}</TableCell>
+                                <TableCell style={stylesBody}>{data.nationality}</TableCell>
+                                <TableCell style={stylesBody}>{data.religion}</TableCell>
+                                <TableCell style={stylesBody}>{data.maritalstatus}</TableCell>
+                                <TableCell style={stylesBody}>{data.bankname}</TableCell>
+                                <TableCell style={stylesBody}>{data.accountname}</TableCell>
+                                <TableCell style={stylesBody}>{data.accountnumber}</TableCell>
+                                <TableCell style={stylesBody}>{data.nameofkin}</TableCell>
+                                <TableCell style={stylesBody}>{data.relationshipofkin}</TableCell>
+                                <TableCell style={stylesBody}>{data.phoneofkin}</TableCell>
+                                <TableCell style={stylesBody}>{data.ecname}</TableCell>
+                                <TableCell style={stylesBody}>{data.ecrelationship}</TableCell>
+                                <TableCell style={stylesBody}>{data.ecphone}</TableCell>
+                                <TableCell style={stylesBody}>{data.ecsname}</TableCell>
+                                <TableCell style={stylesBody}>{data.ecsrelationship}</TableCell>
+                                <TableCell style={stylesBody}>{data.ecsphone}</TableCell>
+                                <TableCell style={stylesBody}>{data.ssce}</TableCell>
+                                <TableCell style={stylesBody}>{data.uni}</TableCell>
+                                <TableCell style={stylesBody}>{data.msc}</TableCell>
+                                <TableCell style={stylesBody}>{data.phd}</TableCell>
+                                <TableCell style={stylesBody}>{data.others}</TableCell>
                                 {/* <TableCell style={stylesBody}><TableButton type="submit" onClick={()=> {
                                     handleClick(data.id)
                                 }}> Edit</TableButton> </TableCell> */}

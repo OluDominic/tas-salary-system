@@ -83,5 +83,45 @@
             }
         }
     }
-    
+
+    .education {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        margin-top: 20px;
+
+        .edu {
+            display: block;
+            width: 50%;
+            height: 100%;
+            float: left;
+        }
+    }
+    label {
+        font-size: 11px;
+    }
 }
+
+@media only screen and (max-width: 500px) {
+    .employeeInfo {
+        margin-left: 50px;
+        width: 100%;
+        
+        h1 {
+            font-size: 22px;
+        }
+
+        .user-info {
+
+        }
+
+        .personal, .user-bank, .education {
+            margin-top: 5px;
+        }
+
+    h3 {
+        font-size: 12px;
+    }
+    }
+}
+

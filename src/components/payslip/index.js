@@ -63,7 +63,7 @@ const Payslip =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log('here')
-        axios.get(`${APPCONFIG.appapi}/payslip/${staffid}`, {
+        axios.get(`${APPCONFIG.appapi}/payslips/${staffid}`, {
             headers
         }).then((data) => {
            
@@ -115,7 +115,7 @@ const Payslip =()=> {
 
             <div ref={componentRef} className="pays">
                 <div className="payslip-head">
-                    <h2 className="slip">Payslip for the month {moment(payslip.date).format('MM/YYYY')} <hr/></h2>
+                    <h2 className="slip">Payslip for the month of {moment(payslip.date).format('MMMM, YYYY')} <hr/></h2>
                 </div>
 
                 <div className="payslip-logo">

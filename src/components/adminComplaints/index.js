@@ -81,10 +81,10 @@ const AdminComplaints =()=> {
     }
 
     const deleteComplaints =()=> {
-        axios.delete(`http://localhost:3000/deletecomplaints/${complaintId}`, {
+        axios.delete(`${APPCONFIG.appapi}/deletecomplaints/${complaintId}`, {
            
         })
-        window.location.replace('http://localhost:3000/admincomplaints')
+        window.location.replace(`${APPCONFIG.appapi}/admincomplaints`)
         .then((response)=> {
             console.log(response)
         });
@@ -207,7 +207,7 @@ const AdminComplaints =()=> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {complaints.map((data, i)=> (
+                        {complaints.map && complaints.map((data, i)=> (
                             <TableRow key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>

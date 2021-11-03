@@ -28,7 +28,6 @@ import KeyboardArrowUp from "@material-ui/icons/KeyboardArrowUp";
 
 const SalaryInfo =()=> {
     const [salaryinfo, setSalaryinfo] = useState([]);
-    const [banks, setBanks] = useState([])
     const [date, setDate] = useState(new Date());
     const [info, setInfo] = useState([]);
     const [fetchSocial, setFetchSocial] = useState([]);
@@ -80,26 +79,8 @@ const SalaryInfo =()=> {
         }
     }
 
-    const reset =()=> {
-        setHodAllowance(0);
-        setClassTeacherAllow(0);
-        setMonthlyAllow(0);
-        setLeaveAllow(0);
-        setTransportAllowance(0);
-        setArrears(0);
-        setCompesation(0);
-        setOtherAllowance(0);
-        setSocial(300);
-        setLateness(0);
-        setCooperative(0);
-        setChildFees(0);
-        setAbsentism(0);
-        setHealth(0);
-        setOtherDec(0)
-    }
-
     const postSalary =(salaryid)=> {
-        axios.post("http://192.168.43.9:3000/salary", {
+        axios.post(`${APPCONFIG.appapi}/salary`, {
             
             id: salaryinfo.id,
             staffid: salaryinfo.staffid,
@@ -127,7 +108,7 @@ const SalaryInfo =()=> {
             accountname: salaryinfo.accountname,
             accountno: salaryinfo.accountno
         })
-        window.location.replace('http://192.168.43.9:3000/salaryinfo/'+salaryinfo.id)
+        window.location.replace(`${APPCONFIG.appapi}/salaryinfo/`+salaryinfo.id)
         .then((response) => {
             // if (response.data.message) {
             //     setErrorMessage(response.data.message)
@@ -166,10 +147,10 @@ const SalaryInfo =()=> {
     };
 
     const deleteSalary=()=> {
-        axios.delete(`http://192.168.43.9:3000/deletesalary/${employeeId}`, {
+        axios.delete(`${APPCONFIG.appapi}//deletesalary/${employeeId}`, {
            
         })
-        window.location.replace('http://192.168.43.9:3000/salaryinfo/'+salaryinfo.id)
+        window.location.replace(`${APPCONFIG.appapi}//salaryinfo/`+salaryinfo.id)
         .then((response)=> {
             console.log(response)
         });
@@ -184,6 +165,11 @@ const SalaryInfo =()=> {
 
     const handleClicks =(salaryid)=> {
         history.push('/adminpayslip/' +salaryid)
+    }
+
+    const handleChange =(e)=> {
+        const {name, value} = e.target;
+        setSalaryinfo({...salaryinfo, [name]: value})
     }
 
     const togglePopup =(salaryid)=> {
@@ -230,7 +216,7 @@ const SalaryInfo =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log('here')
-        axios.get(`${APPCONFIG.appapi}/salaryinfo/${id}`, {
+        axios.get(`${APPCONFIG.appapi}/salaryinfos/${id}`, {
             headers
         }).then((data) => {
            
@@ -240,26 +226,6 @@ const SalaryInfo =()=> {
         })
     }
 
-
-    useEffect(()=> {
-        fetchBanks()
-    },[])
-
-    const fetchBanks =()=> {
-        console.log(banks)
-        const headers = {
-            "Content-Type": "application/json",
-            Authorisation: `Bearer 111`,
-            "Access-Control-Allow-Origin":"*"
-        }
-
-        axios.get(`${APPCONFIG.appapi}/empinfo/${id}`, {
-            headers
-        })
-        .then((data)=> {
-            setBanks(data.data)
-        })
-    }
 
     const fetchDataUser = () => {
    
@@ -284,9 +250,9 @@ const SalaryInfo =()=> {
        let setNetSalary0 = parseInt(salaryinfo.pay)
         + parseInt(leaveAllow) + 
         parseInt(monthlyAllow) + parseInt(transportAllowance) + 
-        parseInt(hodAllowance) + parseInt(classTeacherAllow) + 
+        parseInt(salaryinfo.hodallow) + parseInt(classTeacherAllow) + 
         parseInt(arrears) + parseInt(compensation) + parseInt(otherAllowance) - 
-        parseInt(social) - parseInt(lateness) - parseInt(cooperative) - 
+        parseInt(social) - parseInt(lateness) - parseInt(salaryinfo.coop) - 
         parseInt(childFees) - parseInt(absentism) - parseInt(health) - 
         parseInt(otherDec)
     setNetSalary(setNetSalary0)
@@ -318,6 +284,7 @@ const SalaryInfo =()=> {
                         value={salaryinfo.id}
                         />
                         </div>
+                        <label>ID</label>
                         <FormInput
                         type="text"
                         name="id"
@@ -372,10 +339,10 @@ const SalaryInfo =()=> {
                         <label>HOD Allowance</label>
                         <FormInput
                         required 
-                        name="hod allowance"
-                        value={hodAllowance}
+                        name="hodallow"
+                        value={salaryinfo.hodallow}
                         type="text"
-                        handleChange={e => setHodAllowance(e.target.value)}
+                        handleChange={handleChange}
                         />
                         <label>Class Teacher Allowance</label>
                         <FormInput
@@ -437,12 +404,19 @@ const SalaryInfo =()=> {
                 <div className="info-fill">
                     <h3>Deduction</h3>
                     <label>Social</label>
-                        <FormInput
+                        {/* <FormInput
                         required 
                         name="social"
                         value={fetchSocial.social}
                         type="text"
                         readOnly
+                        /> */}
+                        <FormInput
+                        required 
+                        name="social"
+                        value={social}
+                        type="text"
+                        handleChange={e => setSocial(e.target.value)}
                         />
                         <label>Lateness</label>
                         <FormInput
@@ -455,10 +429,10 @@ const SalaryInfo =()=> {
                         <label>Co-operative</label>
                         <FormInput
                         required 
-                        name="cooperative"
-                        value={cooperative}
+                        name="coop"
+                        value={salaryinfo.coop}
                         type="text"
-                        handleChange={e => setCooperative(e.target.value)}
+                        handleChange={handleChange}
                         />
                         <label>Child Fees</label>
                         <FormInput
@@ -538,7 +512,7 @@ const SalaryInfo =()=> {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {info.map((data, i)=> (
+                        {info.map && info.map((data, i)=> (
                             
                             <TableRow  key={i}>
                                 <TableCell style={stylesBody}><Collapse hidden={!open} in={open} style={{display: 'block'}}>{i + 1}</Collapse></TableCell>

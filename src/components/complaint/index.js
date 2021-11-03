@@ -4,6 +4,7 @@ import FormInput from '../forms/FormInput';
 import { Helmet } from 'react-helmet';
 import FormWrapper from '../forms/FormWrapper';
 import axios from 'axios'
+import {APPCONFIG} from './../../config/config'
 import './index.scss';
 
 const Complaint =()=> {
@@ -41,7 +42,7 @@ const Complaint =()=> {
     }
 
     const Complaint =()=> {
-        axios.post("http://192.168.43.9:3000/complaints", {
+        axios.post(`${APPCONFIG.appapi}/complaints`, {
             id: usedata.id,
             staffid: usedata.staffid,
             message: message

@@ -16,6 +16,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import SettingsIcon from '@material-ui/icons/Settings';
+import {APPCONFIG} from './../../config/config'
 
 const StyledMenu = withStyles({
     paper: {
@@ -71,7 +72,7 @@ const Admin =()=> {
     const logout=()=> {
         localStorage.clear();
         setuseData({});
-        window.location.replace('http://192.168.43.9:3000/')
+        window.location.replace(`${APPCONFIG.appapi}/`)
     }
 
     const settings=()=> {

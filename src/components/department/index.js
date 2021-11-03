@@ -27,10 +27,10 @@ const Department =()=> {
     const [hideModal, setHideModal] = useState(true)
 
     const addDepartment =()=> {
-        axios.post("http://192.168.43.9:3000/department", {
+        axios.post(`${APPCONFIG.appapi}/department`, {
             department: department
         })
-        window.location.replace('http://192.168.43.9:3000/departments')
+        window.location.replace(`${APPCONFIG.appapi}/departments`)
     }
 
     useEffect(()=> {
@@ -69,10 +69,10 @@ const Department =()=> {
     }
 
     const deleteDepart =()=> {
-        axios.delete(`http://192.168.43.9:3000/deletedepartment/${departmentId}`, {
+        axios.delete(`${APPCONFIG.appapi}/deletedepartment/${departmentId}`, {
            
         })
-        window.location.replace('http://192.168.43.9:3000/departments')
+        window.location.replace(`${APPCONFIG.appapi}/departments`)
         .then((response)=> {
             console.log(response)
         });

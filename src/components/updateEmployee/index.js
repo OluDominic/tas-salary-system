@@ -32,7 +32,7 @@ const Update =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log('here')
-        axios.get(`${APPCONFIG.appapi}/salaryinfo/${id}`, {
+        axios.get(`${APPCONFIG.appapi}/salaryinfos/${id}`, {
             headers
         }).then((data, response) => {
            
@@ -58,15 +58,19 @@ const Update =()=> {
 
     const updateEmployee =()=> {
 
-        axios.put(`http://192.168.43.9:3000/employee/${id}`, {
+        axios.put(`${APPCONFIG.appapi}/employee/${id}`, {
+            id: update.staffid,
             staffid: update.id,
             surname: update.surname,    
             firstname: update.firstname,
             lastname: update.lastname,
             email: update.email,
+            password: update.password,
             school: update.school,
             department: update.department,
             pay: update.pay,
+            hodallow: update.hodallow,
+            coop: update.coop,
             bankname: update.bankname,
             accountname: update.accountname,
             accountno: update.accountno
@@ -85,11 +89,15 @@ const Update =()=> {
             <h1>Update Employee Details</h1>
             <div>
                 <ul>
+                    <li><p style={{textTransform: 'none'}}>{update.staffid}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.surname}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.firstname}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.lastname}</p></li>
                     <li><p style={{textTransform: 'lowercase'}}>{update.email}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.password}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.pay}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.hodallow}</p></li>
+                    <li><p style={{textTransform: 'none'}}>{update.coop}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.school}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.department}</p></li>
                     <li><p style={{textTransform: 'none'}}>{update.bankname}</p></li>
@@ -112,6 +120,14 @@ const Update =()=> {
                             <FormInput 
                             type="text"
                             placeholder="Surname"
+                            name="staffid"
+                            value={update.staffid}
+                            handleChange={handleChange}
+                            />
+                            <label>Surname</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Surname"
                             name="surname"
                             value={update.surname}
                             handleChange={handleChange}
@@ -124,7 +140,7 @@ const Update =()=> {
                             value={update.firstname}
                             handleChange={handleChange}
                             />
-                            <label>Surname</label>
+                            <label>Lastname</label>
                             <FormInput 
                             type="text"
                             placeholder="Lastname"
@@ -140,12 +156,36 @@ const Update =()=> {
                             value={update.email}
                             handleChange={handleChange}
                             />
-                            <label>Gross Pay</label>
+                            <label>Password</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Password"
+                            name="password"
+                            value={update.password}
+                            handleChange={handleChange}
+                            />
+                            <label>Basic Salary (N)</label>
                             <FormInput 
                             type="text"
                             placeholder="Salary(N)"
                             name="pay"
                             value={update.pay}
+                            handleChange={handleChange}
+                            />
+                            <label>HOD Allowance (N)</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="HOD Allowance"
+                            name="hodallow"
+                            value={update.hodallow}
+                            handleChange={handleChange}
+                            />
+                            <label>Cooperative (N)</label>
+                            <FormInput 
+                            type="text"
+                            placeholder="Cooperative"
+                            name="coop"
+                            value={update.coop}
                             handleChange={handleChange}
                             />
                             <label>School</label>
@@ -164,18 +204,48 @@ const Update =()=> {
                             value={update.department}
                             handleChange={handleChange}
                             />
-                            <label>Bank</label>
+                            <label>Payment Options (cash, cheque, bankname)</label>
                             <FormInput 
                             type="text"
-                            placeholder="Salary(N)"
+                            placeholder="Bank name"
                             name="bankname"
                             value={update.bankname}
                             handleChange={handleChange}
                             />
+                             {/* <FormSelect
+                        
+                        options={[
+                            {
+                                value: "Cash",
+                                label: "bankname"
+                            },
+                            {
+                                value: "Cheque",
+                                name: "bankname"
+                            },
+                        {
+                            value: "Firstbank",
+                            name: "bankname"
+                        },
+                        {
+                            value: "Heritage",
+                            name: "bankname"
+                        },
+                        {
+                            value: "Stanbic",
+                            name: "bankname"
+                        }
+                        , {
+                            value: "UBA",
+                            name: "bankname"
+                        }
+                    ]}
+                    handleChange={handleChange}
+                /> */}
                             <label>Account Name</label>
                             <FormInput 
                             type="text"
-                            placeholder="Salary(N)"
+                            placeholder="Account Name"
                             name="accountname"
                             value={update.accountname}
                             handleChange={handleChange}
@@ -183,7 +253,7 @@ const Update =()=> {
                             <label>Account Number</label>
                             <FormInput 
                             type="text"
-                            placeholder="Salary(N)"
+                            placeholder="Account Number"
                             name="accountno"
                             value={update.accountno}
                             handleChange={handleChange}

@@ -166,7 +166,7 @@ function App() {
             </AdminLayout>
           )}
           />
-          <Route path="/adminpayslip/:staffid" render={()=> (
+          <Route path="/adminpayslip/:salaryid" render={()=> (
             <AdminLayout>
               <AdminPayslip />
             </AdminLayout>

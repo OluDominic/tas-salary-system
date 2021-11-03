@@ -6,6 +6,7 @@ import axios from 'axios'
 import { Helmet } from 'react-helmet'
 import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom'
+import {APPCONFIG} from './../../config/config'
 import './index.scss'
 
 const Login =()=> {
@@ -24,7 +25,7 @@ const Login =()=> {
     }
 
     const loginUser =()=> {
-        axios.post("http://192.168.43.9:3000/login", {
+        axios.post(`${APPCONFIG.appapi}/login`, {
             email : id,
             password: password
         },{
@@ -36,9 +37,9 @@ const Login =()=> {
             let data = response.data;
             localStorage.setItem("userdata",JSON.stringify(data));
             if (data.usertype=='admin') {
-               window.location.replace('http://192.168.43.9:3000/admin')
+               window.location.replace(`${APPCONFIG.appapi}/admin`)
             } else {
-                window.location.replace('http://192.168.43.9:3000/profile')
+                window.location.replace(`${APPCONFIG.appapi}/profile`)
             }
 
             if (response.data.message) {
@@ -69,7 +70,7 @@ const Login =()=> {
                     type="text"
                     name="id"
                     value={id}
-                    placeholder="Enter Email"
+                    placeholder="Username"
                     handleChange={e => setId(e.target.value)}
                     />
                     <FormInput 

@@ -75,11 +75,11 @@ const SalaryEdit =()=> {
             "Access-Control-Allow-Origin":"*"
         }
 
-        axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
+        axios.get(`${APPCONFIG.appapi}/fetchemployees`, {
             headers
         })
         .then((data) => {
-            setEmployees(data.data[0]);
+            setEmployees(data.data);
         })
         .catch((error)=> {
             console.log(error);
@@ -94,7 +94,7 @@ const SalaryEdit =()=> {
     //   });
 
       const stylesHead = {
-        fontSize: '20px',
+        fontSize: '16px',
         cursor: 'pointer',
         width: '15%',
         fontWeight: '500',
@@ -103,11 +103,11 @@ const SalaryEdit =()=> {
       };
 
       const stylesBody = {
-        fontSize: '15px',
+        fontSize: '13px',
         cursor: 'pointer',
         width: '15%',
-        fontWeight: '400',
-        padding: '4px 4px'
+        fontWeight: '350',
+        padding: '2px 2px'
       };
 
 
@@ -172,12 +172,13 @@ const SalaryEdit =()=> {
                 <Table id="table-to-xls" >
                     <TableHead>
                         <TableRow>
-                            <TableCell style={stylesHead}># </TableCell>
+                            {/* <TableCell style={stylesHead}># </TableCell> */}
                             <TableCell style={stylesHead}>ID </TableCell>
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Fistname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
+                            <TableCell style={stylesHead}>Basic Salary </TableCell>
                             {/* <TableCell style={stylesHead}>Action </TableCell> */}
                         </TableRow>
                     </TableHead>
@@ -186,12 +187,13 @@ const SalaryEdit =()=> {
                         {employees.map && employees.map((data, i)=> (
                             
                             <TableRow className="linkss" component={Link} to={'/salaryinfo/'+data.id} key={i}>
-                                <TableCell style={stylesBody}>{i + 1}</TableCell>
+                                {/* <TableCell style={stylesBody}>{i + 1}</TableCell> */}
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
+                                <TableCell style={stylesBody}>{data.pay}</TableCell>
                                 {/* <TableCell style={stylesBody}><TableButton onClick={()=>{
                                                 handleClick(data.id)
                                 }}> Edit</TableButton> </TableCell> */}

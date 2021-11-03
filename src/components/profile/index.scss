@@ -48,7 +48,7 @@
         margin-left: 50px;
 
         .sub, .sub-school, .sub-title {
-            padding: 80px 60px;
+            padding: 60px 40px;
             border-radius: 10px;
             margin: 5px 5px;
             text-align: left;
@@ -106,5 +106,84 @@
                 text-transform: uppercase;
             }
         }
+    }
+}
+
+@media only screen and (max-width: 880px) {
+    .profile {
+        margin: 1rem auto 0.6rem;
+        width: 100%;
+
+        .name {
+                padding: 0 10px;
+                margin-left: 30px;
+                h2 {
+                    display: block;
+                    padding: 3px 4px;
+                    margin: 0 auto 5px;
+                    font-size: 12px;
+                }
+        
+                .date {
+                    padding: 3px 5px;
+                    margin: 0 auto 5px;
+        
+                    p {
+                        font-size: 10px;
+                        line-height: 0.8;
+                        display: block;
+                        position: relative;
+                        padding: 5px 0;
+                        margin: 5px 5px;
+                    }
+                }
+        }
+
+        .name-sub {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px 10px;
+            margin: 15px 0px 0 0;
+            align-content: space-around;
+            background: rgb(245, 244, 244);
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px;
+            margin-left: 15px;
+    
+            .sub, .sub-school, .sub-title {
+                padding: 10px 7px;
+                border-radius: 8px;
+                margin: 5px 5px;
+                text-align: left;
+    
+                
+    
+                h2 {
+                    display: block;
+                    font-size: 10px;
+                    text-align: left;
+                    font-weight: 300;
+                    font-family: Georgia, 'Times New Roman', Times, serif;
+                    line-height: 0.8;
+                    color: white;
+                }
+    
+                span {
+                    display: block;
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: white;
+                    padding: 2px;
+                    margin-top: 8px;
+                }
+            }
+    
+            
+        }
+    }
+}
+
+@media only screen and (max-width: 330px) {
+    .profile {
+        margin-left: 50px;
     }
 }

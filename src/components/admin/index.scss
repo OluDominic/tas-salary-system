@@ -49,3 +49,19 @@
         }
     }
 }
+
+@media only screen and (max-width: 540px) {
+    .admin-comp {
+        h2 {
+            font-size: 14px;
+        }
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .admin-comp {
+        h2 {
+            font-size: 10px;
+        }
+    }
+}

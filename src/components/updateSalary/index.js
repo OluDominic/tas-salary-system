@@ -43,7 +43,7 @@ const UpdateSalary =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log(salaryid)
-        axios.get(`${APPCONFIG.appapi}/payslip/${salaryid}`, {
+        axios.get(`${APPCONFIG.appapi}/payslips/${salaryid}`, {
             headers
         }).then((data) => {
            
@@ -84,7 +84,7 @@ const UpdateSalary =()=> {
 
     const updateEmployee =()=> {
 
-        axios.put(`http://localhost:3000/salaryupdate/${salaryid}`, {
+        axios.put(`${APPCONFIG.appapi}/salaryupdate/${salaryid}`, {
             
             gross: info.gross,
             hod: info.hod,

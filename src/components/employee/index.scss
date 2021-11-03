@@ -49,3 +49,14 @@
         }
     }
 }
+
+@media only screen and (max-width: 320px) {
+
+    .employee-top {
+        padding: 5px;
+
+        h2 {
+            font-size: 11px;
+        }
+    }
+}

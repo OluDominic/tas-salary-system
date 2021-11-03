@@ -11,6 +11,8 @@ import Logo from './../../taclog1.png';
 const Adminpage =()=> {
 
     const [employees, setEmployees] = useState([]);
+    const [department, setDepartment] = useState([]);
+    const [school, setSchool] = useState([]);
     const [useData, setuseData] = useState({});
     
     useEffect(()=> {
@@ -23,7 +25,7 @@ const Adminpage =()=> {
     },[])
 
     const fetchEmployees = () => {
-        console.log(8999)
+        console.log(employees)
         const headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer lll`,
@@ -40,6 +42,50 @@ const Adminpage =()=> {
         })
     }
 
+    useEffect(()=> {
+        fetchDepartment()
+    },[])
+
+    const fetchDepartment = () => {
+        console.log(employees)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/countdepartments`, {
+            headers
+        }).then((data) => {
+           
+            setDepartment(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    useEffect(()=> {
+        fetchSchool()
+    },[])
+
+    const fetchSchool = () => {
+        console.log(employees)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/countschools`, {
+            headers
+        }).then((data) => {
+           
+            setSchool(data.data[0]);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <div className="adminpage">
             <h1>home</h1>
@@ -51,8 +97,9 @@ const Adminpage =()=> {
             </Helmet>
             <div className="admincolumn">
             <div className="adminName"><h2>Welcome {useData.adminid}</h2></div>
-            <div className="requests"><h2>Pending Requests</h2></div>
-            <div className="staffs"><h2>employees</h2></div>
+            <div className="request"><h2>Departments </h2><span>({department.total})</span></div>
+            <div className="requests"><h2>schools </h2><span>({school.total})</span></div>
+            <div className="staffs"><h2>employees</h2> <span>({employees.total})</span></div>
             </div>
         </div>
     )

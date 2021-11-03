@@ -7,7 +7,9 @@ import {
   } from '@material-ui/core';
   //import {makeStyles} from '@material-ui/core/styles'
   import Paper from '@material-ui/core/Paper';
-  import { Helmet } from 'react-helmet'
+  import { Helmet } from 'react-helmet';
+  import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import moment from 'moment';
 import './index.scss'
 
 
@@ -46,7 +48,7 @@ const Birthday =()=> {
     //   });
 
       const stylesHead = {
-        fontSize: '20px',
+        fontSize: '17px',
         cursor: 'pointer',
         width: '10%',
         fontWeight: '500',
@@ -54,7 +56,7 @@ const Birthday =()=> {
       };
 
       const stylesBody = {
-        fontSize: '17px',
+        fontSize: '14px',
         cursor: 'pointer',
         width: '10%',
         fontWeight: '400'
@@ -67,11 +69,20 @@ const Birthday =()=> {
             </Helmet>
             <h1>Birthday's</h1>
             <div className="birthday-sub">
+            <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                filename="employeesBirthdayXls"
+                sheet="tablexls"
+                buttonText="Download as XLS" 
+                />
             <h2>This Month's Birthday</h2>
             <TableContainer component={Paper}>
-                <Table >
+                <Table id="table-to-xls">
                     <TableHead>
                         <TableRow>
+                            <TableCell style={stylesHead}># </TableCell>
                             <TableCell style={stylesHead}>ID </TableCell>
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>firstname </TableCell>
@@ -83,12 +94,13 @@ const Birthday =()=> {
                     <TableBody>
                         {birthday.map && birthday.map((data, i)=> (
                             <TableRow key={i}>
+                                <TableCell style={stylesBody}>{i+1}</TableCell>
                                 <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
                                 <TableCell style={stylesBody}>{data.school}</TableCell>
-                                <TableCell style={stylesBody}>{data.birthday}</TableCell>
+                                <TableCell style={stylesBody}>{moment(data.birthday).format('Do MMMM')}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

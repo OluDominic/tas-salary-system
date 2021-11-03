@@ -23,3 +23,17 @@
         }
     }
 }
+
+@media only screen and (max-width: 500px) {
+    .formWrapper {
+        max-width: 250px;
+        margin: 10px 15px;
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .formWrapper {
+        max-width: 200px;
+        margin: 15px 20px;
+    }
+}

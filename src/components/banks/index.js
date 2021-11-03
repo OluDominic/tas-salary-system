@@ -9,25 +9,11 @@ import {
 import Naira from 'react-naira';
 import moment from 'moment'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import { useParams } from 'react-router-dom';
-import SearchBar from 'material-ui-search-bar';
 
 const Banks =()=> {
     const [banks, setBanks] = useState([]);
-    const [searched, setSearched] = useState("");
     const [searchTerm, setSearchTerm] = useState('');
 
-    const requestSearch = (searchedVal) => {
-        const filteredRows = banks.filter((row) => {
-          return row.date.toLowerCase().includes(searchedVal.toLowerCase());
-        });
-        setBanks(filteredRows);
-    };
-
-    const cancelSearch = () => {
-        setSearched("");
-        requestSearch(searched);
-      };
 
       const handleChange = event => {
         setSearchTerm(event.target.value);
@@ -66,8 +52,6 @@ const Banks =()=> {
         padding: '2px 4px'
       };
 
-    let {id} = useParams;
-
     useEffect(()=> {
         fetchBanks()
     },[])
@@ -79,7 +63,7 @@ const Banks =()=> {
             "Access-Control-Allow-Origin":"*"
         }
 
-        axios.get(`${APPCONFIG.appapi}/salarytotal`, {
+        axios.get(`${APPCONFIG.appapi}/banks`, {
             headers
         })
         .then((data)=> {
@@ -114,7 +98,7 @@ const Banks =()=> {
                 id="test-table-xls-button"
                 className="download-table-xls-button"
                 table="table-to-xls"
-                filename="salaryextractXls"
+                filename="bankextractXls"
                 sheet="tablexls"
                 buttonText="Download as XLS" 
                 />
@@ -122,7 +106,7 @@ const Banks =()=> {
                 <Table id="table-to-xls">
                     <TableHead>
                         <TableRow>
-                            <TableCell style={stylesHead}># </TableCell>
+                            {/* <TableCell style={stylesHead}># </TableCell> */}
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Bank </TableCell>
@@ -136,13 +120,13 @@ const Banks =()=> {
                     <TableBody>
                         {banks.map && banks.map((data, i)=> (
                             <TableRow  key={i}>
-                                <TableCell style={stylesBody}>{i + 1}</TableCell>
+                                {/* <TableCell style={stylesBody}>{i + 1}</TableCell> */}
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.bankname}</TableCell>
                                 <TableCell style={stylesBody}>{data.accountname}</TableCell>
                                 <TableCell style={stylesBody}>{data.accountno}</TableCell>
-                                <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
+                                <TableCell style={stylesBody}><Naira>{data.grosspay}</Naira></TableCell>
                                 <TableCell style={stylesBody}><Naira>{data.net}</Naira></TableCell>
                                 <TableCell style={stylesBody}>{moment(data.date).format('MM-YYYY')}</TableCell>
                             </TableRow>

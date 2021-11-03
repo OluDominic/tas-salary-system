@@ -17,12 +17,16 @@
         width: 100%;
     }
 
-    .adminName, .requests, .staffs {
+    .adminName, .request, .requests, .staffs {
         padding: 50px 30px;
         color: black;
         background: linear-gradient(180deg,#f3cbab,#feedca);
         transition: 0.3s all ease-in-out;
         margin: 30px auto;
+    }
+
+    .request {
+        background: linear-gradient(180deg,#969299,#d2e99c);
     }
 
     .requests {
@@ -31,5 +35,27 @@
 
     .staffs {
         background: linear-gradient(90deg,#b1e5f9,#f4d2fe);
+    }
+}
+
+@media only screen and (max-width: 580px) {
+    .adminpage {
+
+        h1 {
+            font-size: 21px;
+        }
+
+        .admincolumn { 
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 100%;
+        }
+
+        .adminName, .request, .requests, .staffs {
+            padding: 20px 17px;
+            margin: 10px auto;
+        }
     }
 }

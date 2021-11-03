@@ -12,3 +12,23 @@
         }
     }
 }
+
+@media only screen and (max-width: 540px) {
+
+    .userProfile {
+
+        h1 {
+            font-size: 21px;
+        }
+    }
+}
+
+@media only screen and (max-width: 340px) {
+
+    .userProfile {
+
+        h1 {
+            font-size: 19px;
+        }
+    }
+}

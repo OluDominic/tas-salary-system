@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import './index.scss'
 import { faBirthdayCake, faHome, faMoneyBill, faSuitcase, faUser, faUserFriends } from '@fortawesome/free-solid-svg-icons'
@@ -14,7 +14,7 @@ const EmployeeSidebar =()=> {
     const [open, setOpen] = useState(false)
 
     const onBar =()=> {
-        setOpen(!false)
+        setOpen(!open)
     }
 
     return (
@@ -22,20 +22,27 @@ const EmployeeSidebar =()=> {
                 <i onClick={onBar} className={open ? 'fas fa-times' : 'fas fa-bars bars'}></i>
             <h2>The Ambassadors Schools HRM</h2>
             <hr />
+            <TransitionGroup>
+                <CSSTransition
+                    timeout={500}
+                    classNames="fade"
+                >
                 <ul>
                     <li>
-                        <Link to="/profile"> <FontAwesomeIcon icon={faHome} /> Home </Link>
+                        <NavLink activeStyle={{background:'grey'}} to="/profile"> <FontAwesomeIcon icon={faHome} /> Home </NavLink>
                     </li>
                     <li>
-                        <Link to="/salary"> <FontAwesomeIcon icon={faMoneyBill} /> Payroll </Link>
+                        <NavLink activeStyle={{background:'grey'}} to="/salary"> <FontAwesomeIcon icon={faMoneyBill} /> Payroll </NavLink>
                     </li>
                     <li>
-                        <Link to="/info"> <FontAwesomeIcon icon={faSuitcase} /> My Profile </Link>
+                        <NavLink activeStyle={{background:'grey'}} to="/info"> <FontAwesomeIcon icon={faSuitcase} /> My Profile </NavLink>
                     </li>
                     <li>
-                        <Link to="/complaint"> <FontAwesomeIcon icon={faComment} /> Complaints </Link>
+                        <NavLink activeStyle={{background:'grey'}} to="/complaint"> <FontAwesomeIcon icon={faComment} /> Complaints </NavLink>
                     </li>
                 </ul>
+                </CSSTransition>
+            </TransitionGroup>
         </div>
     );
 }

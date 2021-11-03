@@ -7,7 +7,7 @@ import './index.scss'
 import FormWrapper from '../forms/FormWrapper'
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import  {APPCONFIG} from '../../config/config';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Popup from './../department/popup'
@@ -21,6 +21,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import SearchBar from 'material-ui-search-bar'
+import { ExportCSV } from '../exportCSV'
 
 const Employees =()=> {
 
@@ -39,6 +40,8 @@ const Employees =()=> {
     const [search, setSearch] = React.useState("");
     const [employeeId, setEmployeeId] = useState('');
     const [pay, setPay] = useState('');
+    const [hod, setHod] = useState(0);
+    const [coop, setCoop] = useState(0);
 
     const [searched, setSearched] = useState("");
 
@@ -84,19 +87,16 @@ const Employees =()=> {
     }
 
     useEffect(() => {
-        console.log("Behavior when the value of 'foo' changes.");
        fetchEmployees() 
       },[]);
 
 
         const fetchEmployees = () => {
-            console.log('Employees fetched')
         const headers = {
                 "Content-Type": "application/json",
                 Authorization: `Bearer lll`,
                 "Access-Control-Allow-Origin":"*"
             }
-            console.log(employees)
             axios.get(`${APPCONFIG.appapi}/fetchemployee`, {
                 headers
             }).then((data) => {
@@ -121,7 +121,7 @@ const Employees =()=> {
     }
 
     const register =()=> {
-        axios.post("http://192.168.43.9:3000/register", {
+        axios.post(`${APPCONFIG.appapi}/register`, {
             staffid: id,
             surname: surName,    
             firstname: firstName,
@@ -130,19 +130,21 @@ const Employees =()=> {
             password: password,
             school: school,
             department: department,
-            pay: pay
+            pay: pay,
+            hodallow: hod,
+            coop: coop
         })
-        window.location.replace('http://192.168.43.9:3000/employees')
+        window.location.replace(`${APPCONFIG.appapi}/employees`)
         .then((response) => {
-            console.log(response)
+            //console.log(response)
         })
     }
 
     const deleteEmployee =()=> {
-        axios.delete(`http://192.168.43.9:3000/deleteemployees/${employeeId}`, {
+        axios.delete(`${APPCONFIG.appapi}/deleteemployees/${employeeId}`, {
            
         })
-        window.location.replace('http://192.168.43.9:3000/employees')
+        window.location.replace(`${APPCONFIG.appapi}/employees`)
         .then((response)=> {
             console.log(response)
         });
@@ -170,20 +172,20 @@ const Employees =()=> {
     //   });
 
       const stylesHead = {
-        fontSize: '18px',
+        fontSize: '16px',
         cursor: 'pointer',
-        width: '10%',
+        width: '8%',
         fontWeight: '500',
         textTransform: 'uppercase',
         padding: '4px 4px'
       };
 
       const stylesBody = {
-        fontSize: '15px',
+        fontSize: '13px',
         cursor: 'pointer',
-        width: '15%',
+        width: '10%',
         fontWeight: '400',
-        padding: '4px 4px'
+        padding: '2px 2px'
       };
 
     return (
@@ -273,6 +275,16 @@ const Employees =()=> {
                 value={pay}
                 handleChange={ e=> setPay(e.target.value)}
                 />
+                <FormInput
+                type="hidden"
+                value={hod}
+                handleChange={ e=> setHod(e.target.value)}
+                />
+                <FormInput
+                type="hidden"
+                value={coop}
+                handleChange={ e=> setCoop(e.target.value)}
+                />
                 <FormSelect
                 
                         options={[
@@ -302,6 +314,7 @@ const Employees =()=> {
 
                 <FormSelect
                     options={[
+                        
                          {
                             value: "Department",
                             name: "Department"
@@ -343,8 +356,8 @@ const Employees =()=> {
                             value: "Kitchen",
                             name: "Kitchen"
                         }, {
-                            value: "Corper",
-                            name: "Corper"
+                            value: "Support Staff",
+                            name: "Support Staff"
                         },
                        {
                           value: "Utility",
@@ -398,31 +411,37 @@ const Employees =()=> {
                 sheet="tablexls"
                 buttonText="Download as XLS" 
                 />
+                 {/* <ExportCSV csvData={Table} fileName="employee excel download" /> */}
             <TableContainer component={Paper}>
                 <Table id="table-to-xls" >
                     <TableHead>
                         <TableRow>
-                            <TableCell style={stylesHead}># </TableCell>
+                            {/* <TableCell style={stylesHead}># </TableCell> */}
                             <TableCell style={stylesHead}>ID </TableCell>
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
                             <TableCell style={stylesHead}>School </TableCell>
-                            <TableCell style={stylesHead}>Actions </TableCell>
+                            {/* <TableCell style={stylesHead}>Basic Salary </TableCell>
+                            <TableCell style={stylesHead}>HOD Allow </TableCell>
+                            <TableCell style={stylesHead}>Coop </TableCell> */}
+                            {/* <TableCell style={stylesHead}>Actions </TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {employees.map && employees.map((data, i)=> {
-                            console.log(data)
                             return (
-                                <TableRow key={i}>
-                                    <TableCell style={stylesBody}>{i + 1}</TableCell>
-                                    <TableCell onClick={()=> history.push(`${APPCONFIG.appapi}/fetchemployees?id`)} style={stylesBody}>{data.staffid}</TableCell>
+                                <TableRow key={i} component={Link} to={'/update/'+data.id}>
+                                    {/* <TableCell style={stylesBody}>{i + 1}</TableCell> */}
+                                    <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                     <TableCell style={stylesBody}>{data.surname}</TableCell>
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                     <TableCell style={stylesBody}>{data.department}</TableCell>
-                                    <TableCell style={stylesBody}>{data.school}</TableCell>
-                                    <TableCell style={stylesBody}><span>
+                                    <TableCell style={{fontSize: 13, cursor:'pointer', width: '16%', fontWeight: 400, padding: '2px 2px' }}>{data.school}</TableCell>
+                                    {/* <TableCell style={stylesBody}>{data.pay}</TableCell>
+                                    <TableCell style={stylesBody}>{data.hodallow}</TableCell>
+                                    <TableCell style={stylesBody}>{data.coop}</TableCell> */}
+                                    {/* <TableCell style={stylesBody}><span>
                                     <button onClick={()=> {
                                         handleClick(data.id)
                                     }}>
@@ -431,7 +450,7 @@ const Employees =()=> {
                             <button onClick={()=>{togglePopup(data.id)}}>
                               <FontAwesomeIcon icon={faTrashAlt} />
                             </button>
-                                        </span> </TableCell>
+                                        </span> </TableCell> */}
                                 </TableRow>
                             )
                         } )}
