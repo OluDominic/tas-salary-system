@@ -37,9 +37,9 @@ const Login =()=> {
             let data = response.data;
             localStorage.setItem("userdata",JSON.stringify(data));
             if (data.usertype=='admin') {
-               window.location.replace(`${APPCONFIG.appapi}/admin`)
+               window.location.replace('https://hr-magt.herokuapp.com/admin')
             } else {
-                window.location.replace(`${APPCONFIG.appapi}/profile`)
+                window.location.replace('https://hr-magt.herokuapp.com/profile')
             }
 
             if (response.data.message) {
@@ -47,7 +47,7 @@ const Login =()=> {
             } else {
                 setMessage(response.data[0])
             }
-            console.log(response.data)
+            //console.log(response.data)
         }).catch((error)=>{
             console.log(error)
         })
@@ -92,6 +92,16 @@ const Login =()=> {
                 </form>
             </div>
         </FormWrapper>
+        <div>
+            <h3>Note this is Full stack Application built with React, Express and MySQL </h3>
+            <p>For testing the app login into the admin using the following details: </p>
+            <label>Username: admin</label>
+            <label>Password: @dmin123</label>
+            <br/>
+            <p>And login as an employee using following details to preview the app.</p>
+            <label>Username: domolu@tac.com</label>
+            <label>Password: domo</label>
+        </div>
         </div>
     );
 }

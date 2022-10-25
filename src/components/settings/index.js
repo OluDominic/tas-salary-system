@@ -84,7 +84,7 @@ const Settings =()=> {
                                 <div><p style={{color: 'green'}}>{error}</p></div>
                         <form onSubmit={handleSubmit}>
                             <div className="settings-sub-sub">
-                                <label>School Name</label>
+                                <label>Organization Name</label>
                                 <div style={{width: '80%'}}>
                                 <FormInput
                                 type="text"
@@ -93,7 +93,7 @@ const Settings =()=> {
                                 handleChange={e => setSchoolName(e.target.value)}
                                 />
                                 </div>
-                                <label>School Address</label>
+                                <label>Organization Address</label>
                                 <div style={{width: '80%'}}>
                                 <FormInput
                                 type="text"

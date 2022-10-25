@@ -20,7 +20,7 @@ const EmployeeSidebar =()=> {
     return (
             <div className="employeeSidebar">
                 <i onClick={onBar} className={open ? 'fas fa-times' : 'fas fa-bars bars'}></i>
-            <h2>The Ambassadors Schools HRM</h2>
+            <h2>HR Management System</h2>
             <hr />
             <TransitionGroup>
                 <CSSTransition

@@ -11,11 +11,11 @@ const Home =()=> {
             <div className="home-write">
                 <Helmet>
                     <meta charSet="UTF-8" />
-                    <title>TAS HR Management System </title>
+                    <title>HR Management System </title>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <link rel="icon" href={Logo} />
                 </Helmet>
-                <h1> the ambassadors schools employee management system</h1>
+                <h1> HR employee management system</h1>
                 <div className="home-login">
                 <span>Click here to  </span>
             

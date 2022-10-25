@@ -53,7 +53,7 @@ const Complaint =()=> {
             } else {
                 setPostText(response.data[0])
             }
-            console.log(response)
+            //console.log(response)
         })
     }
 

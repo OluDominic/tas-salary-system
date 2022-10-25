@@ -74,7 +74,7 @@ const Department =()=> {
         })
         window.location.replace(`${APPCONFIG.appapi}/departments`)
         .then((response)=> {
-            console.log(response)
+            //console.log(response)
         });
         setIsOpen(false)
     }

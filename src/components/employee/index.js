@@ -68,7 +68,7 @@ const Employee =()=> {
     const logout=()=> {
         localStorage.clear();
         setuseData({});
-        window.location.replace(`${APPCONFIG.appapi}/`)
+        window.location.replace('https://hr-magt.herokuapp.com/')
     }
 
     const recovery=(id)=> {

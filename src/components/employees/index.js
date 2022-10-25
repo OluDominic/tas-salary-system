@@ -146,7 +146,7 @@ const Employees =()=> {
         })
         window.location.replace(`${APPCONFIG.appapi}/employees`)
         .then((response)=> {
-            console.log(response)
+            //console.log(response)
         });
         setIsOpen(false)
     }
@@ -416,7 +416,7 @@ const Employees =()=> {
                 <Table id="table-to-xls" >
                     <TableHead>
                         <TableRow>
-                            {/* <TableCell style={stylesHead}># </TableCell> */}
+                            <TableCell style={stylesHead}># </TableCell>
                             <TableCell style={stylesHead}>ID </TableCell>
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Firstname </TableCell>
@@ -432,7 +432,7 @@ const Employees =()=> {
                         {employees.map && employees.map((data, i)=> {
                             return (
                                 <TableRow key={i} component={Link} to={'/update/'+data.id}>
-                                    {/* <TableCell style={stylesBody}>{i + 1}</TableCell> */}
+                                    <TableCell style={stylesBody}>{i + 1}</TableCell>
                                     <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                     <TableCell style={stylesBody}>{data.surname}</TableCell>
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>

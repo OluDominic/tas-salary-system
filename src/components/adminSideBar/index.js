@@ -10,7 +10,7 @@ const AdminSideBar =()=> {
     return (
 
         <div className="adminsidebar">
-            <h2>The Ambassadors Schools HRM</h2>
+            <h2> HR Management System</h2>
             <hr />
                 <ul>
                     {/*}

@@ -112,7 +112,7 @@ const EmployeeInfo =()=> {
         }
         else{
             data=JSON.parse(data);
-            console.log(data,'popop')
+            //console.log(data,'popop')
       setUserdata(data);
         }
     },[]);
@@ -148,7 +148,7 @@ const EmployeeInfo =()=> {
         let data = localStorage.getItem('userdata')
 
         if (!data) {
-            console.log('Data Fetched')
+            //console.log('Data Fetched')
         }
         else{
             data=JSON.parse(data);

@@ -93,7 +93,8 @@ const SalaryTotal =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log(moment(selectDate).format("YYYY-MM"))
-        axios.get(`${APPCONFIG.appapi}/salarytotals/${moment(selectDate).format("YYYY-MM-DD")}`, {
+        //axios.get(`${APPCONFIG.appapi}/salarytotals/${moment(selectDate).format("YYYY-MM-DD")}`, {
+            axios.get(`${APPCONFIG.appapi}/salarytotal`, {
             headers
         }).then((data) => {
            
@@ -102,6 +103,10 @@ const SalaryTotal =()=> {
             console.log(error);
         })
     };
+
+    useEffect(()=> {
+        fetchSalaryTotal()
+    }, []);
 
     const stylesHead = {
         fontSize: '17px',
@@ -144,8 +149,8 @@ const SalaryTotal =()=> {
                 sheet="tablexls"
                 buttonText="Download as XLS" 
                 />
-                <Select options={options} value={month} onChange={e => setMonth(e.target.value)} defaultValue={options[0]} />
-                <Select options={years} value={year} onChange={e => setYear(e.target.value)} defaultValue={options[0]} />
+                {/* <Select options={options} value={month} onChange={e => setMonth(e.target.value)} defaultValue={options[0]} />
+                <Select options={years} value={year} onChange={e => setYear(e.target.value)} defaultValue={options[0]} /> */}
                 <div>
                     <FormWrapper>
                         <form onSubmit={handleSubmit}>
@@ -155,7 +160,9 @@ const SalaryTotal =()=> {
                         showMonthYearPicker
                         dateFormat="yyyy/MM"
                     />
-                    <Button type="submit" onClick={fetchSalaryTotal}>Submit</Button>
+                    <Button type="submit" 
+                    // onClick={fetchSalaryTotal}
+                    >Submit</Button>
                         </form>
                     </FormWrapper>
                 </div>
@@ -197,7 +204,7 @@ const SalaryTotal =()=> {
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                     <TableCell style={stylesBody}>{moment(data.date).format('MM-YYYY')}</TableCell>
                                     <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>z///*
-                                    <TableCell style={stylesBody}><Naira>{data.hod}</Naira></TableCell>
+                                    <TableCell style={stylesBody}>{data.hod}</TableCell>
                                     <TableCell style={stylesBody}><Naira>{data.classteacher}</Naira></TableCell>
                                     <TableCell style={stylesBody}><Naira>{data.monthly}</Naira></TableCell>
                                     <TableCell style={stylesBody}><Naira>{data.leaveallow}</Naira></TableCell>

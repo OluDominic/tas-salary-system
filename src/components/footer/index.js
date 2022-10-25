@@ -10,7 +10,7 @@ const Footer =()=> {
             <div className="footer-sub">
                 <span className="font-icon">
                     <FontAwesomeIcon icon={faCopyright} />
-                2021 The Ambassadors College. 
+                2021 HR Management System. 
                 </span>
 
                 <span className="rights">
