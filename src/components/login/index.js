@@ -92,16 +92,17 @@ const Login =()=> {
                 </form>
             </div>
         </FormWrapper>
-        <div>
-            <h3>Note this is Full stack Application built with React, Express and MySQL </h3>
-            <p>For testing the app login into the admin using the following details: </p>
+        
+        <div className="login-note">
+            <h3>Note: This App is a Full stack Application built with React, Express and MySQL </h3>
+            <p>For testing the app login as an admin using the following details: </p>
             <label>Username: admin</label>
             <label>Password: @dmin123</label>
-            <br/>
-            <p>And login as an employee using following details to preview the app.</p>
+            <p>And login as an employee using following details to preview the app:</p>
             <label>Username: domolu@tac.com</label>
             <label>Password: domo</label>
         </div>
+
         </div>
     );
 }

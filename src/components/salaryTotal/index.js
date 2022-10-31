@@ -203,8 +203,8 @@ const SalaryTotal =()=> {
                                     <TableCell style={stylesBody}>{data.surname}</TableCell>
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                     <TableCell style={stylesBody}>{moment(data.date).format('MM-YYYY')}</TableCell>
-                                    <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>z///*
-                                    <TableCell style={stylesBody}>{data.hod}</TableCell>
+                                    <TableCell style={stylesBody}><Naira>{data.gross}</Naira></TableCell>
+                                    <TableCell style={stylesBody}><Naira>{data.hod}</Naira></TableCell>
                                     <TableCell style={stylesBody}><Naira>{data.classteacher}</Naira></TableCell>
                                     <TableCell style={stylesBody}><Naira>{data.monthly}</Naira></TableCell>
                                     <TableCell style={stylesBody}><Naira>{data.leaveallow}</Naira></TableCell>

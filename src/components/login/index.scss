@@ -1,6 +1,19 @@
 .login {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .login-note {
+        max-width: 800px;
+        margin-bottom: 50px;
+
+        h3, p, label {
+            text-transform: none;
+        }
+    }
 }
 
 .recovery {
