@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './index.scss';
 import { APPCONFIG } from './../../config/config';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import FormSelect from '../forms/FormSelect';
 import FormWrapper from '../forms/FormWrapper';
 import FormInput from '../forms/FormInput';
@@ -27,7 +27,13 @@ const AdminComplaints =()=> {
     const [complaint, setComplaint] = useState([]);
     const [complaintId, setComplaintId] = useState({})
     const [hideModal, setHideModal] = useState(true);
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    
+    const history = useHistory();
+
+    const handleClick =(complaintid)=> {
+        history.push('/complaintapproval/'+complaintid)
+    }
 
     useEffect(()=> {
         fetchComplaints()
@@ -56,29 +62,30 @@ const AdminComplaints =()=> {
         })
     }
 
-    let {complaintid} = useParams()
-    useEffect(()=> {
-        fetchUser()
-    }, [])
+    // let {complaintid} = useParams()
+    // useEffect(()=> {
+    //     fetchUser()
+    // }, [])
 
-    const fetchUser = () => {
+    // const fetchUser = () => {
    
-        // console.log(location)
-        const headers = {
-            "Content-Type": "application/json",
-            Authorization: `Bearer lll`,
-            "Access-Control-Allow-Origin":"*"
-        }
-        console.log('here')
-        axios.get(`${APPCONFIG.appapi}/fetchcomplaints/${complaintid}`, {
-            headers
-        }).then((data) => {
+    //     // console.log(location)
+    //     const headers = {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer lll`,
+    //         "Access-Control-Allow-Origin":"*"
+    //     }
+    //     //console.log('here')
+    //     axios.get(`${APPCONFIG.appapi}/fetchcomplaints/${complaintid}`, {
+    //         headers
+    //     }).then((data) => {
            
-            setCom(data.data[0]);
-        }).catch((error) => {
-            console.log(error);
-        })
-    }
+    //         setCom(data.data[0]);
+    //         console.log(data.data.id)
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     })
+    // }
 
     const deleteComplaints =()=> {
         axios.delete(`${APPCONFIG.appapi}/deletecomplaints/${complaintId}`, {
@@ -128,16 +135,23 @@ const AdminComplaints =()=> {
       const stylesBody = {
         fontSize: '17px',
         cursor: 'pointer',
-        width: '10%',
+        width: '8%',
         fontWeight: '400'
       };
 
       const stylesOne = {
         fontSize: '17px',
         cursor: 'pointer',
-        width: '50px',
+        width: '60px',
         fontWeight: '400'
       };
+
+      const styleName = {
+        fontSize: '17px',
+        cursor: 'pointer',
+        width: '40px',
+        fontWeight: '400'
+      }
 
     return (
         <div>
@@ -147,7 +161,7 @@ const AdminComplaints =()=> {
             <h1>Complaints Page</h1>
 
             <div>
-            <Modal {...configModal}>
+            {/* <Modal {...configModal}>
                 <FormWrapper {...headline}>
                     <div>
                         <form onSubmit={handleSubmit}>
@@ -190,7 +204,7 @@ const AdminComplaints =()=> {
                         </form>
                         </div>
                 </FormWrapper>
-            </Modal>
+            </Modal> */}
             </div>
             <div className="birthday-sub">
             <h2>Mail</h2>
@@ -199,7 +213,7 @@ const AdminComplaints =()=> {
                     <TableHead>
                         <TableRow>
                             <TableCell style={stylesHead}># </TableCell>
-                            <TableCell style={stylesHead}>ID </TableCell>
+                            <TableCell style={styleName}>Name </TableCell>
                             <TableCell style={stylesOne}>Message </TableCell>
                             <TableCell style={stylesHead}>Date </TableCell>
                             <TableCell style={stylesHead}>Status </TableCell>
@@ -210,13 +224,13 @@ const AdminComplaints =()=> {
                         {complaints.map && complaints.map((data, i)=> (
                             <TableRow key={i}>
                                 <TableCell style={stylesBody}>{i + 1}</TableCell>
-                                <TableCell style={stylesBody}>{data.staffid}</TableCell>
+                                <TableCell style={styleName}>{data.firstname}{" "}{data.lastname}</TableCell>
                                 <TableCell style={stylesOne}>{data.message}</TableCell>
                                 <TableCell style={stylesBody}>{moment(data.date).format('YYYY/MM/DD ')}</TableCell>
-                                <TableCell style={stylesBody}><h3>Approved</h3></TableCell>
+                                <TableCell style={stylesBody}><h3>{data.msgstatus}</h3></TableCell>
                                 <TableCell style={stylesBody}>
                                 <span>
-                                    <button onClick={()=>{ toggleModal()}}>
+                                    <button onClick={()=>{handleClick(data.complaintid)}}>
                               <FontAwesomeIcon icon={faEdit} />
                             </button>
                             <button onClick={()=>{togglePopup(data.id)}}>

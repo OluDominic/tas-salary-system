@@ -42,6 +42,7 @@ const Employees =()=> {
     const [pay, setPay] = useState('');
     const [hod, setHod] = useState(0);
     const [coop, setCoop] = useState(0);
+    const [departments, setDepartments] = useState([])
 
     const [searched, setSearched] = useState("");
 
@@ -119,6 +120,33 @@ const Employees =()=> {
         hideModal,
         toggleModal
     }
+    const handleChange =(e)=> {
+        const {name, value} = e.target;
+        setDepartments({...departments, [name]: value})
+    }
+    
+    const fetchDepartment = () => {
+        console.log(departments)
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer lll`,
+            "Access-Control-Allow-Origin":"*"
+        }
+        console.log('here')
+        axios.get(`${APPCONFIG.appapi}/fetchdepartment`, {
+            headers
+        }).then((data) => {
+           
+         setDepartments(data.data);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    useEffect(()=> {
+        fetchDepartment()
+    },[]);
+
 
     const register =()=> {
         axios.post(`${APPCONFIG.appapi}/register`, {
@@ -129,7 +157,7 @@ const Employees =()=> {
             email: email,
             password: password,
             school: school,
-            department: department,
+            department: departments,
             pay: pay,
             hodallow: hod,
             coop: coop
@@ -137,6 +165,7 @@ const Employees =()=> {
         window.location.replace(`${APPCONFIG.appapi}/employees`)
         .then((response) => {
             //console.log(response)
+            alert("New Employee Successfully Registered!")
         })
     }
 
@@ -185,7 +214,12 @@ const Employees =()=> {
         cursor: 'pointer',
         width: '10%',
         fontWeight: '400',
-        padding: '2px 2px'
+        padding: '2px 2px',
+        hover: {
+            "&$hover:hover": {
+                backgroundColor: '#49bb7b',
+            },
+        },
       };
 
     return (
@@ -289,24 +323,16 @@ const Employees =()=> {
                 
                         options={[
                         {
-                            value: "School",
-                            name: "School"
+                            value: "Gender",
+                            name: "Gender"
                         },
                         {
-                            value: "Senior Secondary School",
-                            name: "Senior Secondary School"
+                            value: "Male",
+                            name: "male"
                         },
                         {
-                            value: "Day School",
-                            name: "Day School"
-                        }
-                        , {
-                            value: "Junior Secondary School",
-                            name: "Junior Secondary School"
-                        }
-                        , {
-                            value: "Primary School",
-                            name: "Primary School"
+                            value: "Female",
+                            name: "female"
                         }
                     ]}
                     handleChange={e => setSchool(e.target.value)}
@@ -366,6 +392,16 @@ const Employees =()=> {
                     ]}
                     handleChange={e => setDepartment(e.target.value)}
                 />
+
+{/* <select
+      name="transcode_profile"
+      id="transcode_profile"
+      onChange={e => setDepartments(e.target.value)}
+      value={departments}
+    >
+        <option value="-----">Departments</option>
+        {departments.map && departments.map(depart => <option value={depart.department}>{depart.department}</option>)}
+    </select> */}
                 
                 <Button onClick={register} type="submit">
                     Sign Up
@@ -421,27 +457,27 @@ const Employees =()=> {
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
-                            <TableCell style={stylesHead}>School </TableCell>
+                            {/* <TableCell style={stylesHead}>School </TableCell> */}
                             {/* <TableCell style={stylesHead}>Basic Salary </TableCell>
                             <TableCell style={stylesHead}>HOD Allow </TableCell>
                             <TableCell style={stylesHead}>Coop </TableCell> */}
-                            {/* <TableCell style={stylesHead}>Actions </TableCell> */}
+                            <TableCell style={stylesHead}>Actions </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {employees.map && employees.map((data, i)=> {
                             return (
-                                <TableRow key={i} component={Link} to={'/update/'+data.id}>
+                                <TableRow key={i} component={Link}>
                                     <TableCell style={stylesBody}>{i + 1}</TableCell>
                                     <TableCell style={stylesBody}>{data.staffid}</TableCell>
                                     <TableCell style={stylesBody}>{data.surname}</TableCell>
                                     <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                     <TableCell style={stylesBody}>{data.department}</TableCell>
-                                    <TableCell style={{fontSize: 13, cursor:'pointer', width: '16%', fontWeight: 400, padding: '2px 2px' }}>{data.school}</TableCell>
+                                    {/* <TableCell style={{fontSize: 13, cursor:'pointer', width: '16%', fontWeight: 400, padding: '2px 2px' }}>{data.school}</TableCell> */}
                                     {/* <TableCell style={stylesBody}>{data.pay}</TableCell>
                                     <TableCell style={stylesBody}>{data.hodallow}</TableCell>
                                     <TableCell style={stylesBody}>{data.coop}</TableCell> */}
-                                    {/* <TableCell style={stylesBody}><span>
+                                    <TableCell style={stylesBody}><span>
                                     <button onClick={()=> {
                                         handleClick(data.id)
                                     }}>
@@ -450,7 +486,7 @@ const Employees =()=> {
                             <button onClick={()=>{togglePopup(data.id)}}>
                               <FontAwesomeIcon icon={faTrashAlt} />
                             </button>
-                                        </span> </TableCell> */}
+                                        </span> </TableCell>
                                 </TableRow>
                             )
                         } )}

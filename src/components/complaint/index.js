@@ -6,7 +6,13 @@ import FormWrapper from '../forms/FormWrapper';
 import axios from 'axios'
 import {APPCONFIG} from './../../config/config'
 import './index.scss';
-
+import {
+    TableContainer, Table, TableHead,
+    TableRow, TableBody, TableCell
+  } from '@material-ui/core';
+  //import {makeStyles} from '@material-ui/core/styles'
+  import Paper from '@material-ui/core/Paper';
+import moment from 'moment'
 const Complaint =()=> {
 
     const [usedata, setUsedata] = useState([]);
@@ -15,6 +21,8 @@ const Complaint =()=> {
     const [charsExceed, setCharsExceed] = useState(false);
     const [postText, setPostText] = useState('');
     const [maxLength, setMaxLength] = useState('');
+    const [status, setStatus] = useState('Pending');
+    const [complaints, setComplaints] = useState([]);
 
 
     useEffect(()=> {
@@ -28,6 +36,34 @@ const Complaint =()=> {
         }
 
     },[]);
+
+    const fetchComplaint = () => {
+   
+        let data = localStorage.getItem('userdata')
+
+        if (!data) {
+            //console.log('Data Fetched')
+        }
+        else{
+            data=JSON.parse(data);
+            //history.push('/admin')
+           
+        setUsedata(data);
+        }
+        axios.get(`${APPCONFIG.appapi}/fetchcomplaint?id=${data.id}`, {
+          
+        })
+        .then((data) => {
+           
+         setComplaints(data.data);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+    
+    useEffect(()=> {
+        fetchComplaint()
+    },[])
 
     const SubmitButton =()=> {
         if (message) {
@@ -45,16 +81,24 @@ const Complaint =()=> {
         axios.post(`${APPCONFIG.appapi}/complaints`, {
             id: usedata.id,
             staffid: usedata.staffid,
-            message: message
+            message: message,
+            firstname: usedata.surname,
+            lastname: usedata.firstname,
+            msgstatus: status
         })
+        alert('Message successfully submited!')
+        window.location.replace(`${APPCONFIG.appapi}/complaint`)
         .then((response)=> {
             if (response.data.message) {
                 setPostText(response.data.message)
+                console.log(response.data)
             } else {
                 setPostText(response.data[0])
             }
-            //console.log(response)
+            console.log(response)
         })
+        
+        
     }
 
     const textInput =(event)=> {
@@ -79,6 +123,28 @@ const Complaint =()=> {
         head : 'Send a complaint'
     }
 
+    const stylesHead = {
+        fontSize: '20px',
+        cursor: 'pointer',
+        width: '10%',
+        fontWeight: '500',
+        textTransform: 'uppercase'
+      };
+
+      const stylesBody = {
+        fontSize: '17px',
+        cursor: 'pointer',
+        width: '10%',
+        fontWeight: '400'
+      };
+
+      const stylesOne = {
+        fontSize: '17px',
+        cursor: 'pointer',
+        width: '50px',
+        fontWeight: '400'
+      };
+
     return (
         <div className="complaints">
             <Helmet>
@@ -89,13 +155,35 @@ const Complaint =()=> {
                 <FormWrapper {...headline}>
                     <div>
                         <form onSubmit={handleFormSubmit}>
-                        <h3 style={{color: 'red'}}>{postText}</h3>
+                        {/* <h3 style={{color: 'green'}}>{postText}</h3> */}
                             <label>#</label>
                             <FormInput
                             type="text"
                             name="id"
                             value={usedata.id}
                             />
+                            <div style={{display: 'none'}}>
+                            <FormInput
+                            type="text"
+                            name="id"
+                            value={usedata.surname}
+                            />
+                            </div>
+                            <div style={{display: 'none'}}>
+                            <FormInput
+                            type="text"
+                            name="id"
+                            value={usedata.firstname}
+                            />
+                            </div>
+                            <div style={{display: 'none'}}>
+                            <FormInput
+                            type="text"
+                            name="id"
+                            value={status}
+                            handleChange={ e=> setStatus(e.target.value)}
+                            />
+                            </div>
                             <label>ID</label>
                             <FormInput
                             type="text"
@@ -109,7 +197,7 @@ const Complaint =()=> {
                             value={message}
                             className="textarea"
                             maxLength={220} 
-                            placeholder="Enter Complaints Here"
+                            placeholder="Enter Message Here"
                             rowSpan={10}
                             onChange={textInput}
                             style={{overflow: 'auto'}}
@@ -120,6 +208,33 @@ const Complaint =()=> {
                         </form>
                     </div>
                 </FormWrapper>
+            </div>
+            <div>
+            <TableContainer component={Paper}>
+                <Table >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={stylesHead}># </TableCell>
+                            <TableCell style={stylesHead}>ID </TableCell>
+                            <TableCell style={stylesOne}>Message </TableCell>
+                            <TableCell style={stylesHead}>Date </TableCell>
+                            <TableCell style={stylesHead}>Status </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {complaints.map && complaints.map((data, i)=> (
+                            <TableRow key={i}>
+                                <TableCell style={stylesBody}>{i + 1}</TableCell>
+                                <TableCell style={stylesBody}>{data.staffid}</TableCell>
+                                <TableCell style={stylesOne}>{data.message}</TableCell>
+                                <TableCell style={stylesBody}>{moment(data.date).format('YYYY/MM/DD ')}</TableCell>
+                                <TableCell style={stylesBody}><h3>{data.msgstatus}</h3></TableCell>
+                               
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
             </div>
         </div>
     );

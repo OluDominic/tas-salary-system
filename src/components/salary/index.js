@@ -33,7 +33,7 @@ const Salary =()=> {
         let data = localStorage.getItem('userdata')
 
         if (!data) {
-            console.log('Data Fetched')
+            //console.log('Data Fetched')
         }
         else{
             data=JSON.parse(data);
@@ -96,7 +96,7 @@ const Salary =()=> {
                         <TableBody>
                             { 
                             payroll.map && payroll.map((data, i)=> {
-                                console.log(data)
+                                //console.log(data)
                                 return (
                                     <TableRow key={i}>
                                         <TableCell className="salTable" style={stylesBody}>{i + 1} </TableCell>

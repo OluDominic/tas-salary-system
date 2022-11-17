@@ -61,14 +61,15 @@
         margin: 0;
         background: linear-gradient(180deg,#3488a1,#69725e);
         height: 100vh;
-        width: 100px;
+        width: 100%;
+        max-width: 100px;
 
         i {
             display: flex;
             justify-content: flex-end;
             color: white;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 20px;
             position: relative;
         }
     
@@ -110,8 +111,8 @@
 
 }
 
-@media only screen and (max-width: 380px) {
-    .employeeSidebar {
-        top: 0;
-    }
-}
+// @media only screen and (max-width: 380px) {
+//     .employeeSidebar {
+//         top: 0;
+//     }
+// }

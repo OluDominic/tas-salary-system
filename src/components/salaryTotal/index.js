@@ -11,50 +11,19 @@ import {
     TableRow, TableBody, TableCell
   } from '@material-ui/core';
 import Button from '../forms/Button'
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import Paper from '@material-ui/core/Paper';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import Select from 'react-select';
 
 const SalaryTotal =()=> {
 
     const [total, setTotal] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectDate, setSelectDate] = useState(new Date());
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
-
-    const options = [
-        {label:'Jan', value:'01'},
-        {label:'Feb', value:'02'},
-        {label:'Mar', value:'03'},
-        {label:'Apr', value:'04'},
-        {label:'May', value:'05'},
-        {label:'Jun', value:'06'},
-        {label:'Jul', value:'07'},
-        {label:'Aug', value:'08'},
-        {label:'Sep', value:'09'},
-        {label:'Oct', value:'10'},
-        {label:'Nov', value:'11'},
-        {label:'Dec', value:'12'},
-    ]
-
-    const years = [
-        {label:'2021', value:'2021'},
-        {label:'2022', value:'2022'},
-        {label:'2023', value:'2023'},
-        {label:'2024', value:'2024'},
-        {label:'2025', value:'2025'},
-        {label:'2026', value:'2026'},
-        {label:'2027', value:'2027'},
-        {label:'2028', value:'2028'},
-        {label:'2029', value:'2029'},
-        {label:'2030', value:'2030'},
-        {label:'2031', value:'2031'},
-        {label:'2032', value:'2032'},
-    ]
-
+    const [loading, setLoading] = useState(false)
     const handleSubmit =(e)=> {
         e.preventDefault()
     }
@@ -93,12 +62,14 @@ const SalaryTotal =()=> {
             "Access-Control-Allow-Origin":"*"
         }
         console.log(moment(selectDate).format("YYYY-MM"))
-        //axios.get(`${APPCONFIG.appapi}/salarytotals/${moment(selectDate).format("YYYY-MM-DD")}`, {
-            axios.get(`${APPCONFIG.appapi}/salarytotal`, {
+        axios.get(`${APPCONFIG.appapi}/salarytotals/${moment(selectDate).format("YYYY-MM")}`, {
+           //axios.get(`${APPCONFIG.appapi}/salarytotals`, {
             headers
         }).then((data) => {
            
             setTotal(data.data);
+            
+            setLoading(false)
         }).catch((error) => {
             console.log(error);
         })
@@ -123,6 +94,8 @@ const SalaryTotal =()=> {
         fontWeight: '400',
         padding: '2px 4px'
       };
+
+      const headline = {}
     
     return (
         <div>
@@ -130,16 +103,16 @@ const SalaryTotal =()=> {
             <div>
             <div  ><h1 style={{marginTop: '20px'}}>Salary History</h1></div>
             <div className="search">
-                <div className="search-input">
+                {/* <div className="search-input">
                             <FormInput 
                             name="employee"
                             value={searchTerm || ""}
                             placeholder="Search Bar"
                             handleChange={handleChange}
                             />
-                </div>
+                </div> */}
             </div> 
-
+            <h4>Select Month and Year to get salary history of a particular month </h4>
             <div>
                 <ReactHTMLTableToExcel
                 id="test-table-xls-button"
@@ -149,20 +122,32 @@ const SalaryTotal =()=> {
                 sheet="tablexls"
                 buttonText="Download as XLS" 
                 />
-                {/* <Select options={options} value={month} onChange={e => setMonth(e.target.value)} defaultValue={options[0]} />
-                <Select options={years} value={year} onChange={e => setYear(e.target.value)} defaultValue={options[0]} /> */}
+
                 <div>
                     <FormWrapper>
                         <form onSubmit={handleSubmit}>
-                    <DatePicker 
+                    {/* <DatePicker 
                         selected={selectDate}
                         onChange={date => setSelectDate(date)}
                         showMonthYearPicker
                         dateFormat="yyyy/MM"
-                    />
-                    <Button type="submit" 
-                    // onClick={fetchSalaryTotal}
-                    >Submit</Button>
+                        placeholderText="Click to select a date"
+                    /> */}
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+        variant="inline"
+        openTo="year"
+        views={["year", "month"]}
+        label="Year and Month"
+        helperText="Start from year selection"
+        value={selectDate}
+        onChange={setSelectDate}
+      />
+      </MuiPickersUtilsProvider>
+                        <Button type="submit" 
+                        onClick={fetchSalaryTotal}
+                       >get salary history</Button>
+                    
                         </form>
                     </FormWrapper>
                 </div>
@@ -196,6 +181,7 @@ const SalaryTotal =()=> {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                        {loading && <em>Loading Payment History...</em>}
                             {total.map && total.map((data, i)=> (
                                 <TableRow  key={i}>
                                     {/* <TableCell style={stylesBody}>{i + 1}</TableCell> */}

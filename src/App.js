@@ -36,6 +36,7 @@ import SalaryTotalPage from './pages/SalaryTotalPage';
 import AdminPayslip from './pages/AdminPayslip';
 import BankPage from './pages/BankPage';
 import EmployeeDetailsUpdatePage from './pages/EmployeeDetailsUpdatePage';
+import ComplaintApprovePage from './pages/ComplaintApprovalPage';
 //import './App.css';
 
 function App() {
@@ -45,7 +46,8 @@ function App() {
   useEffect(()=> {
       let userdata = localStorage.getItem('userdata');
       setuseData(JSON.parse(userdata))
-  },[])
+  },[]);
+
   return (
     <div className="App">
       {useData && useData.usertype=='admin'?   <Admin />:null}
@@ -169,6 +171,12 @@ function App() {
           <Route path="/adminpayslip/:salaryid" render={()=> (
             <AdminLayout>
               <AdminPayslip />
+            </AdminLayout>
+          )}
+          />
+          <Route path="/complaintapproval/:complaintid" render={()=> (
+            <AdminLayout>
+              <ComplaintApprovePage />
             </AdminLayout>
           )}
           />

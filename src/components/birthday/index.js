@@ -87,7 +87,6 @@ const Birthday =()=> {
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
-                            <TableCell style={stylesHead}>School </TableCell>
                             <TableCell style={stylesHead}>Celebration </TableCell>
                         </TableRow>
                     </TableHead>
@@ -99,7 +98,6 @@ const Birthday =()=> {
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
-                                <TableCell style={stylesBody}>{data.school}</TableCell>
                                 <TableCell style={stylesBody}>{moment(data.birthday).format('Do MMMM')}</TableCell>
                             </TableRow>
                         ))}

@@ -25,13 +25,13 @@ const Adminpage =()=> {
     },[])
 
     const fetchEmployees = () => {
-        console.log(employees)
+        //console.log(employees)
         const headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer lll`,
             "Access-Control-Allow-Origin":"*"
         }
-        console.log('here')
+        //console.log('here')
         axios.get(`${APPCONFIG.appapi}/countemployees`, {
             headers
         }).then((data) => {
@@ -47,13 +47,13 @@ const Adminpage =()=> {
     },[])
 
     const fetchDepartment = () => {
-        console.log(employees)
+        //console.log(employees)
         const headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer lll`,
             "Access-Control-Allow-Origin":"*"
         }
-        console.log('here')
+        //console.log('here')
         axios.get(`${APPCONFIG.appapi}/countdepartments`, {
             headers
         }).then((data) => {
@@ -69,13 +69,13 @@ const Adminpage =()=> {
     },[])
 
     const fetchSchool = () => {
-        console.log(employees)
+        //console.log(employees)
         const headers = {
             "Content-Type": "application/json",
             Authorization: `Bearer lll`,
             "Access-Control-Allow-Origin":"*"
         }
-        console.log('here')
+        //console.log('here')
         axios.get(`${APPCONFIG.appapi}/countschools`, {
             headers
         }).then((data) => {
@@ -98,7 +98,7 @@ const Adminpage =()=> {
             <div className="admincolumn">
             <div className="adminName"><h2>Welcome {useData.adminid}</h2></div>
             <div className="request"><h2>Departments </h2><span>({department.total})</span></div>
-            <div className="requests"><h2>schools </h2><span>({school.total})</span></div>
+            {/* <div className="requests"><h2>schools </h2><span>({school.total})</span></div> */}
             <div className="staffs"><h2>employees</h2> <span>({employees.total})</span></div>
             </div>
         </div>

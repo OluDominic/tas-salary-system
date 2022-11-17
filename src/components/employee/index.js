@@ -99,14 +99,14 @@ const Employee =()=> {
                 open={Boolean(openMenu)}
                 onClose={handleClose}
             >
-          <StyledMenuItem onClick={()=> {
+          {/* <StyledMenuItem onClick={()=> {
             recovery(useData.id)
           }}>
             <ListItemIcon>
                 <SettingsIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Reset Password" />
-            </StyledMenuItem>
+            </StyledMenuItem> */}
             <StyledMenuItem onClick={logout}>
             <ListItemIcon>
                 <NavigationIcon fontSize="small" />

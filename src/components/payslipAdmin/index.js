@@ -153,9 +153,9 @@ const PayslipAdmin =()=> {
                 </div>
 
                 <div className="payslip-logo">
-                    <div className="logo">
+                    {/* <div className="logo">
                         <img src={taclogo} alt="taclogo" />
-                    </div>
+                    </div> */}
                     <div className="payslip-id">
                         <h2 style={{textTransform: "uppercase"}}>payslip #{payslip.salaryid}</h2>
                         <h3>Salary Month: {moment(payslip.date).format('MM/YYYY')}</h3>

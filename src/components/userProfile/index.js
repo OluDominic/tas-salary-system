@@ -37,18 +37,18 @@ const UserProfile =()=> {
         }
     }
     useEffect(() => {
-        console.log("Behavior when the value of 'foo' changes.");
+        //console.log("Behavior when the value of 'foo' changes.");
        fetchEmployees() 
       },[]);
 
     const fetchEmployees = () => {
-            console.log('Employees fetched')
+            //console.log('Employees fetched')
     const headers = {
                 "Content-Type": "application/json",
                 Authorization: `Bearer lll`,
                 "Access-Control-Allow-Origin":"*"
             }
-        console.log('here')
+        //console.log('here')
             axios.get(`${APPCONFIG.appapi}/fetchemp`, {
                 headers
             }).then((data) => {
@@ -147,10 +147,10 @@ const UserProfile =()=> {
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Firstname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
-                            <TableCell style={stylesHead}>School </TableCell>
+                            {/* <TableCell style={stylesHead}>School </TableCell> */}
                             <TableCell style={stylesHead}>Email </TableCell>
                             <TableCell style={stylesHead}>Birthday </TableCell>
-                            <TableCell style={stylesHead}>Address </TableCell>
+                            {/* <TableCell style={stylesHead}>Address </TableCell>
                             <TableCell style={stylesHead}>Phone </TableCell>
                             <TableCell style={stylesHead}>Date of join </TableCell>
                             <TableCell style={stylesHead}>Identification No </TableCell>
@@ -175,7 +175,7 @@ const UserProfile =()=> {
                             <TableCell style={stylesHead}>University Degree </TableCell>
                             <TableCell style={stylesHead}>Masters </TableCell>
                             <TableCell style={stylesHead}>PHD </TableCell>
-                            <TableCell style={stylesHead}>Other Qualifications </TableCell>
+                            <TableCell style={stylesHead}>Other Qualifications </TableCell> */}
                             {/* <TableCell style={stylesHead}>Action </TableCell> */}
                         </TableRow>
                     </TableHead>
@@ -187,10 +187,10 @@ const UserProfile =()=> {
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
-                                <TableCell style={stylesBody}>{data.school}</TableCell>
+                                {/* <TableCell style={stylesBody}>{data.school}</TableCell> */}
                                 <TableCell style={stylesBody}>{data.email}</TableCell>
                                 <TableCell style={stylesBody}>{moment(data.birthday).format('Do MMMM')}</TableCell>
-                                <TableCell style={stylesBody}>{data.address}</TableCell>
+                                {/* <TableCell style={stylesBody}>{data.address}</TableCell>
                                 <TableCell style={stylesBody}>{data.phone}</TableCell>
                                 <TableCell style={stylesBody}>{moment(data.dateofjoin).format('MMMM YYYY')}</TableCell>
                                 <TableCell style={stylesBody}>{data.identificationno}</TableCell>
@@ -215,7 +215,7 @@ const UserProfile =()=> {
                                 <TableCell style={stylesBody}>{data.uni}</TableCell>
                                 <TableCell style={stylesBody}>{data.msc}</TableCell>
                                 <TableCell style={stylesBody}>{data.phd}</TableCell>
-                                <TableCell style={stylesBody}>{data.others}</TableCell>
+                                <TableCell style={stylesBody}>{data.others}</TableCell> */}
                                 {/* <TableCell style={stylesBody}><TableButton type="submit" onClick={()=> {
                                     handleClick(data.id)
                                 }}> Edit</TableButton> </TableCell> */}

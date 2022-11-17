@@ -29,25 +29,38 @@ const SalaryEdit =()=> {
  const handleChange = event => {
     setSearchTerm(event.target.value);
   };
-  useEffect(() => {
-    getCharacter()
-    if (searchTerm && searchTerm.length > 1) {
-        if (searchTerm.length % 2 === 0) {
-            getCharacter();
-        } 
-    } 
-  }, [searchTerm]);
+//   useEffect(() => {
+//     getCharacter()
+//     if (searchTerm && searchTerm.length > 1) {
+//         if (searchTerm.length % 2 === 0) {
+//             getCharacter();
+//         } 
+//     } 
+//   }, [searchTerm]);
 
-  const getCharacter =()=> {
-    const results = employees.filter( employees =>
-        employees.surname.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        employees.staffid.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employees.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        employees.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employees.school.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+
+
+  const getCharacter =(searchedVal)=> {
+    const results = employees.filter( employe => {
+        return employe.surname.toLowerCase().includes(searchedVal.toLowerCase()) || 
+        employe.staffid.toLowerCase().includes(searchedVal.toLowerCase()) ||
+        employe.firstname.toLowerCase().includes(searchedVal.toLowerCase()) || 
+        employe.department.toLowerCase().includes(searchedVal.toLowerCase()) ||
+        employe.school.toLowerCase().includes(searchedVal.toLowerCase())
+    });
       setEmployees(results);
+      
   }
+
+  
+  const cancelSearch = () => {
+    setSearchTerm("");
+    getCharacter(searchTerm);
+  };
+//   useEffect(() => {
+//     cancelSearch()
+//     console.log('search')
+//   }, [])
 
     const handleClick =(id)=> {
         history.push('/salaryinfo/'+id)
@@ -119,12 +132,12 @@ const SalaryEdit =()=> {
             <h1>Salary Edit Page</h1>
             <div className="search">
                 <div className="search-input">
-                            <FormInput 
+                            {/* <FormInput 
                             name="employee"
                             value={searchTerm || ""}
                             placeholder="Search Bar"
                             handleChange={handleChange}
-                            />
+                            /> */}
                 </div>
                 {/* <div className="search-select">
                             <FormSelect
@@ -154,12 +167,12 @@ const SalaryEdit =()=> {
                             />
                 </div> */}
             </div>
-            {/* <SearchBar
-            style={classes}
-                value={searched}
-                onChange={(searchVal) => requestSearch(searchVal)}
+            <SearchBar
+           
+                value={searchTerm || ""}
+                onChange={(searchVal) => getCharacter(searchVal)}
                 onCancelSearch={() => cancelSearch()}
-            /> */}
+            />
             <ReactHTMLTableToExcel
                 id="test-table-xls-button"
                 className="download-table-xls-button"
@@ -177,7 +190,7 @@ const SalaryEdit =()=> {
                             <TableCell style={stylesHead}>Surname </TableCell>
                             <TableCell style={stylesHead}>Fistname </TableCell>
                             <TableCell style={stylesHead}>Department </TableCell>
-                            <TableCell style={stylesHead}>School </TableCell>
+                            {/* <TableCell style={stylesHead}>School </TableCell> */}
                             <TableCell style={stylesHead}>Basic Salary </TableCell>
                             {/* <TableCell style={stylesHead}>Action </TableCell> */}
                         </TableRow>
@@ -192,7 +205,7 @@ const SalaryEdit =()=> {
                                 <TableCell style={stylesBody}>{data.surname}</TableCell>
                                 <TableCell style={stylesBody}>{data.firstname}</TableCell>
                                 <TableCell style={stylesBody}>{data.department}</TableCell>
-                                <TableCell style={stylesBody}>{data.school}</TableCell>
+                                {/* <TableCell style={stylesBody}>{data.school}</TableCell> */}
                                 <TableCell style={stylesBody}>{data.pay}</TableCell>
                                 {/* <TableCell style={stylesBody}><TableButton onClick={()=>{
                                                 handleClick(data.id)

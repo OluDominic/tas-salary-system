@@ -18,8 +18,9 @@ const EmployeeSidebar =()=> {
     }
 
     return (
-            <div className="employeeSidebar">
-                <i onClick={onBar} className={open ? 'fas fa-times' : 'fas fa-bars bars'}></i>
+        <div className="employeeSidebar">
+                <i onClick={onBar} className={open ? 'fas fa-bars bars' : 'fas fa-times'}></i>
+                <div>
             <h2>HR Management System</h2>
             <hr />
             <TransitionGroup>
@@ -27,22 +28,23 @@ const EmployeeSidebar =()=> {
                     timeout={500}
                     classNames="fade"
                 >
-                <ul>
-                    <li>
-                        <NavLink activeStyle={{background:'grey'}} to="/profile"> <FontAwesomeIcon icon={faHome} /> Home </NavLink>
-                    </li>
-                    <li>
-                        <NavLink activeStyle={{background:'grey'}} to="/salary"> <FontAwesomeIcon icon={faMoneyBill} /> Payroll </NavLink>
-                    </li>
-                    <li>
-                        <NavLink activeStyle={{background:'grey'}} to="/info"> <FontAwesomeIcon icon={faSuitcase} /> My Profile </NavLink>
-                    </li>
-                    <li>
-                        <NavLink activeStyle={{background:'grey'}} to="/complaint"> <FontAwesomeIcon icon={faComment} /> Complaints </NavLink>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <NavLink activeStyle={{background:'grey'}} to="/profile"> <FontAwesomeIcon icon={faHome} /> Home </NavLink>
+                        </li>
+                        <li>
+                            <NavLink activeStyle={{background:'grey'}} to="/salary"> <FontAwesomeIcon icon={faMoneyBill} /> Payroll </NavLink>
+                        </li>
+                        <li>
+                            <NavLink activeStyle={{background:'grey'}} to="/info"> <FontAwesomeIcon icon={faSuitcase} /> My Profile </NavLink>
+                        </li>
+                        <li>
+                            <NavLink activeStyle={{background:'grey'}} to="/complaint"> <FontAwesomeIcon icon={faComment} /> Complaints </NavLink>
+                        </li>
+                    </ul>
                 </CSSTransition>
             </TransitionGroup>
+            </div>
         </div>
     );
 }

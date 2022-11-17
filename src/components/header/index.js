@@ -10,7 +10,8 @@ const Header =()=> {
                 <div className="head-sub">
                     <div className ="taclogo">
                         <Link to="/">
-                        <img src={tacLogo} alt="taclogo" />
+                        {/* <img src={tacLogo} alt="taclogo" /> */}
+                        <h3>Hr Management</h3>
                         </Link>
                     </div>
                     

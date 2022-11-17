@@ -75,6 +75,7 @@ const Update =()=> {
             accountname: update.accountname,
             accountno: update.accountno
         });
+        alert("Employee Details Updated")
         setMsg('Employee Details Update Successful!!')
     }
 

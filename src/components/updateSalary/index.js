@@ -7,6 +7,7 @@ import {APPCONFIG} from './../../config/config'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios'
+import moment from 'moment'
 
 import './index.scss';
 
@@ -106,6 +107,7 @@ const UpdateSalary =()=> {
         });
         setNetSalary('')
         setMsg('Employee Salary Updated')
+        alert( `${info.firstname} salary updated`)
     }
     
 
@@ -120,7 +122,8 @@ const UpdateSalary =()=> {
                 
                 
                 <div className="net">
-                        <h3>Month & Year</h3>
+                        <p>Month & Year</p>
+                        <h4>{moment(info.date).format('MMMM yyyy')}</h4>
                         <label>Gross Salary (N)</label>
                         <FormInput 
                         required

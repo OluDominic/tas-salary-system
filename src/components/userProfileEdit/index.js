@@ -44,6 +44,7 @@ const UserProfileEdit =()=> {
             <div className="combined">
                 <div className="useredit-header">
                     <h2>{profile.staffid}</h2>
+                    <h2>{profile.surname} {" "} {profile.firstname} {" "} {profile.lastname}</h2>
                     <p>{profile.department}</p>
                     <p>{profile.school}</p>
                     <p>Date of Join : {moment(profile.dateofjoin).format("MMM YYYY")}</p>

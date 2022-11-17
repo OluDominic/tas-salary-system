@@ -48,7 +48,6 @@ const Department =()=> {
         </Button>
         }
     }
-
     
     const fetchDepartment = () => {
         console.log(departments)

@@ -122,21 +122,20 @@ const EmployeeInfo =()=> {
     }
 
     const SubmitButton =()=> {
-        if (userdata.staffid, userdata.surname, userdata.firstname, 
-            userdata.lastname, userdata.department, userdata.school, 
-            userdata.email,phone, birthday, address,gender,startDate,passport,
-            tel, marital , country, religion, bankName, accName, 
-            accNo, state, kinName, kinRela, kinPhone, contactName1, 
-            contactRela1, contactPhone1, contactName2, contactRela2,
-            contactPhone2, ssce, bsc, msc, phd
-            ) {
-                return <Button onClick={profileAPI} type="submit">
+        if (userdata.staffid && userdata.surname && userdata.firstname && 
+            userdata.lastname && userdata.department && userdata.school && 
+            userdata.email && phone && birthday && address && gender && startDate && passport &&
+            tel && marital && country && religion && bankName && accName && 
+            accNo && state && kinName && kinRela && kinPhone && contactName1 && 
+            contactRela1 && contactPhone1 && contactName2 && contactRela2 &&
+            contactPhone2 && ssce && bsc && msc && phd) {
+                return (<Button onClick={profileAPI} type="submit">
                                 Update
-                            </Button>
+                            </Button>)
             } else {
-                return <Button onClick={profileAPI} disabled type="submit">
+                return (<Button onClick={profileAPI} disabled type="submit">
                                 Update
-                            </Button>
+                            </Button>)
             }
     }
 
@@ -245,6 +244,7 @@ const EmployeeInfo =()=> {
             phd: phd,
             otherqual: otherqual
         })
+        alert(`${userdata.surname} personal details successfully updated!!`)
     }
 
     

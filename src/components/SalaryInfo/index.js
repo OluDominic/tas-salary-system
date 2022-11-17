@@ -26,6 +26,7 @@ import { faFileInvoice, faInfo } from '@fortawesome/free-solid-svg-icons'
 import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUp from "@material-ui/icons/KeyboardArrowUp";
 
+
 const SalaryInfo =()=> {
     const [salaryinfo, setSalaryinfo] = useState([]);
     const [date, setDate] = useState(new Date());
@@ -108,6 +109,7 @@ const SalaryInfo =()=> {
             accountname: salaryinfo.accountname,
             accountno: salaryinfo.accountno
         })
+        alert(`${salaryinfo.surname} monthly salary successfully inputed! `)
         window.location.replace(`${APPCONFIG.appapi}/salaryinfo/`+salaryinfo.id)
         .then((response) => {
             // if (response.data.message) {
@@ -121,7 +123,7 @@ const SalaryInfo =()=> {
         setmsg('Employee Salary Information Uploaded Successful')
         setGrossSalary('')
         setNetSalary('')
-        
+        alert("Employee monthly salary successfully inputed");
     }   
 
     useEffect(()=> {
@@ -268,7 +270,7 @@ const SalaryInfo =()=> {
                 <h2> {salaryinfo.surname} {salaryinfo.firstname}</h2>
                 <h3>{salaryinfo.staffid}</h3>
                 <h3><p>{salaryinfo.department}</p></h3>
-                <h3><p>{salaryinfo.school}</p></h3>
+                {/* <h3><p>{salaryinfo.school}</p></h3> */}
             </div>
 
             <div className="wrap">

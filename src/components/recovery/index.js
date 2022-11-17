@@ -34,7 +34,7 @@ const Recovery =()=> {
         }
         else{
             data=JSON.parse(data);
-            console.log(data,'popop')
+            //console.log(data,'popop')
       setUserdata(data);
         }
     },[])

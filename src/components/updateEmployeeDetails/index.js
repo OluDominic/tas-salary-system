@@ -35,7 +35,7 @@ const UpdateEmployeeDetails =()=> {
             Authorization: `Bearer lll`,
             "Access-Control-Allow-Origin":"*"
         }
-        console.log('here')
+        //console.log('here')
         axios.get(`${APPCONFIG.appapi}/empinfo/${id}`, {
             headers
         }).then((data, response) => {
